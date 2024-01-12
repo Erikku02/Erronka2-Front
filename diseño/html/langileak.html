@@ -115,10 +115,10 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- <li><a class="dropdown-item" href="#">Rotaciones</a></li> -->
-                                <li><a class="dropdown-item" href="#">Grupos</a></li>
-                                <li><a class="dropdown-item" href="#">Usuarios</a></li>
+                                <li><a class="dropdown-item" href="taldeak.html">Grupos</a></li>
+                                <li><a class="dropdown-item" href="langileak.html">Trabajadores</a></li>
                                 <li>
-                                    <a class="dropdown-item" href="#">Horarios por grupo</a>
+                                    <a class="dropdown-item" href="ordutegiak.html">Horarios por grupo</a>
                                 </li>
                             </ul>
                         </li>
@@ -183,20 +183,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th><input type="checkbox" /></th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                        </tr>
-                        <tr>
-                            <th><input type="checkbox" /></th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                        </tr>
-                        <tr>
-                            <th><input type="checkbox" /></th>
-                            <td>Larry the Bird</td>
-                            <td>@twitter</td>
+                        <tr v-for="(langile) in listaLangile">
+                            <td><input type="checkbox" :value="langilea.id" v-model="arrayId"></td>
+                            <td>
+                                <span v-if="">
+
+                                </span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -260,6 +253,46 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
     </script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                listaLangile: [],
+                arrayId: []
+
+
+            },
+            methods: {
+                async cargaLangile() {
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+                        if (!response.ok) {
+                            console.log('Errorea eskera eskaera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+
+                        const datuak = await response.json();
+                        console.log(datuak);
+                        this.listaLangile = datuak
+
+                            .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
+                    } catch (error) {
+                        console.error('Errorea: ', error);
+                    }
+                }
+            }
+        })
+
+    </script>
+
+
+
 </body>
 
 </html>
