@@ -1,0 +1,39 @@
+/* * {
+    background-color: #F5F9FE;
+}
+
+.row {
+    background-color: #24A0E6;
+} */
+
+/* BARRA DE NAVEGACION (SE VE SIEMPRE) */
+.navbar {
+    background-color: #F7F7F7;
+}
+.navbar-brand {
+    color: #24A0E6;
+    font-size: 180%;
+}
+/* Estilo para la barra de navegación fija en la parte superior */
+.navbar.fixed-top {
+    position: fixed;
+    width: 100%;
+    z-index: 1000; /* Asegura que la barra de navegación esté sobre otros elementos */
+}
+
+/* Margen superior para el contenido principal */
+main {
+    margin-top: 70px; /* Ajusta el valor según sea necesario para dar espacio a la barra de navegación */
+}
+
+.offcanvas-start .navbar-nav .nav-link,
+.offcanvas-start {
+    background-color: #313C40;
+}
+
+.offcanvas-start .navbar-toggler-icon {
+    font: white;
+}
+span {
+    color: black;
+}
