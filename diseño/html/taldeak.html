@@ -172,7 +172,7 @@
                                 <span v-if="!arrayKodea.includes(talde.kodea)">
                                     {{talde.izena}}
                                 </span>
-                                <input v-else type="text" v-model="talde.izena"/>
+                                <input v-else type="text" v-model="talde.izena" />
                             </td>
                         </tr>
                     </tbody>
@@ -204,6 +204,7 @@
                         <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
                             <button @click.prevent="createTalde()" class="btn btn-primary">Añadir</button>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -253,7 +254,7 @@
                 async cargaTalde() {
                     try {
                         const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta', {
-                        // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldearuta', {
                             method: 'GET',
                             // mode: "no-cors",
                             headers: {
@@ -288,7 +289,7 @@
                         console.log(JSON.stringify(arraySortu));
 
                         const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldeagorde', {
-                        // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldeagorde', {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
@@ -314,12 +315,13 @@
                         const kodea = this.arrayKodea[0];
                         const izena = this.listaTalde.map(talde => talde.izena).join(', ');
                         const arrayActu = {
+                            "id": id,
                             "kodea": kodea,
                             "izena": izena
                         };
 
                         const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
-                        // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -344,7 +346,7 @@
                     try {
                         for (var i = 0; i < this.arrayKodea.length; i++) {
                             const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
-                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
+                                // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json',

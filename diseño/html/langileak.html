@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Taldeak</title>
+    <title>Trabajadores</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
@@ -145,8 +145,9 @@
         </div>
     </nav>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-    <main>
+    <main id="app">
         <div class="container">
             <header class="row">
                 <ul class="nav nav-tabs mt-5">
@@ -169,7 +170,7 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-3">
-                    <i class="bi bi-check-circle"></i>
+                    <i class="bi bi-check-circle" @click="actuLangile()"></i>
                     <i class="bi bi-dash-circle"></i>
                 </div>
 
@@ -184,11 +185,18 @@
                     </thead>
                     <tbody>
                         <tr v-for="(langile) in listaLangile">
-                            <td><input type="checkbox" :value="langilea.id" v-model="arrayId"></td>
+                            <td><input type="checkbox" :value="langile.id" v-model="arrayId"></td>
                             <td>
-                                <span v-if="">
-
+                                <span v-if="!arrayId.includes(langile.id)">
+                                    {{ langile.izena }}
                                 </span>
+                                <input v-else type="text" v-model="langile.izena">
+                            </td>
+                            <td>
+                                <span v-if="!arrayId.includes(langile.id)">
+                                    {{ langile.abizenak }}
+                                </span>
+                                <input v-else type="text" v-model="langile.abizenak">
                             </td>
                         </tr>
                     </tbody>
@@ -204,34 +212,32 @@
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
                     <div class="btn-group col-sm-6 col-lg-3">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Grupo
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Separated link</a></li>
-                        </ul>
+                        <div class="mb-3">
+                            <!-- TODO: que aparezca una lista de los grupos que existen -->
+                            <label for="dia" class="form-label">Grupo</label>
+                            <select class="form-select w-100" id="dia" required v-model="kodeaSortu">
+                                <option disabled selected>Seleccione un grupo</option>
+                                <option value="3WAG2">3WAG2</option>
+                                <option value="3WAG1">3WAG1</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input1" class="">Código</label> -->
-                        <input type="text" class="form-control" id="input1" placeholder="Nombre" />
+                        <input type="text" class="form-control" id="input1" v-model="izenaSortu" placeholder="Nombre" />
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input2" class="">Nombre</label> -->
-                        <input type="text" class="form-control" id="input2" placeholder="Apellido" />
+                        <input type="text" class="form-control" id="input2" v-model="abizenakSortu" placeholder="Apellido" />
                     </div>
 
                     <!-- FIXME: el button solo se centra cuando esta en pantalla completa-->
                     <!-- <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto"> -->
                     <div class="col-1 align-self-center">
-
-                        <button type="submit" class="btn btn-primary">Añadir</button>
+                        <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
+                        <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
+                            <button @click.prevent="createLangile()" class="btn btn-primary">Añadir</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -252,14 +258,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
-    </script>
 
     <script>
         new Vue({
             el: '#app',
             data: {
+                selectedCheckbox: null, // Esta variable almacenará la ID del checkbox seleccionado
                 listaLangile: [],
-                arrayId: []
+                arrayId: [],
+                kodeaSortu: "",
+                izenaSortu: "",
+                abizenakSortu: "",
+                listaLangile: [],
 
 
             },
@@ -267,6 +277,9 @@
                 async cargaLangile() {
                     try {
                         const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                            method: 'GET',
+                            // mode: "no-cors",
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Access-Control-Allow-Origin': '*'
@@ -285,9 +298,88 @@
                     } catch (error) {
                         console.error('Errorea: ', error);
                     }
+                },
+                async createLangile() {
+                    try {
+                        const kodea = this.kodeaSortu;
+                        const izena = this.izenaSortu;
+                        const abizenak = this.abizenakSortu;
+                        const arraySortu = {
+                            "kodea": kodea,
+                            "izena": izena,
+                            "abizenak": abizenak
+                        };
+
+                        console.log(JSON.stringify(arraySortu));
+
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langileagorde', {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileagorde', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                            body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
+                        });
+
+                        if (!response.ok) {
+                            console.log('Errorea sortzerakoan');
+                            throw new Error('Errorea sortzerakoan');
+                        }
+
+                        alert('Sortu da');
+                        await this.cargaLangile();
+                        location.reload();
+
+                    } catch (error) {
+                        console.log("Errorea: ", error);
+                    }
+                },
+                // FIXME: no hace la actualizazion de datos
+                async actuLangile() {
+                    try {
+                        const id = this.arrayId[0];
+                        const langile = this.listaLangile.find(lang => lang.id === id);
+                        const izena = langile.izena;
+                        const abizenak = langile.abizenak;
+                        // const izena = this.listaLangile.map(langile => langile.izena).join(', ');
+                        // const abizenak = this.listaLangile.map(langile => langile.abizenak).join(', ');
+                        const arrayActu = {
+                            "id": id,
+                            "izena": izena,
+                            "abizenak": abizenak
+                        }
+
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                            body: JSON.stringify(arrayActu),
+                        });
+
+                        if (!response.ok) {
+                            console.log('Errorea eguneratzerakoan');
+                            throw new Error('Errorea eguneratzerakoan');
+                        }
+                        
+                        alert('Ondo eguneratuta');
+                        await this.cargaLangile();
+                        // location.reload();
+
+
+                    } catch (error) {
+                        console.log('Errorea: ', error);
+                    }
                 }
+            },
+            mounted() {
+                // Llama a tu función cargarPagina cuando el componente se monta
+                this.cargaLangile();
             }
-        })
+        });
 
     </script>
 
