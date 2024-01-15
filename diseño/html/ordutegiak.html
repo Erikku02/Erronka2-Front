@@ -273,4 +273,42 @@
 
 </body>
 
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            selectedChecbox: null, // Almacena el id del checkbox seleccionado
+            arrayKodea: [],
+            listaOrdutegia: [],
+        },
+        methods:{
+            async cargaOrdutegia() {
+                try {
+                    const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
+                        // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
+                        method: 'GET',
+                        // mode: "no-cors",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                    });
+
+                    if (!response.ok) {
+                        console.log('Errorea eskaera egiterakoan');
+                        throw new Error('Errorea eskaera egiterakoan');
+                    }
+
+                    const datuak = await response.json();
+                    console.log(datuak);
+                    this.listaOrdutegia = datuak 
+                        .filter(ordutegia => ordutegia.deleted_at === null || ordutegia.deleted_at === "0000-00-00 00:00:00");
+                } catch (error) {
+                    console.error('Errorea: ', error);
+                }
+            },
+        }
+    })
+</script>
+
 </html>
