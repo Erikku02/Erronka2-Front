@@ -174,12 +174,22 @@
                                     <span v-if="!arrayKodea.includes(talde.kodea)">
                                         {{talde.izena}}
                                     </span>
+<<<<<<< HEAD
                                     <input v-else type="text" v-model="talde.izena" />
+=======
+                                
+                                <input v-else type="text" v-model="izenaActu" :placeholder="talde.izena"/>
+>>>>>>> main
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> main
             </div>
 
             <!-- FORMULARIO AÑADIR GRUPO -->
@@ -189,6 +199,7 @@
        
                 <form class="d-flex flex-column align-items-center">
 
+<<<<<<< HEAD
                     <div class="col-sm-10 col-md-8 col-lg-6">
                         <label for="input1" class="form-label">Código</label>
                         <input type="text" class="form-control" id="input1" v-model="kodeaSortu" placeholder="Código" />
@@ -196,6 +207,15 @@
                 
                     <div class="col-sm-10 col-md-8 col-lg-6">
                         <label for="input2" class="form-label">Nombre</label>
+=======
+                    <div class="col-sm-10 col-md-8 col-lg-6 mb-4">
+                        <!-- <label for="input1" class="form-label">Código</label> -->
+                        <input type="text" class="form-control" id="input1" v-model="kodeaSortu" placeholder="Código" />
+                    </div>
+                
+                    <div class="col-sm-10 col-md-8 col-lg-6 mb-4">
+                        <!-- <label for="input2" class="form-label">Nombre</label> -->
+>>>>>>> main
                         <input type="text" class="form-control" id="input2" v-model="izenaSortu" placeholder="Nombre del grupo" />
                     </div>
                 
