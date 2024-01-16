@@ -179,19 +179,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="langile in listaLangile">
+                        <tr v-for="(langile) in listaLangile">
                             <td><input type="checkbox" :value="langile.id" v-model="arrayId"></td>
                             <td>
                                 <span v-if="!arrayId.includes(langile.id)">
                                     {{ langile.izena }}
                                 </span>
-                                <input v-else type="text" v-model="izenaActu" :placeholder="langile.izena">
+                                <input v-else type="text" v-model="langile.izena" :placeholder="langile.izena">
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(langile.id)">
                                     {{ langile.abizenak }}
                                 </span>
-                                <input v-else type="text" v-model="abizenakActu" :placeholder="langile.abizenak">
+                                <input v-else type="text" v-model="langile.abizenak" :placeholder="langile.abizenak">
                             </td>
                         </tr>
                     </tbody>
@@ -265,8 +265,6 @@
                 izenaSortu: "",
                 abizenakSortu: "",
                 listaTalde: [],
-                izenaActu: "",
-                abizenakActu: "",
             },
             methods: {
                 // Para cargar los grupos que estan activos
@@ -362,9 +360,10 @@
                 async actuLangile() {
                     try {
                         const id = this.arrayId[0];
-                        const izena = this.izenaActu;
-                        const abizenak = this.abizenakActu;
-                        
+                        const izena = this.listaLangile.find(langile => langile.id === this.arrayId[0]).izena;
+                        const abizenak = this.listaLangile.find(langile => langile.id === this.arrayId[0]).abizenak;
+                        console.log(izena);
+                        console.log(abizenak);
                         // const izena = this.listaLangile.map(langile => langile.izena).join(', ');
                         const arrayActu = {
                             "id": id,
