@@ -450,7 +450,7 @@
                             const datuak = await response.json();
                             console.log(datuak);
                             this.listaLangile = datuak
-                                // .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
+                                .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
                             console.log(datuak);
                         }
                     } catch (error) {
