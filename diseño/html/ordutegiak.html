@@ -151,8 +151,8 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <!-- <i class="bi bi-check-circle m-2" @click="#"></i> -->
-                    <!-- <i class="bi bi-dash-circle" @="#"></i> -->
+                    <i class="bi bi-check-circle m-2" @click="actuOrdutegia()"></i>
+                    <i class="bi bi-dash-circle" @click="ezabOrdutegi()"></i>
                 </div>
 
                 <!-- Tabla -->
@@ -174,38 +174,39 @@
                         <!-- TODO: mostrar los datos del fetch -->
                         <tr v-for="(ordutegia) in listaOrdutegia">
                             <td>
-                                <input type="checkbox" :value="ordutegia.kodea" v-model="arrayKodea" />
+                                <input type="checkbox" :value="ordutegia.id" v-model="arrayId" />
                             </td>
                             <td>
                                 {{ ordutegia.kodea }}
                             </td>
                             <td>
-                                <span v-if="!arrayKodea.includes(ordutegia.kodea)">
-                                    {{ ordutegia.eguna }}
+                                <span v-if="!arrayId.includes(ordutegia.kodea)">
+                                    <!-- {{ ordutegia.eguna }} -->
+                                    {{ egunaOrdutegia(ordutegia.eguna) }}
                                 </span>
                                 <input v-else type="text" v-model="ordutegia.eguna">
                             </td>
                             <td>
-                                <span v-if="!arrayKodea.includes(ordutegia.kodea)">
+                                <span v-if="!arrayId.includes(ordutegia.kodea)">
                                     {{ ordutegia.hasiera_data }}
                                 </span>
                                 <input v-else type="date" v-model="ordutegia.hasiera_data">
                             </td>
                             <td>
-                                <span v-if="!arrayKodea.includes(ordutegia.kodea)">
+                                <span v-if="!arrayId.includes(ordutegia.kodea)">
                                     {{ ordutegia.amaiera_data }}
                                 </span>
                                 <input v-else type="date" v-model="ordutegia.amaiera_data">
                             </td>
                             <td>
-                                <span v-if="!arrayKodea.includes(ordutegia.kodea)">
+                                <span v-if="!arrayId.includes(ordutegia.kodea)">
                                     {{ ordutegia.hasiera_ordua }}
                                     <!-- {{ formatOrduak(ordutegia.hasiera_ordua) }} -->
                                 </span>
                                 <input v-else type="time" v-model="ordutegia.hasiera_ordua">
                             </td>
                             <td>
-                                <span v-if="!arrayKodea.includes(ordutegia.kodea)">
+                                <span v-if="!arrayId.includes(ordutegia.kodea)">
                                     {{ ordutegia.amaiera_ordua }}
                                     <!-- {{ formatOrduak(ordutegia.amaiera_ordua) }} -->
                                 </span>
@@ -230,9 +231,12 @@
                             <!-- TODO: los grupos se añaden automaticamente -->
                             <label for="dia" class="form-label">Grupo</label>
                             <select class="form-select" id="dia" v-model="kodeaSortu">
-                                <option disabled selected>Seleccione un grupo</option>
-                                <option value="1">3WAG2</option>
-                                <option value="1">añadir automaticamente con el fetch</option>
+                                <option v-for="(talde, index) in listaTalde" :key="index" :value="talde.kodea">
+                                    {{ talde.kodea }}
+                                </option>
+                                <!-- <option disabled selected>Seleccione un grupo</option>
+                                <option value="3WAG2">3WAG2</option>
+                                <option value="1">añadir automaticamente con el fetch</option> -->
                             </select>
                         </div>
                     </div>
@@ -306,8 +310,10 @@
         el: '#app',
         data: {
             selectedChecbox: null, // Almacena el id del checkbox seleccionado
-            arrayKodea: [],
+            arrayId: [],
             listaOrdutegia: [],
+            listaTalde: [],
+            selectedTalde: "",
             kodeaSortu: "",
             egunaSortu: "",
             hasiera_dataSortu: "",
@@ -345,15 +351,14 @@
                     }
 
                     const datuak = await response.json();
-                    console.log(datuak);
+                    // console.log(datuak);
                     this.listaOrdutegia = datuak
                         .filter(ordutegia => ordutegia.deleted_at === null || ordutegia.deleted_at === "0000-00-00 00:00:00");
-                    console.log(datuak);
+                    // console.log(datuak);
                 } catch (error) {
                     console.error('Errorea: ', error);
                 }
             },
-            // FIXME: da fallo al intentar crear un nuevo ordutegi con el form
             async createOrdutegia() {
                 try {
                     const kodea = this.kodeaSortu;
@@ -373,6 +378,8 @@
 
                     console.log(JSON.stringify(arraySortu));
 
+                    // console.log(arraySortu);
+
                     const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiagorde', {
                         // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/ordutegiagorde', {
                         method: 'POST',
@@ -380,12 +387,12 @@
                             'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
                             'Access-Control-Allow-Origin': '*'
                         },
-                        body: JSON.stringify(arraySortu),
+                        body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
                     });
 
                     if (!response.ok) {
                         console.log('Errorea sortzerakoan');
-                        throw new Error ('Errorea sortzerakoan');
+                        throw new Error('Errorea sortzerakoan');
                     }
 
                     alert('Sortu da');
@@ -395,10 +402,95 @@
                 } catch (error) {
                     console.log('Errorea: ', error);
                 }
+            },
+
+            async actuOrdutegia() {
+                try {
+                    const id = this.arrayId[0];
+                    const kodea = ordutegia.kodea;
+                    const eguna = ordutegia.eguna;
+                    const hasiera_data = ordutegia.hasiera_data;
+                    const amaiera_data = ordutegia.amaiera_data;
+                    const hasiera_ordua = ordutegia.hasiera_ordua;
+                    const amaiera_ordua = ordutegia.amaiera_ordua;
+                    // const
+                    const arrayActu = {
+                        'id': id,
+                        'kodea': kodea,
+                        'eguna': eguna,
+                        'hasiera_data': hasiera_data,
+                        'amaiera_data': amaiera_data,
+                        'hasiera_ordua': hasiera_ordua,
+                        'amaiera_ordua': amaiera_ordua
+                    }
+
+                    console.log(arrayActu);
+                } catch (error) {
+                    console.log('Errorea: ', error);
+                }
+            },
+            async ezabOrdutegi() {
+                try {
+                    for (let i = 0; i < this.arrayId.length; i++) {
+                        console.log(this.arrayId[i]);
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaezabatu/' + this.arrayId[i], {
+                            // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/ordutegiaezabatu/' + this.arrayId[i], {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                            body: JSON.stringify(this.arrayId[i]),
+                        });
+
+                    }
+                    alert('Ondo ezabatuta');
+                    await this.cargaOrdutegia();
+                    location.reload();
+                } catch (error) {
+                    console.log('Errorea: ', error);
+                }
+            },
+            egunaOrdutegia(numeroDia) {
+                const diasSemana = ['', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Vierner', 'Sábado', 'Domingo'];
+                return diasSemana[numeroDia];
+            },
+            async cargaTalde(){
+                try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                            // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                            method: 'GET',
+                            // mode: "no-cors",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+
+                        if (!response.ok) {
+                            console.log('Errorea eskera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+
+                        const datuak = await response.json();
+                        console.log(datuak);
+                        this.listaTalde = datuak
+                            .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
+                            console.log(datuak);
+
+                        if (this.listaTalde.length > 0) {
+                            this.selectedTalde = this.listaTalde[0].kodea;
+                        }
+                        // console.log(listaTalde);
+
+                    } catch (error) {
+                        console.error('Errorea:', error);
+                    }
             }
         },
         mounted() {
             this.cargaOrdutegia();
+            this.cargaTalde();
         }
     })
 </script>
