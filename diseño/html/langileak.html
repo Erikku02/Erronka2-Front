@@ -149,42 +149,18 @@
 
     <main id="app">
         <div class="container">
-            <!-- <header class="row">
-                <ul class="nav nav-tabs mt-5" v-for="(talde) in listaTalde">
+            <header class="row">
+                <ul class="nav nav-tabs mt-5">
                     <li class="nav-item">
-                        <a href="#" class="nav-link active" aria-current="page">
+                        <a class="nav-link active" aria-current="page" href="#" @click="cargaLangile()">Todos</a>
+                    </li>
+                    <li class="nav-item" v-for="(talde,index) in listaTalde" :key="index">
+                        <a href="#" class="nav-link active" aria-current="page"  @click="filterTaldea(talde.kodea)">
                             {{ talde.kodea }}
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">3WAG2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-disabled="true">Disabled</a>
-                    </li>
                 </ul>
-            </header> -->
-
-            <header class="row pt-3">
-                <a @click="filterTaldea()"></a>
-                <!-- <select v-model="selectedTalde" @change="filterTaldea">
-                    <option value="" @click="cargaLangile()">Todos los grupos</option>
-                    <option v-for="(talde) in listaTalde" :value="talde.kodea" @click="filterTaldea()">{{ talde.kodea }}
-                    </option>
-                </select> -->
-
-                <select v-model="selectedTalde">
-                    <option value="">Todos los grupos</option>
-                    <option v-for="(talde) in listaTalde" :value="talde.kodea" @click="filterTaldea()">{{ talde.kodea }}</option>
-                </select>
             </header>
-
 
             <div class="row">
                 <!-- Iconos para editar los datos -->
@@ -230,12 +206,10 @@
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
-                    <div class="btn-group col-sm-6 col-lg-3">
+                    <div class="col-sm-6 col-lg-3">
                         <div class="mb-3">
-                            <!-- TODO: que aparezca una lista de los grupos que existen -->
-                            <label for="dia" class="form-label">Grupo</label>
                             <select class="form-select w-100" id="dia" required v-model="kodeaSortu">
-                                <option disabled selected>Seleccione un grupo</option>
+                                <option disabled value="">Grupo</option>
                                 <option value="3WAG2">3WAG2</option>
                                 <option value="3WAG1">3WAG1</option>
                             </select>
@@ -423,8 +397,43 @@
                     } catch (error) {
                         console.log('Errorea: ', error);
                     }
+                },
+                async filterTaldea(talde) {
+                this.selectedTalde = talde;
+                console.log("rfrfr");
+                try {
+                    const kodea = this.selectedTalde;
+                    console.log(kodea);
+
+                    if (!kodea) {
+                        // Si no se selecciona ningún grupo, cargar todos los trabajadores
+                        this.cargaLangile();
+                    } else {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta/' + kodea, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+
+                        if (!response.ok) {
+                            console.log('Error al solicitar trabajadores por grupo');
+                            throw new Error('Error al realizar la solicitud');
+                        }
+
+                        const datuak = await response.json();
+                        console.log(datuak);
+                        this.listaLangile = datuak
+                            // .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
+                        console.log(datuak);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
                 }
+                },
             },
+            
             // async filterTaldea() {
             //     if (this.selectedTalde === "") {
             //         // Si no se selecciona ningún grupo, muestra todos los trabajadores
@@ -459,42 +468,10 @@
             //     }
             // },
 
-            async filterTaldea() {
-                console.log("rfrfr");
-                try {
-                    const kodea = this.selectedTalde;
-                    console.log(kodea);
-
-                    if (!kodea) {
-                        // Si no se selecciona ningún grupo, cargar todos los trabajadores
-                        this.cargaLangile();
-                    } else {
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta/' + kodea, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Access-Control-Allow-Origin': '*'
-                            },
-                        });
-
-                        if (!response.ok) {
-                            console.log('Error al solicitar trabajadores por grupo');
-                            throw new Error('Error al realizar la solicitud');
-                        }
-
-                        const datuak = await response.json();
-                        console.log(datuak);
-                        this.listaLangile = datuak
-                            .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
-                        console.log(datuak);
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            },
+        
             mounted() {
                 // Llama a tu función cargarPagina cuando el componente se monta
-                // this.cargaLangile();
+                this.cargaLangile();
                 
                 this.cargaTalde();
             }
