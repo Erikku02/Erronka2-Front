@@ -172,7 +172,8 @@
                                 <span v-if="!arrayKodea.includes(talde.kodea)">
                                     {{talde.izena}}
                                 </span>
-                                <input v-else type="text" v-model="talde.izena" />
+                            
+                                <input v-else type="text" v-model="izenaActu" :placeholder="talde.izena"/>
                             </td>
                         </tr>
                     </tbody>
@@ -249,6 +250,7 @@
                 kodeaSortu: "",
                 izenaSortu: "",
                 listaTalde: [],
+                izenaActu : "",
             },
             methods: {
                 async cargaTalde() {
@@ -315,9 +317,9 @@
                 async actuTalde() {
                     try {
                         const kodea = this.arrayKodea[0];
-                        const izena = this.listaTalde.map(talde => talde.izena).join(', ');
+                        const izena = this.izenaActu;
+                        // const izena = this.listaTalde.map(talde => talde.izena).join(', ');
                         const arrayActu = {
-                            "kodea": kodea,
                             "kodea": kodea,
                             "izena": izena
                         };
