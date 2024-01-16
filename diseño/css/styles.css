@@ -37,3 +37,16 @@ main {
 span {
     color: black;
 }
+
+/* En tu archivo styles.css */
+form {
+    margin-top: 20px;
+}
+
+form .col-sm-6 {
+    margin-bottom: 15px;
+}
+
+form button {
+    margin-top: 15px;
+}
