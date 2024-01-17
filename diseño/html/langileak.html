@@ -153,20 +153,15 @@
             <header class="row">
                 <ul class="nav nav-tabs mt-5">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">3WAG2</a>
+                        <a class="nav-link active" aria-current="page" href="#" @click="cargaLangile()">Todos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-disabled="true">Disabled</a>
+                    <li class="nav-item" v-for="(talde,index) in listaTalde" :key="index">
+                        <a href="#" class="nav-link active" aria-current="page"  @click="filterTaldea(talde.kodea)">
+                            {{ talde.kodea }}
+                        </a>
                     </li>
                 </ul>
             </header>
-
 
             <div class="row">
                 <!-- Iconos para editar los datos -->
@@ -176,35 +171,32 @@
                 </div>
 
                 <!-- Tabla -->
-                <div class="table-responsive mx-auto">
-                    <!-- Tabla -->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellidos</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(langile) in listaLangile">
-                                <td><input type="checkbox" :value="langile.id" v-model="arrayId"></td>
-                                <td>
-                                    <span v-if="!arrayId.includes(langile.id)">
-                                        {{ langile.izena }}
-                                    </span>
-                                    <input v-else type="text" v-model="langile.izena">
-                                </td>
-                                <td>
-                                    <span v-if="!arrayId.includes(langile.id)">
-                                        {{ langile.abizenak }}
-                                    </span>
-                                    <input v-else type="text" v-model="langile.abizenak">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="langile in listaLangile">
+                            <td><input type="checkbox" :value="langile.id" v-model="arrayId"></td>
+                            <td>
+                                <span v-if="!arrayId.includes(langile.id)">
+                                    {{ langile.izena }}
+                                </span>
+                                <input v-else type="text" v-model="izenaActu" :placeholder="langile.izena">
+                            </td>
+                            <td>
+                                <span v-if="!arrayId.includes(langile.id)">
+                                    {{ langile.abizenak }}
+                                </span>
+                                <input v-else type="text" v-model="abizenakActu" :placeholder="langile.abizenak">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
 
@@ -216,11 +208,11 @@
                 <form class="d-flex flex-column align-items-center">
                     <div class="col-sm-10 col-md-8 col-lg-6">
                         <div class="mb-3">
-                            <!-- TODO: que aparezca una lista de los grupos que existen -->
                             <label for="dia" class="form-label">Grupo</label>
-                            <select class="form-select w-100" id="dia" required v-model="kodeaSortu">
-                                <option disabled value="">Grupo</option>
-                                <option v-for="(talde) in listaTalde">{{talde.kodea}}</option>
+                            <select class="form-select" id="dia" v-model="kodeaSortu">
+                                <option v-for="(talde, index) in listaTalde" :key="index" :value="talde.kodea">
+                                    {{ talde.kodea }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -265,18 +257,49 @@
         new Vue({
             el: '#app',
             data: {
+                selectedTalde: "",
                 selectedCheckbox: null, // Esta variable almacenará la ID del checkbox seleccionado
                 listaLangile: [],
                 arrayId: [],
+                arrayKodea: [],
+                listaTalde: [],
+                selectedTalde: "",
                 kodeaSortu: "",
                 izenaSortu: "",
                 abizenakSortu: "",
-                listaLangile: [],
                 listaTalde: [],
-
-
+                izenaActu: "",
+                abizenakActu: "",
             },
             methods: {
+                // Para cargar los grupos que estan activos
+                async cargaTalde() {
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                            method: 'GET',
+                            // mode: "no-cors",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+
+                        if (!response.ok) {
+                            console.log('Errorea eskera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+
+                        const datuak = await response.json();
+                        // console.log(datuak);
+                        this.listaTalde = datuak
+
+                            .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
+                        console.log(datuak);
+                    } catch (error) {
+                        console.error('Errorea:', error);
+                    }
+                },
                 async cargaLangile() {
                     try {
                         const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
@@ -342,10 +365,9 @@
                 async actuLangile() {
                     try {
                         const id = this.arrayId[0];
-                        const izena = this.listaLangile.find(langile => langile.id === this.arrayId[0]).izena;
-                        const abizenak = this.listaLangile.find(langile => langile.id === this.arrayId[0]).abizenak;
-                        console.log(izena);
-                        console.log(abizenak);
+                        const izena = this.izenaActu;
+                        const abizenak = this.abizenakActu;
+                        
                         // const izena = this.listaLangile.map(langile => langile.izena).join(', ');
                         const arrayActu = {
                             "id": id,
@@ -367,7 +389,7 @@
                             console.log('Errorea eguneratzerakoan');
                             throw new Error('Errorea eguneratzerakoan');
                         }
-                        
+
                         alert('Ondo eguneratuta');
                         await this.cargaLangile();
                         location.reload();
@@ -438,46 +460,44 @@
                         console.error('Error:', error);
                     }
                 },
+                async cargaTalde(){
+                try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                            // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                            method: 'GET',
+                            // mode: "no-cors",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+
+                        if (!response.ok) {
+                            console.log('Errorea eskera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+
+                        const datuak = await response.json();
+                        console.log(datuak);
+                        this.listaTalde = datuak
+                            .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
+                            console.log(datuak);
+
+                        if (this.listaTalde.length > 0) {
+                            this.selectedTalde = this.listaTalde[0].kodea;
+                        }
+                        // console.log(listaTalde);
+
+                    } catch (error) {
+                        console.error('Errorea:', error);
+                    }
+            }
             },
-            
-            // async filterTaldea() {
-            //     if (this.selectedTalde === "") {
-            //         // Si no se selecciona ningún grupo, muestra todos los trabajadores
-            //         this.cargaLangile();
-            //     } else {
-            //         // Filtra la lista de trabajadores por el grupo seleccionado
-            //         this.listaLangile = this.listaLangile.filter(langile => langile.grupo === this.selectedTalde);
-            //     }
-            // },
-
-            // async filterTaldea() {
-            //     try {
-            //         const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta/' + kodea, {
-            //             method: 'GET',
-            //             headers: {
-            //                 'Content-Type': 'application/json',
-            //                 'Access-Control-Allow-Origin': '*'
-            //             },
-            //         });
-            //         if (!response.ok) {
-            //             console.log('Errorea taldea eskaeran');
-            //             throw new Error('Errorea eskaera egiterakoan');
-            //         }
-
-            //         const datuak = await response.json();
-            //         console.log(datuak);
-            //         this.listaTalde = datuak
-            //             .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
-            //         console.log(datuak);
-            //     } catch (error) {
-            //         console.error('Errorea:', error);
-            //     }
-            // },
-
-        
             mounted() {
                 // Llama a tu función cargarPagina cuando el componente se monta
                 this.cargaLangile();
+                
+                this.cargaTalde();
             }
         });
 
