@@ -9,14 +9,13 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
 </head>
 
 <body>
     <!-- BARRA DE NAVEGACION -->
     <nav class="navbar bg-body-tertiary fixed-top">
-        <div class="container d-flex justify-content-between align-items-center">
+        <div class="container d-flex align-items-center">
             <!-- <div class="container-fluid"> -->
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -152,37 +151,33 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i class="bi bi-check-circle m-2" @click="actuTalde()" style="font-size: 1.5rem;"></i>
-                    <i class="bi bi-dash-circle" @click="ezabTalde()" style="font-size: 1.5rem;"></i>
-                </div>
-                
-                <div class="table-responsive mx-auto">
-                    <!-- Tabla -->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Código</th>
-                                <th scope="col">Nombre</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(talde) in listaTalde">
-                                <td><input type="checkbox" :value="talde.kodea" v-model="arrayKodea" /></td>
-                                <td>{{talde.kodea}}</td>
-                                <td>
-                                    <span v-if="!arrayKodea.includes(talde.kodea)">
-                                        {{talde.izena}}
-                                    </span>
-                                
-                                <input v-else type="text" v-model="izenaActu" :placeholder="talde.izena"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <i class="bi bi-check-circle m-2" @click="actuTalde()"></i>
+                    <i class="bi bi-dash-circle" @click="ezabTalde()"></i>
                 </div>
 
-
+                <!-- Tabla -->
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Código</th>
+                            <th scope="col">Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(talde) in listaTalde">
+                            <td><input type="checkbox" :value="talde.kodea" v-model="arrayKodea" /></td>
+                            <td>{{talde.kodea}}</td>
+                            <td>
+                                <span v-if="!arrayKodea.includes(talde.kodea)">
+                                    {{talde.izena}}
+                                </span>
+                            
+                                <input v-else type="text" v-model="talde.izena" :placeholder="talde.izena"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
 
@@ -190,25 +185,28 @@
             <!-- <div class="row justify-content-center align-items-center"> -->
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
                 <h4 class="text-center pt-5 mx-auto">Añadir grupo</h4>
-       
-                <form class="d-flex flex-column align-items-center">
 
-                    <div class="col-sm-10 col-md-8 col-lg-6 mb-4">
-                        <!-- <label for="input1" class="form-label">Código</label> -->
+                <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
+                    style="width: 100%;">
+                    <div class="col-sm-6 col-lg-3">
+                        <!-- <label for="input1" class="">Código</label> -->
                         <input type="text" class="form-control" id="input1" v-model="kodeaSortu" placeholder="Código" />
                     </div>
-                
-                    <div class="col-sm-10 col-md-8 col-lg-6 mb-4">
-                        <!-- <label for="input2" class="form-label">Nombre</label> -->
-                        <input type="text" class="form-control" id="input2" v-model="izenaSortu" placeholder="Nombre del grupo" />
+                    <div class="col-sm-6 col-lg-3">
+                        <!-- <label for="input2" class="">Nombre</label> -->
+                        <input type="text" class="form-control" id="input2" v-model="izenaSortu"
+                            placeholder="Nombre del grupo" />
                     </div>
-                
-                    <div class="col-12 text-center mt-3">
-                        <button @click.prevent="createTalde()" class="btn btn-primary">Añadir</button>
+
+                    <!-- FIXME: el button solo se centra cuando esta en pantalla completa-->
+                    <!-- <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto"> -->
+                    <div class="col-1 align-self-center">
+                        <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
+                        <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
+                            <button @click.prevent="createTalde()" class="btn btn-primary">Añadir</button>
+                        </div>
                     </div>
-                
-                </form>                
-                
+                </form>
             </div>
         </div>
     </main>
@@ -252,7 +250,6 @@
                 kodeaSortu: "",
                 izenaSortu: "",
                 listaTalde: [],
-                izenaActu : "",
             },
             methods: {
                 async cargaTalde() {
@@ -319,7 +316,7 @@
                 async actuTalde() {
                     try {
                         const kodea = this.arrayKodea[0];
-                        const izena = this.izenaActu;
+                        const izena = this.listaTalde.find(talde => talde.kodea === this.arrayKodea[0]).izena;
                         // const izena = this.listaTalde.map(talde => talde.izena).join(', ');
                         const arrayActu = {
                             "kodea": kodea,
@@ -361,8 +358,7 @@
                                 body: JSON.stringify(this.arrayKodea[i]),
                             });
                         }
-
-
+                        
                         // if(!response.ok){
                         //   console.log('Errorea eguneratzerakoan');
                         //   throw new Error('Errorea eguneratzerakoan');
@@ -382,7 +378,5 @@
             }
         });
     </script>
-
 </body>
-
 </html>
