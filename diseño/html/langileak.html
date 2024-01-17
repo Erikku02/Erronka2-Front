@@ -9,14 +9,13 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
 </head>
 
 <body>
     <!-- BARRA DE NAVEGACION -->
     <nav class="navbar bg-body-tertiary fixed-top">
-        <div class="container d-flex justify-content-between align-items-center">
+        <div class="container d-flex align-items-center">
             <!-- <div class="container-fluid"> -->
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -180,19 +179,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="langile in listaLangile">
+                        <tr v-for="(langile) in listaLangile">
                             <td><input type="checkbox" :value="langile.id" v-model="arrayId"></td>
                             <td>
                                 <span v-if="!arrayId.includes(langile.id)">
                                     {{ langile.izena }}
                                 </span>
-                                <input v-else type="text" v-model="izenaActu" :placeholder="langile.izena">
+                                <input v-else type="text" v-model="langile.izena" :placeholder="langile.izena">
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(langile.id)">
                                     {{ langile.abizenak }}
                                 </span>
-                                <input v-else type="text" v-model="abizenakActu" :placeholder="langile.abizenak">
+                                <input v-else type="text" v-model="langile.abizenak" :placeholder="langile.abizenak">
                             </td>
                         </tr>
                     </tbody>
@@ -205,24 +204,21 @@
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
                 <h4 class="text-center pt-5 mx-auto">Añadir trabajador</h4>
 
-                <form class="d-flex flex-column align-items-center">
-                    <div class="col-sm-10 col-md-8 col-lg-6">
+                <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
+                    style="width: 100%;">
+                    <div class="col-sm-6 col-lg-3">
                         <div class="mb-3">
-                            <label for="dia" class="form-label">Grupo</label>
-                            <select class="form-select" id="dia" v-model="kodeaSortu">
-                                <option v-for="(talde, index) in listaTalde" :key="index" :value="talde.kodea">
-                                    {{ talde.kodea }}
-                                </option>
+                            <select class="form-select w-100" id="dia" required v-model="kodeaSortu">
+                                <option disabled value="">Grupo</option>
+                                <option v-for="(talde) in listaTalde">{{talde.kodea}}</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-10 col-md-8 col-lg-6">
-                        <div class="mb-4">
-                            <!-- <label for="input1" class="">Código</label> -->  
-                            <input type="text" class="form-control" id="input1" v-model="izenaSortu" placeholder="Nombre" />
-                        </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <!-- <label for="input1" class="">Código</label> -->
+                        <input type="text" class="form-control" id="input1" v-model="izenaSortu" placeholder="Nombre" />
                     </div>
-                    <div class="col-sm-10 col-md-8 col-lg-6">
+                    <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input2" class="">Nombre</label> -->
                         <input type="text" class="form-control" id="input2" v-model="abizenakSortu"
                             placeholder="Apellido" />
@@ -230,8 +226,11 @@
 
                     <!-- FIXME: el button solo se centra cuando esta en pantalla completa-->
                     <!-- <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto"> -->
-                    <div class="col-12 text-center mt-3">
-                        <button @click.prevent="createLangile()" class="btn btn-primary">Añadir</button>
+                    <div class="col-1 align-self-center">
+                        <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
+                        <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
+                            <button @click.prevent="createLangile()" class="btn btn-primary">Añadir</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -262,14 +261,10 @@
                 listaLangile: [],
                 arrayId: [],
                 arrayKodea: [],
-                listaTalde: [],
-                selectedTalde: "",
                 kodeaSortu: "",
                 izenaSortu: "",
                 abizenakSortu: "",
                 listaTalde: [],
-                izenaActu: "",
-                abizenakActu: "",
             },
             methods: {
                 // Para cargar los grupos que estan activos
@@ -365,9 +360,10 @@
                 async actuLangile() {
                     try {
                         const id = this.arrayId[0];
-                        const izena = this.izenaActu;
-                        const abizenak = this.abizenakActu;
-                        
+                        const izena = this.listaLangile.find(langile => langile.id === this.arrayId[0]).izena;
+                        const abizenak = this.listaLangile.find(langile => langile.id === this.arrayId[0]).abizenak;
+                        console.log(izena);
+                        console.log(abizenak);
                         // const izena = this.listaLangile.map(langile => langile.izena).join(', ');
                         const arrayActu = {
                             "id": id,
@@ -453,58 +449,20 @@
                             const datuak = await response.json();
                             console.log(datuak);
                             this.listaLangile = datuak
-                                .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
+                                 .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
                             console.log(datuak);
                         }
                     } catch (error) {
                         console.error('Error:', error);
                     }
                 },
-                async cargaTalde(){
-                try {
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta', {
-                            // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
-                            method: 'GET',
-                            // mode: "no-cors",
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Access-Control-Allow-Origin': '*'
-                            },
-                        });
-
-                        if (!response.ok) {
-                            console.log('Errorea eskera egiterakoan');
-                            throw new Error('Errorea eskaera egiterakoan');
-                        }
-
-                        const datuak = await response.json();
-                        console.log(datuak);
-                        this.listaTalde = datuak
-                            .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
-                            console.log(datuak);
-
-                        if (this.listaTalde.length > 0) {
-                            this.selectedTalde = this.listaTalde[0].kodea;
-                        }
-                        // console.log(listaTalde);
-
-                    } catch (error) {
-                        console.error('Errorea:', error);
-                    }
-            }
             },
             mounted() {
                 // Llama a tu función cargarPagina cuando el componente se monta
                 this.cargaLangile();
-                
                 this.cargaTalde();
             }
         });
-
     </script>
-
-
-
 </body>
-
 </html>
