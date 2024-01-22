@@ -21,7 +21,7 @@
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="#">
+            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="materiala_erabili.html">
                 Trabajadores
                 <!-- FIXME: buscar como hacero sin puntitos  -->
                 <!-- sin los puntos no se ve bien centrado -->
@@ -50,7 +50,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Asignar citas</a></li>
                                 <li><a class="dropdown-item" href="#">Comfirmar citas</a></li>
-                                <li><a class="dropdown-item" href="#">Ficha técnica</a></li>
+                                <li><a class="dropdown-item" href="bezero_fitxak.html">Ficha técnica</a></li>
                                 <li><a class="dropdown-item" href="#">Listado tickets</a></li>
                                 <li><a class="dropdown-item" href="#">Agenda de citas</a></li>
                             </ul>
@@ -66,7 +66,7 @@
 
                         <!-- Productos -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="produktuak.html">
                                 <i class="bi bi-tags-fill m-2"></i>
                                 Productos
                             </a>
@@ -74,7 +74,7 @@
 
                         <!-- Material -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="materiala.html">
                                 <!-- <i class="bi bi-brush"></i> -->
                                 <i class="bi bi-palette2 m-2"></i>
                                 Material
@@ -83,7 +83,7 @@
 
                         <!-- Tratamientos -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="tratamenduak.html">
                                 <i class="bi bi-scissors m-2"></i>
                                 Tratamientos
                             </a>
@@ -98,9 +98,11 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="#">Asignación de tareas</a>
+                                    <a class="dropdown-item" href="txandak.html">Asignación de tareas</a>
                                 </li>
-                                <li><a class="dropdown-item" href="txandak.html">Turnos</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Resumen de tareas</a>
+                                </li>
                             </ul>
                         </li>
 
@@ -153,7 +155,7 @@
                         <a class="nav-link active" aria-current="page" href="#" @click="cargaLangile()">Todos</a>
                     </li>
                     <li class="nav-item" v-for="(talde,index) in listaTalde" :key="index">
-                        <a href="#" class="nav-link active" aria-current="page"  @click="filterTaldea(talde.kodea)">
+                        <a href="#" class="nav-link active" aria-current="page" @click="filterTaldea(talde.kodea)">
                             {{ talde.kodea }}
                         </a>
                     </li>
@@ -172,8 +174,10 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellidos</th>
+                            <th @click="ordenarPorNombre" scope="col">Nombre <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th @click="ordenarPorApellidos" scope="col">Apellidos <i class="bi bi-arrow-down-up"></i>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -263,6 +267,8 @@
                 izenaSortu: "",
                 abizenakSortu: "",
                 listaTalde: [],
+                ordenNombre: 'asc', // para ordenar los datos
+                ordenApellidos: 'asc'
             },
             methods: {
                 // Para cargar los grupos que estan activos
@@ -314,6 +320,8 @@
                         this.listaLangile = datuak
 
                             .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
+
+                        this.ordenarPorNombre();
                     } catch (error) {
                         console.error('Errorea: ', error);
                     }
@@ -354,7 +362,52 @@
                         console.log("Errorea: ", error);
                     }
                 },
-                // FIXME: no hace la actualizacion de datos
+                alphanumCompare(a, b) {
+                    const chunkRegExp = /(\D+|\d+)/g;
+
+                    // Función auxiliar para comparar partes alfanuméricas
+                    const compareChunks = (chunkA, chunkB) => {
+                        const isDigitA = !isNaN(chunkA);
+                        const isDigitB = !isNaN(chunkB);
+
+                        if (isDigitA && isDigitB) {
+                            return parseInt(chunkA, 10) - parseInt(chunkB, 10);
+                        } else {
+                            return chunkA.localeCompare(chunkB);
+                        }
+                    };
+
+                    const chunksA = String(a).match(chunkRegExp);
+                    const chunksB = String(b).match(chunkRegExp);
+
+                    const minLength = Math.min(chunksA.length, chunksB.length);
+
+                    for (let i = 0; i < minLength; i++) {
+                        const result = compareChunks(chunksA[i], chunksB[i]);
+                        if (result !== 0) {
+                            return result;
+                        }
+                    }
+
+                    return chunksA.length - chunksB.length;
+                },
+
+                ordenarPorNombre() {
+                    this.ordenNombre = this.ordenNombre === 'asc' ? 'desc' : 'asc';
+                    this.listaLangile.sort((a, b) => {
+                        const compareResult = this.alphanumCompare(a.izena, b.izena);
+                        return this.ordenNombre === 'asc' ? compareResult : -compareResult;
+                    });
+                },
+
+                ordenarPorApellidos() {
+                    this.ordenApellidos = this.ordenApellidos === 'asc' ? 'desc' : 'asc';
+                    this.listaLangile.sort((a, b) => {
+                        const compareResult = this.alphanumCompare(a.abizenak, b.abizenak);
+                        return this.ordenApellidos === 'asc' ? compareResult : -compareResult;
+                    });
+                },
+
                 async actuLangile() {
                     try {
                         const id = this.arrayId[0];
@@ -362,7 +415,6 @@
                         const abizenak = this.listaLangile.find(langile => langile.id === this.arrayId[0]).abizenak;
                         console.log(izena);
                         console.log(abizenak);
-                        // const izena = this.listaLangile.map(langile => langile.izena).join(', ');
                         const arrayActu = {
                             "id": id,
                             "izena": izena,
@@ -422,7 +474,6 @@
 
                 async filterTaldea(talde) {
                     this.selectedTalde = talde;
-                    console.log("rfrfr");
                     try {
                         const kodea = this.selectedTalde;
                         console.log(kodea);
@@ -447,7 +498,7 @@
                             const datuak = await response.json();
                             console.log(datuak);
                             this.listaLangile = datuak
-                                 .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
+                                .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
                             console.log(datuak);
                         }
                     } catch (error) {
@@ -459,8 +510,10 @@
                 // Llama a tu función cargarPagina cuando el componente se monta
                 this.cargaLangile();
                 this.cargaTalde();
+                this.ordenarPorNombre();
             }
         });
     </script>
 </body>
+
 </html>

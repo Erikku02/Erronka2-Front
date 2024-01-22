@@ -153,7 +153,7 @@
                         <a class="nav-link active" aria-current="page" href="#" @click="cargaTxanda()">Todos</a>
                     </li>
                     <li class="nav-item" v-for="(talde,index) in listaTalde" :key="index">
-                        <a href="#" class="nav-link active" aria-current="page"  @click="filterTaldea(talde.kodea)">
+                        <a href="#" class="nav-link active" aria-current="page" @click="filterTaldea(talde.kodea)">
                             {{ talde.kodea }}
                         </a>
                     </li>
@@ -163,7 +163,7 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    
+
                 </div>
 
                 <!-- Tabla -->
@@ -326,8 +326,8 @@
                         console.log(datuak);
                         this.listaTxanda = datuak
 
-                            // .filter(txanda => txanda.deleted_at === null || txanda.deleted_at === "0000-00-00 00:00:00");
-                            
+                        // .filter(txanda => txanda.deleted_at === null || txanda.deleted_at === "0000-00-00 00:00:00");
+
                     } catch (error) {
                         console.error('Errorea: ', error);
                     }
@@ -485,12 +485,11 @@
 
                             const datuak = await response.json();
                             this.listaTxanda = datuak
-                                //   .filter(langilea => langilea.deleted_at === null || langilea.deleted_at === "0000-00-00 00:00:00");
-                             console.log(datuak);
-                             console.log(this.listaTxanda)
-                             
-                             this.contarTurnosPorAlumno();
-                             //this.contarTurnosByKodea(kodea);
+                                //  .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00") 
+                                  .filter(txanda => txanda.deleted_at === null || txanda.deleted_at === "0000-00-00 00:00:00");
+                            console.log(datuak);
+                            // this.contarTurnosPorAlumno();
+                            // this.contarTurnos(turno.alumnos, "G");
                         }
 
                     } catch (error) {
@@ -507,4 +506,5 @@
         });
     </script>
 </body>
+
 </html>
