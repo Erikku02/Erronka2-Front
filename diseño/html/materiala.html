@@ -22,7 +22,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand mx-auto h3 d-flex d-inline" href="materiala_erabili.html">
-                Préstamo de material
+                Material
                 <!-- FIXME: buscar como hacero sin puntitos  -->
                 <!-- sin los puntos no se ve bien centrado -->
                 <p class="puntos" style="color: #F7F7F7;">........</p>
@@ -176,8 +176,9 @@
                             <th scope="col"></th>
                             <!-- TODO: llamar a la funcion para ordenar los datos de las columnas -->
                             <!-- <th @click="ordenarColumna" scope="col">Etiqueta <i class="bi bi-arrow-down-up"></i></th> -->
-                            <th scope="col">Etiqueta <i class="bi bi-arrow-down-up"></i></th>
-                            <th scope="col">Nombre <i class="bi bi-arrow-down-up"></i></th>
+                            <th @click="ordenarPorEtiqueta" scope="col">Etiqueta <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th @click="ordenarPorNombre" scope="col">Nombre <i class="bi bi-arrow-down-up"></i></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -262,6 +263,8 @@
                 izenaSortu: "",
                 etiketaSortu: "",
                 listaMateriala: [],
+                ordenEtiketa: 'asc', // para ordenar los datos de la tabla
+                ordenIzena: 'asc'
             },
             methods: {
                 // Para cargar los grupos que estan activos
@@ -287,6 +290,7 @@
                         this.listaMateriala = datuak
                             .filter(materiala => materiala.deleted_at === null || materiala.deleted_at === "0000-00-00 00:00:00");
                         console.log(datuak);
+                        this.ordenarPorEtiqueta();
                     } catch (error) {
                         console.error('Errorea:', error);
                     }
@@ -335,6 +339,55 @@
                         
                     }
                 }*/
+                // Función de comparación alfanumérica
+                alphanumCompare(a, b) {
+                    const chunkRegExp = /(\D+|\d+)/g;
+
+                    // Función auxiliar para comparar partes alfanuméricas
+                    const compareChunks = (chunkA, chunkB) => {
+                        const isDigitA = !isNaN(chunkA);
+                        const isDigitB = !isNaN(chunkB);
+
+                        if (isDigitA && isDigitB) {
+                            return parseInt(chunkA, 10) - parseInt(chunkB, 10);
+                        } else {
+                            return chunkA.localeCompare(chunkB);
+                        }
+                    };
+
+                    const chunksA = String(a).match(chunkRegExp);
+                    const chunksB = String(b).match(chunkRegExp);
+
+                    const minLength = Math.min(chunksA.length, chunksB.length);
+
+                    for (let i = 0; i < minLength; i++) {
+                        const result = compareChunks(chunksA[i], chunksB[i]);
+                        if (result !== 0) {
+                            return result;
+                        }
+                    }
+
+                    return chunksA.length - chunksB.length;
+                },
+
+                ordenarPorEtiqueta() {
+                    this.ordenEtiqueta = this.ordenEtiqueta === 'asc' ? 'desc' : 'asc';
+                    this.listaMateriala.sort((a, b) => {
+                        return this.ordenEtiqueta === 'asc' ?
+                            this.alphanumCompare(a.etiketa, b.etiketa) :
+                            this.alphanumCompare(b.etiketa, a.etiketa);
+                    });
+                },
+
+                // Función para ordenar por nombre
+                ordenarPorNombre() {
+                    this.ordenNombre = this.ordenNombre === 'asc' ? 'desc' : 'asc';
+                    this.listaMateriala.sort((a, b) => {
+                        return this.ordenNombre === 'asc' ?
+                            this.alphanumCompare(a.izena, b.izena) :
+                            this.alphanumCompare(b.izena, a.izena);
+                    });
+                },
                 // TODO: actuMateriala
                 async actuMateriala() {
                     try {
