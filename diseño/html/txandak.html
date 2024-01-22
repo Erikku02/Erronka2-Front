@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trabajadores</title>
+    <title>Turnos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
@@ -22,7 +22,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand mx-auto h3 d-flex d-inline" href="#">
-                Trabajadores
+                Turnos
                 <!-- FIXME: buscar como hacero sin puntitos  -->
                 <!-- sin los puntos no se ve bien centrado -->
                 <p class="puntos" style="color: #F7F7F7;">........</p>
@@ -150,7 +150,7 @@
             <header class="row">
                 <ul class="nav nav-tabs mt-5">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#" @click="cargaLangile()">Todos</a>
+                        <a class="nav-link active" aria-current="page" href="#" @click="cargaTxanda()">Todos</a>
                     </li>
                     <li class="nav-item" v-for="(talde,index) in listaTalde" :key="index">
                         <a href="#" class="nav-link active" aria-current="page"  @click="filterTaldea(talde.kodea)">
@@ -163,34 +163,23 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i class="bi bi-check-circle m-2" @click="actuLangile()"></i>
-                    <i class="bi bi-dash-circle" @click="ezabLangile()"></i>
+                    
                 </div>
 
                 <!-- Tabla -->
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Apellidos</th>
+                            <th scope="col">Limpieza</th>
+                            <th scope="col">Mostrador</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(langile) in listaLangile">
-                            <td><input type="checkbox" :value="langile.id" v-model="arrayId"></td>
-                            <td>
-                                <span v-if="!arrayId.includes(langile.id)">
-                                    {{ langile.izena }}
-                                </span>
-                                <input v-else type="text" v-model="langile.izena" :placeholder="langile.izena">
-                            </td>
-                            <td>
-                                <span v-if="!arrayId.includes(langile.id)">
-                                    {{ langile.abizenak }}
-                                </span>
-                                <input v-else type="text" v-model="langile.abizenak" :placeholder="langile.abizenak">
-                            </td>
+                        <tr v-for="(alumno, index) in contarTurnosPorAlumno()" :key="index">
+                            <td>{{ alumno.izena }}</td>
+                            <td>{{ contarTurnos(alumno.turnos, 'G') }}</td>
+                            <td>{{ contarTurnos(alumno.turnos, 'M') }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -200,7 +189,7 @@
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
-                <h4 class="text-center pt-5 mx-auto">Añadir trabajador</h4>
+                <h4 class="text-center pt-5 mx-auto">Añadir turno</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
@@ -227,7 +216,7 @@
                     <div class="col-1 align-self-center">
                         <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
                         <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
-                            <button @click.prevent="createLangile()" class="btn btn-primary">Añadir</button>
+                            <button @click.prevent="createtxanda()" class="btn btn-primary">Añadir</button>
                         </div>
                     </div>
                 </form>
@@ -256,15 +245,40 @@
             data: {
                 selectedTalde: "",
                 selectedCheckbox: null, // Esta variable almacenará la ID del checkbox seleccionado
-                listaLangile: [],
+                listaTxanda: [],
                 arrayId: [],
                 arrayKodea: [],
                 kodeaSortu: "",
                 izenaSortu: "",
                 abizenakSortu: "",
                 listaTalde: [],
+                listaLangile: []
             },
             methods: {
+                // contarTurnosPorAlumno() {
+                //     const alumnos = {};
+
+                //     this.listaTxanda.forEach((txanda) => {
+                //         const nombre = txanda.izena;
+                //         const mota = txanda.mota;
+
+                //         if (!alumnos[nombre]) {
+                //             alumnos[nombre] = { nombre, turnos: {} };
+                //         }
+
+                //         if (!alumnos[nombre].turnos[mota]) {
+                //             alumnos[nombre].turnos[mota] = 1;
+                //         } else {
+                //             alumnos[nombre].turnos[mota]++;
+                //         }
+                //     });
+                    
+                //     return Object.values(alumnos);
+                // },
+                contarTurnos(turnos, tipo) {
+                    return turnos[tipo] || 0;
+                },
+
                 // Para cargar los grupos que estan activos
                 async cargaTalde() {
                     try {
@@ -293,6 +307,133 @@
                         console.error('Errorea:', error);
                     }
                 },
+                async cargaTxanda() {
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearutaTxanda', {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
+                            method: 'GET',
+                            // mode: "no-cors",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+                        if (!response.ok) {
+                            console.log('Errorea eskera eskaera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+
+                        const datuak = await response.json();
+                        console.log(datuak);
+                        this.listaTxanda = datuak
+
+                            // .filter(txanda => txanda.deleted_at === null || txanda.deleted_at === "0000-00-00 00:00:00");
+                            
+                    } catch (error) {
+                        console.error('Errorea: ', error);
+                    }
+                },
+                // async createtxanda() {
+                //     try {
+                //         const kodea = this.kodeaSortu;
+                //         const izena = this.izenaSortu;
+                //         const abizenak = this.abizenakSortu;
+                //         const arraySortu = {
+                //             "kodea": kodea,
+                //             "izena": izena,
+                //             "abizenak": abizenak
+                //         };
+
+                //         console.log(JSON.stringify(arraySortu));
+
+                //         const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaagorde', {
+                //             // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaagorde', {
+                //             method: 'POST',
+                //             headers: {
+                //                 'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
+                //                 'Access-Control-Allow-Origin': '*'
+                //             },
+                //             body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
+                //         });
+
+                //         if (!response.ok) {
+                //             console.log('Errorea sortzerakoan');
+                //             throw new Error('Errorea sortzerakoan');
+                //         }
+
+                //         alert('Sortu da');
+                //         await this.cargaTxanda();
+                //         location.reload();
+
+                //     } catch (error) {
+                //         console.log("Errorea: ", error);
+                //     }
+                // },
+                // FIXME: no hace la actualizacion de datos
+                // async actutxanda() {
+                //     try {
+                //         const id = this.arrayId[0];
+                //         const izena = this.listaTxanda.find(txanda => txanda.id === this.arrayId[0]).izena;
+                //         const abizenak = this.listaTxanda.find(txanda => txanda.id === this.arrayId[0]).abizenak;
+                //         console.log(izena);
+                //         console.log(abizenak);
+                //         // const izena = this.listaTxanda.map(txanda => txanda.izena).join(', ');
+                //         const arrayActu = {
+                //             "id": id,
+                //             "izena": izena,
+                //             "abizenak": abizenak
+                //         }
+
+                //         const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaaeguneratu/' + id, {
+                //             // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaeguneratu/' + id, {
+                //             method: 'PUT',
+                //             headers: {
+                //                 'Content-Type': 'application/json',
+                //                 'Access-Control-Allow-Origin': '*'
+                //             },
+                //             body: JSON.stringify(arrayActu),
+                //         });
+
+                //         if (!response.ok) {
+                //             console.log('Errorea eguneratzerakoan');
+                //             throw new Error('Errorea eguneratzerakoan');
+                //         }
+
+                //         alert('Ondo eguneratuta');
+                //         await this.cargaTxanda();
+                //         location.reload();
+
+                //     } catch (error) {
+                //         console.log('Errorea: ', error);
+                //     }
+                // },
+                // async ezabtxanda() {
+                //     try {
+                //         for (var i = 0; i < this.arrayId.length; i++) {
+                //             const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaaezabatu/' + this.arrayId[i], {
+                //                 // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
+                //                 method: 'PUT',
+                //                 headers: {
+                //                     'Content-Type': 'application/json',
+                //                     'Access-Control-Allow-Origin': '*'
+                //                 },
+                //                 body: JSON.stringify(this.arrayId[i]),
+                //             });
+                //         }
+
+
+                //         // if(!response.ok){
+                //         //   console.log('Errorea eguneratzerakoan');
+                //         //   throw new Error('Errorea eguneratzerakoan');
+                //         // }
+
+                //         alert('Ondo ezabatuta');
+                //         await this.cargaTxanda();
+                //         location.reload();
+                //     } catch (error) {
+                //         console.log('Errorea: ', error);
+                //     }
+                // },
                 async cargaLangile() {
                     try {
                         const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
@@ -318,111 +459,8 @@
                         console.error('Errorea: ', error);
                     }
                 },
-                async createLangile() {
-                    try {
-                        const kodea = this.kodeaSortu;
-                        const izena = this.izenaSortu;
-                        const abizenak = this.abizenakSortu;
-                        const arraySortu = {
-                            "kodea": kodea,
-                            "izena": izena,
-                            "abizenak": abizenak
-                        };
-
-                        console.log(JSON.stringify(arraySortu));
-
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langileagorde', {
-                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileagorde', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
-                                'Access-Control-Allow-Origin': '*'
-                            },
-                            body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
-                        });
-
-                        if (!response.ok) {
-                            console.log('Errorea sortzerakoan');
-                            throw new Error('Errorea sortzerakoan');
-                        }
-
-                        alert('Sortu da');
-                        await this.cargaLangile();
-                        location.reload();
-
-                    } catch (error) {
-                        console.log("Errorea: ", error);
-                    }
-                },
-                // FIXME: no hace la actualizacion de datos
-                async actuLangile() {
-                    try {
-                        const id = this.arrayId[0];
-                        const izena = this.listaLangile.find(langile => langile.id === this.arrayId[0]).izena;
-                        const abizenak = this.listaLangile.find(langile => langile.id === this.arrayId[0]).abizenak;
-                        console.log(izena);
-                        console.log(abizenak);
-                        // const izena = this.listaLangile.map(langile => langile.izena).join(', ');
-                        const arrayActu = {
-                            "id": id,
-                            "izena": izena,
-                            "abizenak": abizenak
-                        }
-
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
-                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Access-Control-Allow-Origin': '*'
-                            },
-                            body: JSON.stringify(arrayActu),
-                        });
-
-                        if (!response.ok) {
-                            console.log('Errorea eguneratzerakoan');
-                            throw new Error('Errorea eguneratzerakoan');
-                        }
-
-                        alert('Ondo eguneratuta');
-                        await this.cargaLangile();
-                        location.reload();
-
-                    } catch (error) {
-                        console.log('Errorea: ', error);
-                    }
-                },
-                async ezabLangile() {
-                    try {
-                        for (var i = 0; i < this.arrayId.length; i++) {
-                            const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langileaezabatu/' + this.arrayId[i], {
-                                // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
-                                method: 'PUT',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Access-Control-Allow-Origin': '*'
-                                },
-                                body: JSON.stringify(this.arrayId[i]),
-                            });
-                        }
-
-
-                        // if(!response.ok){
-                        //   console.log('Errorea eguneratzerakoan');
-                        //   throw new Error('Errorea eguneratzerakoan');
-                        // }
-
-                        alert('Ondo ezabatuta');
-                        await this.cargaLangile();
-                        location.reload();
-                    } catch (error) {
-                        console.log('Errorea: ', error);
-                    }
-                },
-
                 async filterTaldea(talde) {
                     this.selectedTalde = talde;
-                    console.log("rfrfr");
                     try {
                         const kodea = this.selectedTalde;
                         console.log(kodea);
@@ -446,10 +484,14 @@
 
                             const datuak = await response.json();
                             console.log(datuak);
-                            this.listaLangile = datuak
-                                 .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
+                            this.listaTxanda = datuak
+                                //  .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00") 
+                                  .filter(txanda => txanda.deleted_at === null || txanda.deleted_at === "0000-00-00 00:00:00");
                             console.log(datuak);
+                            // this.contarTurnosPorAlumno();
+                            // this.contarTurnos(turno.alumnos, "G");
                         }
+
                     } catch (error) {
                         console.error('Error:', error);
                     }
@@ -457,7 +499,8 @@
             },
             mounted() {
                 // Llama a tu función cargarPagina cuando el componente se monta
-                this.cargaLangile();
+                this.filterTaldea();
+                this.cargaTxanda();
                 this.cargaTalde();
             }
         });
