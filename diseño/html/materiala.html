@@ -339,30 +339,31 @@
                 async actuMateriala() {
                     try {
                         const id = this.arrayId[0];
-                        const etiketa = this.listaMateriala.find(mateiala => materiala.id === this.arrayId[0].etiketa);
+                        const etiketa = this.listaMateriala.find(materiala => materiala.id === this.arrayId[0]).etiketa;
                         const izena = this.listaMateriala.find(materiala => materiala.id === this.arrayId[0]).izena;
+                        console.log(id);
                         console.log(etiketa);
                         console.log(izena);
-                        // const izena = this.listaLangile.map(langile => langile.izena).join(', ');
+                        
                         const arrayActu = {
-                            "id": id,
-                            "etiketa": etiketa,
-                            "izena": izena
+                        "id": id,
+                        "etiketa": etiketa,
+                        "izena": izena
                         }
 
                         const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaeguneratu/' + id, {
-                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Access-Control-Allow-Origin': '*'
-                            },
-                            body: JSON.stringify(arrayActu),
+                        // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
+                        method: 'PUT',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify(arrayActu),
                         });
 
                         if (!response.ok) {
-                            console.log('Errorea eguneratzerakoan');
-                            throw new Error('Errorea eguneratzerakoan');
+                        console.log('Errorea eguneratzerakoan');
+                        throw new Error('Errorea eguneratzerakoan');
                         }
 
                         alert('Ondo eguneratuta');
