@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Taldeak</title>
+    <title>Bezero_fitxak</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
@@ -22,7 +22,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand mx-auto h3 d-flex d-inline" href="#">
-                Grupos
+                Fichas Clientes
                 <!-- FIXME: buscar como hacero sin puntitos  -->
                 <!-- sin los puntos no se ve bien centrado -->
                 <p class="puntos" style="color: #F7F7F7;">........</p>
@@ -151,8 +151,8 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i class="bi bi-check-circle m-2" @click="actuTalde()"></i>
-                    <i class="bi bi-dash-circle" @click="ezabTalde()"></i>
+                    <i class="bi bi-check-circle m-2" @click="actuFitxa()"></i>
+                    <i class="bi bi-dash-circle" @click="ezabFitxa()"></i>
                 </div>
 
                 <!-- Tabla -->
@@ -160,20 +160,52 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">Código</th>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Piel sensible</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(talde) in listaTalde">
-                            <td><input type="checkbox" :value="talde.kodea" v-model="arrayKodea" /></td>
-                            <td>{{talde.kodea}}</td>
+                        <tr v-for="(fitxa) in listaFitxa">
+                            <td><input type="checkbox" :value="fitxa.id" v-model="arrayId" /></td>
                             <td>
-                                <span v-if="!arrayKodea.includes(talde.kodea)">
-                                    {{talde.izena}}
+                                <span v-if="!arrayId.includes(fitxa.id)">
+                                    {{fitxa.izena}}
                                 </span>
                             
-                                <input v-else type="text" v-model="talde.izena" :placeholder="talde.izena"/>
+                                <input v-else type="text" v-model="fitxa.izena" :placeholder="fitxa.izena"/>
+                            </td>
+                            <td>
+                                <span v-if="!arrayId.includes(fitxa.id)">
+                                    {{fitxa.abizena}}
+                                </span>
+                            
+                                <input v-else type="text" v-model="fitxa.abizena" :placeholder="fitxa.abizena"/>
+                            </td>
+                            <td>
+                                <span v-if="!arrayId.includes(fitxa.id)">
+                                    {{fitxa.telefonoa}}
+                                </span>
+                            
+                                <input v-else type="text" v-model="fitxa.telefonoa" :placeholder="fitxa.telefonoa"/>
+                            </td>
+                            <td>
+                                <span v-if="!arrayId.includes(fitxa.id)">
+                                    <span v-if="fitxa.azal_sentikorra == 'E'">
+                                        Ez
+                                    </span>
+                                    <span v-else="fitxa.azal_sentikorra == 'B'">
+                                        Bai
+                                    </span>
+
+                                </span>
+                            
+                                <select v-else class="form-select w-100" v-model="fitxa.azal_sentikorra">
+                                    <option disabled>Categoria</option>
+                                    <option value="B"> Bai</option>
+                                    <option value="E"> Ez</option>
+                                </select>
                             </td>
                         </tr>
                     </tbody>
@@ -184,18 +216,31 @@
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
-                <h4 class="text-center pt-5 mx-auto">Añadir grupo</h4>
+                <h4 class="text-center pt-5 mx-auto">Añadir Ficha Cliente</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input1" class="">Código</label> -->
-                        <input type="text" class="form-control" id="input1" v-model="kodeaSortu" placeholder="Código" />
+                        <input type="text" class="form-control" id="input1" v-model="izenaSortu" placeholder="Nombre" />
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input2" class="">Nombre</label> -->
-                        <input type="text" class="form-control" id="input2" v-model="izenaSortu"
-                            placeholder="Nombre del grupo" />
+                        <input type="text" class="form-control" id="input2" v-model="abizenaSortu"
+                            placeholder="Apellidos" />
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <!-- <label for="input2" class="">Nombre</label> -->
+                        <input type="text" class="form-control" id="input2" v-model="telefonoaSortu"
+                            placeholder="Telefono" />
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <!-- <label for="input2" class="">Nombre</label> -->
+                        <select class="form-select w-100" id="dia" required v-model="sentikorraSortu">
+                            <option disabled value="">Piel sensible</option>
+                            <option value="B">Bai</option>
+                            <option value="E">Ez</option>
+                        </select>
                     </div>
 
                     <!-- FIXME: el button solo se centra cuando esta en pantalla completa-->
@@ -203,7 +248,7 @@
                     <div class="col-1 align-self-center">
                         <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
                         <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
-                            <button @click.prevent="createTalde()" class="btn btn-primary">Añadir</button>
+                            <button @click.prevent="createFitxa()" class="btn btn-primary">Añadir</button>
                         </div>
                     </div>
                 </form>
@@ -214,7 +259,7 @@
     <!-- FOOTER -->
     <footer class="bg-dark text-light text-center py-3" id="sticky-footer">
         <div class="container">
-            <p>&copy; 2024 Taldeak. Todos los derechos reservados.</p>
+            <p>&copy; 2024 Bezero_fitxak. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -244,15 +289,17 @@
             el: '#app',
             data: {
                 selectedCheckbox: null, // Esta variable almacenará la ID del checkbox seleccionado
-                arrayKodea: [],
-                kodeaSortu: "",
+                arrayId: [],
                 izenaSortu: "",
-                listaTalde: [],
+                abizenaSortu: "",
+                telefonoaSortu: "",
+                sentikorraSortu: "",
+                listaFitxa: [],
             },
             methods: {
-                async cargaTalde() {
+                async cargaFitxa() {
                     try {
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/bezero_fixaruta', {
                             // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
                             method: 'GET',
                             // mode: "no-cors",
@@ -269,27 +316,31 @@
 
                         const datuak = await response.json();
                         console.log(datuak);
-                        this.listaTalde = datuak
+                        this.listaFitxa = datuak
 
-                            .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
+                            .filter(fitxa => fitxa.deleted_at === null || fitxa.deleted_at === "0000-00-00 00:00:00");
                             console.log(datuak);
 
                     } catch (error) {
                         console.error('Errorea:', error);
                     }
                 },
-                async createTalde() {
+                async createFitxa() {
                     try {
-                        const kodea = this.kodeaSortu;
                         const izena = this.izenaSortu;
+                        const abizena = this.abizenaSortu;
+                        const telefonoa = this.telefonoaSortu;
+                        const azal_sentikorra = this.sentikorraSortu;
                         const arraySortu = {
-                            "kodea": kodea,
-                            "izena": izena
+                            "izena": izena,
+                            "abizena": abizena,
+                            "telefonoa": telefonoa,
+                            "azal_sentikorra": azal_sentikorra,
                         };
 
                         console.log(JSON.stringify(arraySortu));
 
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldeagorde', {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/bezero_fixagorde', {
                             // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                             method: 'POST',
                             headers: {
@@ -305,23 +356,29 @@
                         }
 
                         alert('Sortu da');
-                        await this.cargaTalde();
+                        await this.cargaFitxa();
                         location.reload();
                     } catch (error) {
                         console.log('Errorea: ', error);
                     }
                 },
-                async actuTalde() {
+                async actuFitxa() {
                     try {
-                        const kodea = this.arrayKodea[0];
-                        const izena = this.listaTalde.find(talde => talde.kodea === this.arrayKodea[0]).izena;
-                        // const izena = this.listaTalde.map(talde => talde.izena).join(', ');
+                        const id = this.arrayId[0];
+                        const izena = this.listaFitxa.find(fitxa => fitxa.id === this.arrayId[0]).izena;
+                        const abizena = this.listaFitxa.find(fitxa => fitxa.id === this.arrayId[0]).abizena;
+                        const telefonoa = this.listaFitxa.find(fitxa => fitxa.id === this.arrayId[0]).telefonoa;
+                        const azal_sentikorra = this.listaFitxa.find(fitxa => fitxa.id === this.arrayId[0]).azal_sentikorra;
+                        // const izena = this.listaFitxa.map(talde => talde.izena).join(', ');
                         const arrayActu = {
-                            "kodea": kodea,
-                            "izena": izena
+                            "id": id,
+                            "izena": izena,
+                            "abizena": abizena,
+                            "telefonoa": telefonoa,
+                            "azal_sentikorra": azal_sentikorra,
                         };
 
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/bezero_fixaeguneratu/' + id, {
                             // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
                             method: 'PUT',
                             headers: {
@@ -337,23 +394,23 @@
                         }
 
                         alert('Ondo eguneratuta');
-                        await this.cargaTalde();
+                        await this.cargaFitxa();
                         location.reload();
                     } catch (error) {
                         console.log('Errorea: ', error);
                     }
                 },
-                async ezabTalde() {
+                async ezabFitxa() {
                     try {
-                        for (var i = 0; i < this.arrayKodea.length; i++) {
-                            const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
-                                // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
+                        for (var i = 0; i < this.arrayId.length; i++) {
+                            const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/bezero_fixaezabatu/' + this.arrayId[i], {
+                                // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayId[i], {
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json',
                                     'Access-Control-Allow-Origin': '*'
                                 },
-                                body: JSON.stringify(this.arrayKodea[i]),
+                                body: JSON.stringify(this.arrayId[i]),
                             });
                         }
                         
@@ -363,7 +420,7 @@
                         // }
 
                         alert('Ondo ezabatuta');
-                        await this.cargaTalde();
+                        await this.cargaFitxa();
                         location.reload();
                     } catch (error) {
                         console.log('Errorea: ', error);
@@ -372,7 +429,7 @@
             },
             mounted() {
                 // Llama a tu función cargarPagina cuando el componente se monta
-                this.cargaTalde();
+                this.cargaFitxa();
             }
         });
     </script>
