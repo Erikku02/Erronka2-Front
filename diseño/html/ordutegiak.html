@@ -21,12 +21,13 @@
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="#">
-                Horarios
+            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="materiala_erabili.html">
+                Préstamo de material
                 <!-- FIXME: buscar como hacero sin puntitos  -->
                 <!-- sin los puntos no se ve bien centrado -->
                 <p class="puntos" style="color: #F7F7F7;">........</p>
             </a>
+
             <!-- Barra de navegacion fija -->
             <i class="bi bi-box-arrow-right h3"></i>
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
@@ -49,7 +50,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Asignar citas</a></li>
                                 <li><a class="dropdown-item" href="#">Comfirmar citas</a></li>
-                                <li><a class="dropdown-item" href="#">Ficha técnica</a></li>
+                                <li><a class="dropdown-item" href="bezero_fitxak.html">Ficha técnica</a></li>
                                 <li><a class="dropdown-item" href="#">Listado tickets</a></li>
                                 <li><a class="dropdown-item" href="#">Agenda de citas</a></li>
                             </ul>
@@ -65,7 +66,7 @@
 
                         <!-- Productos -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="produktuak.html">
                                 <i class="bi bi-tags-fill m-2"></i>
                                 Productos
                             </a>
@@ -73,7 +74,7 @@
 
                         <!-- Material -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="materiala.html">
                                 <!-- <i class="bi bi-brush"></i> -->
                                 <i class="bi bi-palette2 m-2"></i>
                                 Material
@@ -82,7 +83,7 @@
 
                         <!-- Tratamientos -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="tratamenduak.html">
                                 <i class="bi bi-scissors m-2"></i>
                                 Tratamientos
                             </a>
@@ -97,9 +98,11 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="#">Asignación de tareas</a>
+                                    <a class="dropdown-item" href="txandak.html">Asignación de tareas</a>
                                 </li>
-                                <li><a class="dropdown-item" href="txandak.html">Turnos</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Resumen de tareas</a>
+                                </li>
                             </ul>
                         </li>
 
@@ -409,7 +412,7 @@
                     const amaiera_data = this.listaOrdutegia.find(ordutegia => ordutegia.id === this.arrayId[0]).amaiera_data;
                     const hasiera_ordua = this.listaOrdutegia.find(ordutegia => ordutegia.id === this.arrayId[0]).hasiera_ordua;
                     const amaiera_ordua = this.listaOrdutegia.find(ordutegia => ordutegia.id === this.arrayId[0]).amaiera_ordua;
-                    
+
                     console.log(eguna);
 
                     const arrayActu = {
@@ -422,23 +425,23 @@
                         'amaiera_ordua': amaiera_ordua
                     }
                     const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaeguneratu/' + id, {
-                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Access-Control-Allow-Origin': '*'
-                            },
-                            body: JSON.stringify(arrayActu),
-                        });
+                        // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify(arrayActu),
+                    });
 
-                        if (!response.ok) {
-                            console.log('Errorea eguneratzerakoan');
-                            throw new Error('Errorea eguneratzerakoan');
-                        }
+                    if (!response.ok) {
+                        console.log('Errorea eguneratzerakoan');
+                        throw new Error('Errorea eguneratzerakoan');
+                    }
 
-                        alert('Ondo eguneratuta');
-                        await this.cargaOrdutegia();
-                        location.reload();
+                    alert('Ondo eguneratuta');
+                    await this.cargaOrdutegia();
+                    location.reload();
 
                 } catch (error) {
                     console.log('Errorea: ', error);
@@ -469,37 +472,37 @@
                 const diasSemana = ['', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
                 return diasSemana[numeroDia];
             },
-            async cargaTalde(){
+            async cargaTalde() {
                 try {
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta', {
-                            // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
-                            method: 'GET',
-                            // mode: "no-cors",
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Access-Control-Allow-Origin': '*'
-                            },
-                        });
+                    const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                        // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                        method: 'GET',
+                        // mode: "no-cors",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                    });
 
-                        if (!response.ok) {
-                            console.log('Errorea eskera egiterakoan');
-                            throw new Error('Errorea eskaera egiterakoan');
-                        }
-
-                        const datuak = await response.json();
-                        console.log(datuak);
-                        this.listaTalde = datuak
-                            .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
-                            console.log(datuak);
-
-                        if (this.listaTalde.length > 0) {
-                            this.selectedTalde = this.listaTalde[0].kodea;
-                        }
-                        // console.log(listaTalde);
-
-                    } catch (error) {
-                        console.error('Errorea:', error);
+                    if (!response.ok) {
+                        console.log('Errorea eskera egiterakoan');
+                        throw new Error('Errorea eskaera egiterakoan');
                     }
+
+                    const datuak = await response.json();
+                    console.log(datuak);
+                    this.listaTalde = datuak
+                        .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
+                    console.log(datuak);
+
+                    if (this.listaTalde.length > 0) {
+                        this.selectedTalde = this.listaTalde[0].kodea;
+                    }
+                    // console.log(listaTalde);
+
+                } catch (error) {
+                    console.error('Errorea:', error);
+                }
             }
         },
         mounted() {
@@ -508,4 +511,5 @@
         }
     })
 </script>
+
 </html>

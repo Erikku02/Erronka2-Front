@@ -21,12 +21,13 @@
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="#">
-                Tratamientos
+            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="materiala_erabili.html">
+                Préstamo de material
                 <!-- FIXME: buscar como hacero sin puntitos  -->
                 <!-- sin los puntos no se ve bien centrado -->
                 <p class="puntos" style="color: #F7F7F7;">........</p>
             </a>
+
             <!-- Barra de navegacion fija -->
             <i class="bi bi-box-arrow-right h3"></i>
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
@@ -49,7 +50,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Asignar citas</a></li>
                                 <li><a class="dropdown-item" href="#">Comfirmar citas</a></li>
-                                <li><a class="dropdown-item" href="#">Ficha técnica</a></li>
+                                <li><a class="dropdown-item" href="bezero_fitxak.html">Ficha técnica</a></li>
                                 <li><a class="dropdown-item" href="#">Listado tickets</a></li>
                                 <li><a class="dropdown-item" href="#">Agenda de citas</a></li>
                             </ul>
@@ -65,7 +66,7 @@
 
                         <!-- Productos -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="produktuak.html">
                                 <i class="bi bi-tags-fill m-2"></i>
                                 Productos
                             </a>
@@ -73,7 +74,7 @@
 
                         <!-- Material -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="materiala.html">
                                 <!-- <i class="bi bi-brush"></i> -->
                                 <i class="bi bi-palette2 m-2"></i>
                                 Material
@@ -82,7 +83,7 @@
 
                         <!-- Tratamientos -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="tratamenduak.html">
                                 <i class="bi bi-scissors m-2"></i>
                                 Tratamientos
                             </a>
@@ -97,7 +98,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="#">Asignación de tareas</a>
+                                    <a class="dropdown-item" href="txandak.html">Asignación de tareas</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">Resumen de tareas</a>
@@ -127,7 +128,7 @@
                         <li class="nav-item">
                             <a class="nav-link active link-light" href="#">
                                 <i class="bi bi-receipt m-2"></i>
-                                Resumen tratamientos
+                                Resumen tratamiento
                             </a>
                         </li>
                     </ul>
@@ -172,22 +173,24 @@
                                 <span v-if="!arrayId.includes(tratamendu.id)">
                                     {{tratamendu.izena}}
                                 </span>
-                            
-                                <input v-else type="text" v-model="tratamendu.izena" :placeholder="tratamendu.izena"/>
+
+                                <input v-else type="text" v-model="tratamendu.izena" :placeholder="tratamendu.izena" />
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(tratamendu.id)">
                                     {{tratamendu.etxeko_prezioa}}
                                 </span>
-                            
-                                <input v-else type="text" v-model="tratamendu.etxeko_prezioa" :placeholder="tratamendu.etxeko_prezioa"/>
+
+                                <input v-else type="text" v-model="tratamendu.etxeko_prezioa"
+                                    :placeholder="tratamendu.etxeko_prezioa" />
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(tratamendu.id)">
                                     {{tratamendu.kanpoko_prezioa}}
                                 </span>
-                            
-                                <input v-else type="text" v-model="tratamendu.kanpoko_prezioa" :placeholder="tratamendu.kanpoko_prezioa"/>
+
+                                <input v-else type="text" v-model="tratamendu.kanpoko_prezioa"
+                                    :placeholder="tratamendu.kanpoko_prezioa" />
                             </td>
                         </tr>
                     </tbody>
@@ -292,7 +295,7 @@
                         this.listaTratamendua = datuak
 
                             .filter(tratamendu => tratamendu.deleted_at === null || tratamendu.deleted_at === "0000-00-00 00:00:00");
-                            console.log(datuak);
+                        console.log(datuak);
 
                     } catch (error) {
                         console.error('Errorea:', error);
@@ -382,7 +385,7 @@
                                 body: JSON.stringify(this.arrayId[i]),
                             });
                         }
-                        
+
                         // if(!response.ok){
                         //   console.log('Errorea eguneratzerakoan');
                         //   throw new Error('Errorea eguneratzerakoan');
@@ -403,4 +406,5 @@
         });
     </script>
 </body>
+
 </html>
