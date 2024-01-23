@@ -161,12 +161,16 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">Nombre</th>
+                            <th @click="ordenarPorNombre" scope="col">Nombre <i class="bi bi-arrow-down-up"></i></th>
                             <th scope="col">Descripcion</th>
-                            <th scope="col">Categoria</th>
-                            <th scope="col">Marca</th>
-                            <th scope="col">Stock</th>
-                            <th scope="col">Stock de seguridad</th>
+                            <th @click="ordenarPorCategoria" scope="col">Categoria <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th @click="ordenarPorMarka" scope="col">Marca <i class="bi bi-arrow-down-up"></i></th>
+
+                            <th @click="ordenarPorStock" scope="col">Stock <i class="bi bi-arrow-down-up"></i></th>
+
+                            <th @click="ordenarPorStockAlerta" scope="col">Stock de seguridad <i
+                                    class="bi bi-arrow-down-up"></i></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -174,7 +178,7 @@
                             <td><input type="checkbox" :value="produktu.id" v-model="arrayId" /></td>
                             <td>
                                 <span v-if="!arrayId.includes(produktu.id)">
-                                    {{produktu.izena}}
+                                    {{ produktu.izena }}
                                 </span>
 
                                 <input v-else type="text" v-model="produktu.izena" :placeholder="produktu.izena" />
@@ -182,7 +186,7 @@
 
                             <td>
                                 <span v-if="!arrayId.includes(produktu.id)">
-                                    {{produktu.deskribapena}}
+                                    {{ produktu.deskribapena }}
                                 </span>
 
                                 <input v-else type="text" v-model="produktu.deskribapena"
@@ -191,13 +195,14 @@
 
                             <td>
                                 <span v-if="!arrayId.includes(produktu.id)">
-                                    {{produktu.id_kategoria}}
+                                    {{ produktu.k_izena }}
                                 </span>
 
                                 <select v-else class="form-select w-100" v-model="kategoriaEgu">
                                     <option selected hidden :value="produktu.id_kategoria">Categoria</option>
-                                    <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{kategoria.id}}
-                                        - {{kategoria.izena}}</option>
+                                    <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{ kategoria.id
+                                        }}
+                                        - {{ kategoria.izena }}</option>
                                 </select>
 
                             </td>
@@ -250,12 +255,12 @@
                         <input type="text" class="form-control" id="input2" v-model="deskribSortu"
                             placeholder="Descripcion" />
                     </div>
+
                     <div class="col-sm-6 col-lg-3">
-                        <!-- <label for="input2" class="">Nombre</label> -->
-                        <select class="form-select w-100" id="dia" required v-model="kategoriaSortu">
-                            <option disabled value="">Categoria</option>
-                            <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{kategoria.izena}}
-                            </option>
+                        <select class="form-select" id="kategoria" v-model="kategoriaSortu">
+                            <option value="" disabled>Categoría</option>
+                            <option v-for="(produktu) in listaProduktu" :value="produktu.id_kategoria">{{
+                                produktu.k_izena }}</option>
                         </select>
                     </div>
                     <div class="col-sm-6 col-lg-3">
@@ -328,7 +333,9 @@
                 stockSortu: "",
                 stock_alertaSortu: "",
                 listaProduktu: [],
-                listaKategoria: []
+                listaKategoria: [],
+                ordenNombre: 'asc', // Para ordenar los datos de la tabla
+                ordenKategoria: 'asc'
             },
             methods: {
                 async cargaProduktu() {
@@ -349,10 +356,11 @@
                         }
 
                         const datuak = await response.json();
-                        console.log(datuak);
                         this.listaProduktu = datuak
-                            .filter(produktu => produktu.deleted_at === null || produktu.deleted_at === "0000-00-00 00:00:00");
+                        // FALTA AÑADIR EL FIlTER !!!!!!!
+                        //.filter(produktu => produktu.deleted_at === null || produktu.deleted_at === "0000-00-00 00:00:00");
                         console.log(datuak);
+                        this.ordenarPorNombre();
 
                     } catch (error) {
                         console.error('Errorea:', error);
@@ -495,12 +503,91 @@
                     } catch (error) {
                         console.error('Errorea:', error);
                     }
-                }
+                },
+
+                // Para ordenar los datos de la tabla
+                alphanumCompare(a, b) {
+                    const chunkRegExp = /(\D+|\d+)/g;
+
+                    // Función auxiliar para comparar partes alfanuméricas
+                    const compareChunks = (chunkA, chunkB) => {
+                        const isDigitA = !isNaN(chunkA);
+                        const isDigitB = !isNaN(chunkB);
+
+                        if (isDigitA && isDigitB) {
+                            return parseInt(chunkA, 10) - parseInt(chunkB, 10);
+                        } else {
+                            return chunkA.localeCompare(chunkB);
+                        }
+                    };
+
+                    const chunksA = String(a).match(chunkRegExp);
+                    const chunksB = String(b).match(chunkRegExp);
+
+                    const minLength = Math.min(chunksA.length, chunksB.length);
+
+                    for (let i = 0; i < minLength; i++) {
+                        const result = compareChunks(chunksA[i], chunksB[i]);
+                        if (result !== 0) {
+                            return result;
+                        }
+                    }
+
+                    return chunksA.length - chunksB.length;
+                },
+                ordenarPorNombre() {
+                    this.ordenNombre = this.ordenNombre === 'asc' ? 'desc' : 'asc';
+                    this.listaProduktu.sort((a, b) => {
+                        return this.ordenNombre === 'asc' ?
+                            this.alphanumCompare(a.izena, b.izena) :
+                            this.alphanumCompare(b.izena, a.izena);
+                    });
+                },
+
+                ordenarPorCategoria() {
+                    this.ordenKategoria = this.ordenKategoria === 'asc' ? 'desc' : 'asc';
+                    this.listaProduktu.sort((a, b) => {
+                        return this.ordenKategoria === 'asc' ?
+                            this.alphanumCompare(a.id_kategoria, b.id_kategoria) :
+                            this.alphanumCompare(b.id_kategoria, a.id_kategoria);
+                    });
+                },
+
+                ordenarPorMarka() {
+                    this.ordenMarka = this.ordenMarka === 'asc' ? 'desc' : 'asc';
+                    this.listaProduktu.sort((a, b) => {
+                        return this.ordenMarka === 'asc' ?
+                            this.alphanumCompare(a.marka, b.marka) :
+                            this.alphanumCompare(b.marka, a.marka);
+                    });
+                },
+                // TODO:ordenarPorStock
+                ordenarPorStock() {
+                    this.ordenStock = this.ordenStock === 'asc' ? 'desc' : 'asc';
+                    this.listaProduktu.sort((a, b) => {
+                        return this.ordenStock === 'asc' ?
+                            this.alphanumCompare(a.stock, b.stock) :
+                            this.alphanumCompare(b.stock, a.stock);
+                    });
+                },
+                // TODO: ordenarPorStockDeSeguridad
+                ordenarPorStockAlerta() {
+                    this.ordenStockAlerta = this.ordenStockAlerta === 'asc' ? 'desc' : 'asc';
+                    this.listaProduktu.sort((a, b) => {
+                        return this.ordenStockAlerta === 'asc' ?
+                            this.alphanumCompare(a.stock_alerta, b.stock_alerta) :
+                            this.alphanumCompare(b.stock_alerta, a.stock_alerta);
+                    });
+                },
+
+
             },
             mounted() {
                 // Llama a tu función cargarPagina cuando el componente se monta
                 this.cargaProduktu();
-                this.cargaKategoria();
+                // this.cargaKategoria();
+                this.ordenarPorNombre();
+                // this.ordenKategoria();
             }
         });
     </script>
