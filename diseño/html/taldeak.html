@@ -275,6 +275,8 @@
                             .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
                         console.log(datuak);
 
+                        ordenarPorKodea(); // para que los datos esten ordenados por defecto
+
                     } catch (error) {
                         console.error('Errorea:', error);
                     }
@@ -369,7 +371,46 @@
                     } catch (error) {
                         console.log('Errorea: ', error);
                     }
+                },
+                // Para ordenar los datos de la tabla
+                alphanumCompare(a, b) {
+                    const chunkRegExp = /(\D+|\d+)/g;
+
+                    // Función auxiliar para comparar partes alfanuméricas
+                    const compareChunks = (chunkA, chunkB) => {
+                        const isDigitA = !isNaN(chunkA);
+                        const isDigitB = !isNaN(chunkB);
+
+                        if (isDigitA && isDigitB) {
+                            return parseInt(chunkA, 10) - parseInt(chunkB, 10);
+                        } else {
+                            return chunkA.localeCompare(chunkB);
+                        }
+                    };
+
+                    const chunksA = String(a).match(chunkRegExp);
+                    const chunksB = String(b).match(chunkRegExp);
+
+                    const minLength = Math.min(chunksA.length, chunksB.length);
+
+                    for (let i = 0; i < minLength; i++) {
+                        const result = compareChunks(chunksA[i], chunksB[i]);
+                        if (result !== 0) {
+                            return result;
+                        }
+                    }
+
+                    return chunksA.length - chunksB.length;
+                },
+                ordenarPorKodea() {
+                    this.ordenKodea = this.ordenKodea === 'asc' ? 'desc' : 'asc'; // no hace falta
+                    this.listaTalde.sort((a, b) => {
+                        return this.ordenKodea === 'asc' ?
+                            this.alphanumCompare(a.kodea, b.kodea) :
+                            this.alphanumCompare(b.kodea, a.kodea);
+                    });
                 }
+
             },
             mounted() {
                 // Llama a tu función cargarPagina cuando el componente se monta
