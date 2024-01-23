@@ -201,14 +201,14 @@
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(ordutegia.id)">
-                                    {{ ordutegia.hasiera_ordua }}
+                                    {{ ordutegia.hasiera_ordua | formatHour }}
                                     <!-- {{ formatOrduak(ordutegia.hasiera_ordua) }} -->
                                 </span>
                                 <input v-else type="time" v-model="ordutegia.hasiera_ordua">
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(ordutegia.id)">
-                                    {{ ordutegia.amaiera_ordua }}
+                                    {{ ordutegia.amaiera_ordua | formatHour }}
                                     <!-- {{ formatOrduak(ordutegia.amaiera_ordua) }} -->
                                 </span>
                                 <input v-else type="time" v-model="ordutegia.amaiera_ordua">
@@ -306,6 +306,25 @@
 </body>
 
 <script>
+
+    // Para formatear la hora y que salga con el formato hh:mm
+    Vue.filter('formatHour', function (value) {
+        if (!value) return '';
+
+        // Dividir la cadena de hora en partes utilizando ":"
+        const parts = value.split(':');
+
+        // Asegurarse de que hay al menos dos partes
+        if (parts.length >= 2) {
+            // Tomar las dos primeras partes y unirlas con ":"
+            return `${parts[0]}:${parts[1]}`;
+        }
+
+        // Si no hay dos partes, devolver la cadena original
+        return value;
+    });
+
+
     new Vue({
         el: '#app',
         data: {
@@ -322,17 +341,6 @@
             amaiera_orduaSortu: "",
         },
         methods: {
-            // FIXME: formatear la hora, no aparezcan los seg (no funciona)
-            // formatOrduak(dateTime) {
-            //     const date = new Date(dateTime);
-            //     const hours = date.getHours();
-            //     const minutes = date.getMinutes();
-
-            //     // Asegúrate de que los minutos tengan dos dígitos
-            //     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-
-            //     return `${hours}:${formattedMinutes}`;
-            // },
             async cargaOrdutegia() {
                 try {
                     const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
@@ -354,7 +362,9 @@
                     // console.log(datuak);
                     this.listaOrdutegia = datuak
                         .filter(ordutegia => ordutegia.deleted_at === null || ordutegia.deleted_at === "0000-00-00 00:00:00");
-                    // console.log(datuak);
+
+                    this.ordenarPorKodea();
+                    console.log(datuak);
                 } catch (error) {
                     console.error('Errorea: ', error);
                 }
@@ -397,12 +407,12 @@
 
                     alert('Sortu da');
                     await this.cargaOrdutegia();
-                    // location.reload();
-
+                    location.reload();
                 } catch (error) {
                     console.log('Errorea: ', error);
                 }
             },
+
             async actuOrdutegia() {
                 try {
                     const id = this.arrayId[0];
@@ -490,10 +500,10 @@
                     }
 
                     const datuak = await response.json();
-                    console.log(datuak);
+                    // console.log(datuak);
                     this.listaTalde = datuak
                         .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
-                    console.log(datuak);
+                    // console.log(datuak);
 
                     if (this.listaTalde.length > 0) {
                         this.selectedTalde = this.listaTalde[0].kodea;
@@ -503,6 +513,44 @@
                 } catch (error) {
                     console.error('Errorea:', error);
                 }
+            },
+            // Para ordenar los datos de la tabla
+            alphanumCompare(a, b) {
+                const chunkRegExp = /(\D+|\d+)/g;
+
+                // Función auxiliar para comparar partes alfanuméricas
+                const compareChunks = (chunkA, chunkB) => {
+                    const isDigitA = !isNaN(chunkA);
+                    const isDigitB = !isNaN(chunkB);
+
+                    if (isDigitA && isDigitB) {
+                        return parseInt(chunkA, 10) - parseInt(chunkB, 10);
+                    } else {
+                        return chunkA.localeCompare(chunkB);
+                    }
+                };
+
+                const chunksA = String(a).match(chunkRegExp);
+                const chunksB = String(b).match(chunkRegExp);
+
+                const minLength = Math.min(chunksA.length, chunksB.length);
+
+                for (let i = 0; i < minLength; i++) {
+                    const result = compareChunks(chunksA[i], chunksB[i]);
+                    if (result !== 0) {
+                        return result;
+                    }
+                }
+
+                return chunksA.length - chunksB.length;
+            },
+            ordenarPorKodea() {
+                this.ordenKodea = this.ordenKodea === 'asc' ? 'desc' : 'asc';
+                this.listaOrdutegia.sort((a, b) => {
+                    return this.ordenKodea === 'asc' ?
+                        this.alphanumCompare(a.kodea, b.kodea) :
+                        this.alphanumCompare(b.kodea, a.kodea);
+                });
             }
         },
         mounted() {
