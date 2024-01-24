@@ -200,9 +200,7 @@
 
                                 <select v-else class="form-select w-100" v-model="kategoriaEgu">
                                     <option selected hidden :value="produktu.id_kategoria">Categoria</option>
-                                    <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{ kategoria.id
-                                        }}
-                                        - {{ kategoria.izena }}</option>
+                                    <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{ kategoria.izena }}</option>
                                 </select>
 
                             </td>
@@ -259,8 +257,8 @@
                     <div class="col-sm-6 col-lg-3">
                         <select class="form-select" id="kategoria" v-model="kategoriaSortu">
                             <option value="" disabled>Categoría</option>
-                            <option v-for="(produktu) in listaProduktu" :value="produktu.id_kategoria">{{
-                                produktu.k_izena }}</option>
+                            <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{
+                                kategoria.izena }}</option>
                         </select>
                     </div>
                     <div class="col-sm-6 col-lg-3">
@@ -359,7 +357,7 @@
                         this.listaProduktu = datuak
                         // FALTA AÑADIR EL FIlTER !!!!!!!
                         //.filter(produktu => produktu.deleted_at === null || produktu.deleted_at === "0000-00-00 00:00:00");
-                        console.log(datuak);
+                        // console.log(datuak);
                         this.ordenarPorNombre();
 
                     } catch (error) {
@@ -498,7 +496,7 @@
                         this.listaKategoria = datuak
 
                             .filter(kategoria => kategoria.deleted_at === null || kategoria.deleted_at === "0000-00-00 00:00:00");
-                        console.log(datuak);
+                        console.log(this.listaKategoria);
 
                     } catch (error) {
                         console.error('Errorea:', error);
@@ -585,7 +583,7 @@
             mounted() {
                 // Llama a tu función cargarPagina cuando el componente se monta
                 this.cargaProduktu();
-                // this.cargaKategoria();
+                this.cargaKategoria();
                 this.ordenarPorNombre();
                 // this.ordenKategoria();
             }
