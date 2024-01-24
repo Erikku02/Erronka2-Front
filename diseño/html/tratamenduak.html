@@ -21,7 +21,7 @@
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="materiala_erabili.html">
+            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="tratamenduak.html">
                 Tratamientos
                 <!-- FIXME: buscar como hacero sin puntitos  -->
                 <!-- sin los puntos no se ve bien centrado -->
@@ -271,6 +271,7 @@
                 etxeSortu: "",
                 kanpoSortu: "",
                 listaTratamendua: [],
+                listaTratamenduSinFiltro: []
             },
             methods: {
                 async cargaTratamendu() {
@@ -292,6 +293,7 @@
 
                         const datuak = await response.json();
                         console.log(datuak);
+                        this.listaTratamenduSinFiltro = datuak;
                         this.listaTratamendua = datuak
 
                             .filter(tratamendu => tratamendu.deleted_at === null || tratamendu.deleted_at === "0000-00-00 00:00:00");
@@ -302,6 +304,15 @@
                     }
                 },
                 async createTratamendu() {
+                    // Si ya hay un tratamiento con el mismo nombre, confirma que se quiere añadir al actual (datos del form)
+                    const tratamenduExiste = this.listaTratamenduSinFiltro.find(tratamendu => tratamendu.izena === this.izenaSortu);
+                    if (tratamenduExiste) {
+                        const isComfirmed = window.confirm("Ya existe un tratamiento con el mismo nombre. ¿Estás seguro de que quieres añadir el actual?");
+                        if (!isComfirmed) {
+                            // Si el usuario cancela, no se realiza ninguna accion (no se añade el tratamiento)
+                            return;
+                        }
+                    }
                     try {
                         const izena = this.izenaSortu;
                         const etxeko_prezioa = this.etxeSortu;

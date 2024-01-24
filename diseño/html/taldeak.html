@@ -293,7 +293,7 @@
 
                         if (grupoExistente) {
                             // Reactivar el grupo (actualizar deleted_at a null y cambiar el nombre si es necesario)
-                            await this.reactivarTalde(grupoExistente.kodea);
+                            await this.reactivarTalde(grupoExistente.kodea); // Laravel no lo permite, hay que cambiar la db y añadir una PK autoincremental
                         } else if (this.listaTalde.some(talde => talde.kodea === kodea)) {
                             // Mostrar mensaje de error si el grupo ya existe y no está eliminado lógicamente
                             alert('El grupo ya existe. Por favor, introduce un código diferente');
