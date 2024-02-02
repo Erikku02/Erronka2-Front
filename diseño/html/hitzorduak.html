@@ -145,130 +145,99 @@
 
     <main id="app">
         <div class="container">
-            <div class="row">
+            <div class="row table-responsive">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
                     <!-- <i class="bi bi-check-circle m-2" @click="actuHitzordua()"></i> -->
                     <!-- <i class="bi bi-dash-circle" @click="ezabHitzordua()"></i> -->
                 </div>
 
-                <!-- Tabla -->
-                <table class="table table-hover">
+                <input type="date" class="col-4" v-model="fecha" @change="cargarDatos">
+                <table class="table ">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Asiento</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Hora inicio</th>
-                            <th scope="col">Hora fin</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Telefono</th>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Alumno</th>
+                            <th></th>
+                            <th v-for="eserleku in totalLangile" :key="eserleku">
+                                Asiento {{eserleku}}
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        <!-- TODO: terminar la tabla -->
-                        <tr v-for="(hitzordu) in listaHitzordu">
-                            <td><input type="checkbox" :value="hitzordu.id" v-model="arrayId"></td>
+                        <tr v-for="hora in horas" :key="hora">
                             <td>
-                                <span v-if="!arrayId.includes(hitzordu.id)">
-                                    {{ hitzordu.eserlekua }}
-                                </span>
-                                <input v-else type="text" v-model="hitzordu.eserlekua" :placeholder="fitxa.eserlekua">
+                                {{ hora }}
                             </td>
-                            <td>
-                                <span v-if="!arrayId.includes(hitzordu.id)">
-                                    {{ hitzordu.data}}
-                                </span>
+                            <td v-for="eserleku in totalLangile" :key="eserleku">
+                                <div v-for="cA in si(hora, eserleku)" class="celda-libre">
+                                    {{cA.izena}} id
+                                    <!-- Empty cell -->
+                                </div>
+
                             </td>
                         </tr>
-                        <!-- <tr v-for="(fitxa) in listaFitxa">
-                            <td>
-                                <span v-if="!arrayId.includes(fitxa.id)">
-                                    {{fitxa.izena}}
-                                </span>
-
-                                <input v-else type="text" v-model="fitxa.izena" :placeholder="fitxa.izena" />
-                            </td>
-                            <td>
-                                <span v-if="!arrayId.includes(fitxa.id)">
-                                    {{fitxa.abizena}}
-                                </span>
-
-                                <input v-else type="text" v-model="fitxa.abizena" :placeholder="fitxa.abizena" />
-                            </td>
-                            <td>
-                                <span v-if="!arrayId.includes(fitxa.id)">
-                                    {{fitxa.telefonoa}}
-                                </span>
-
-                                <input v-else type="text" v-model="fitxa.telefonoa" :placeholder="fitxa.telefonoa" />
-                            </td>
-                            <td>
-                                <span v-if="!arrayId.includes(fitxa.id)">
-                                    <span v-if="fitxa.azal_sentikorra == 'E'">
-                                        Ez
-                                    </span>
-                                    <span v-else="fitxa.azal_sentikorra == 'B'">
-                                        Bai
-                                    </span>
-
-                                </span>
-
-                                <select v-else class="form-select w-100" v-model="fitxa.azal_sentikorra">
-                                    <option disabled>Categoria</option>
-                                    <option value="B"> Bai</option>
-                                    <option value="E"> Ez</option>
-                                </select>
-                            </td>
-                        </tr> -->
                     </tbody>
+
                 </table>
+
+
+
             </div>
 
 
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
-            <div class="row d-flex justify-content-center p-5" style="width: 100%;">
+            <!-- <div class="row d-flex justify-content-center p-5" style="width: 100%;">
                 <h4 class="text-center pt-5 mx-auto">Añadir cita</h4>
 
-                <!-- <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
+                <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
                     <div class="col-sm-6 col-lg-3">
-                        // <label for="input1" class="">Código</label>
-                        <input type="text" class="form-control" id="input1" v-model="izenaSortu" placeholder="Nombre" />
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        // <label for="input2" class="">Nombre</label>
-                        <input type="text" class="form-control" id="input2" v-model="abizenaSortu"
-                            placeholder="Apellidos" />
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        // <label for="input2" class="">Nombre</label>
-                        <input type="text" class="form-control" id="input2" v-model="telefonoaSortu"
-                            placeholder="Telefono" />
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        // <label for="input2" class="">Nombre</label>
-                        <select class="form-select w-100" id="dia" required v-model="sentikorraSortu">
-                            <option disabled value="">Piel sensible</option>
-                            <option value="B">Bai</option>
-                            <option value="E">Ez</option>
+                        <label for="input2" class="">Tipo de cliente</label>
+                        <select class="form-select">
+                            <option value="">Seleccione una opción</option>
+                            <option value="k">Externo</option>
+                            <option value="e">Interno</option>
                         </select>
+
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        // <label for="input2" class="">Nombre</label>
+                        <input type="text" class="form-control" v-model="izenaSortu" placeholder="Nombre" />
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        // <label for="input2" class="">Descripción</label>
+                        <input type="text" class="form-control" v-model="deskribapenaSortu" placeholder="Descripción" />
                     </div>
 
-                    // FIXME: el button solo se centra cuando esta en pantalla completa
-                    // <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto">
-                    <div class="col-1 align-self-center">
-                        // <button type="submit" class="btn btn-primary">Añadir</button>
-                        <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
-                            <button @click.prevent="createFitxa()" class="btn btn-primary">Añadir</button>
-                        </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <label for="input2" class="">Fecha</label>
+                        <input type="date" class="form-control" v-model="dataSortu" />
                     </div>
-                </form> -->
+                    <div class="col-sm-6 col-lg-3">
+                        <label for="input2" class="">Hora inicio</label>
+                        <input type="time" class="form-control" v-model="hasiera_orduaSortu" />
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <label for="input2" class="">Hora fin (estimada)</label>
+                        <input type="time" class="form-control" v-model="amaiera_orduaSortu" />
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3">
+                        // <label for="input1" class="">Asiento</label>
+                        <input type="text" class="form-control" id="input1" v-model="asientoSortu"
+                            placeholder="Asiento" />
+                    </div> -->
+
+            <!-- FIXME: el button solo se centra cuando esta en pantalla completa -->
+            <!-- <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto"> -->
+            <div class="col-1 align-self-center">
+                <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
+                <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
+                    <!-- <button @click.prevent="createHitzordu()" class="btn btn-primary">Añadir</button> -->
+                </div>
             </div>
+            </form>
+        </div>
         </div>
     </main>
 
@@ -287,6 +256,8 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
     <script src="../js/hitzorduak.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
 </body>
 
 </html>
