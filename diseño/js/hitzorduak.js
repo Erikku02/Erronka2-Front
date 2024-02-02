@@ -3,14 +3,16 @@ new Vue({
     data: {
         selectedCheckbox: null, // Esta variable almacenará la ID del checkbox seleccionado
         /* arrayId: [], */
-        /* etxekoaSortu: "",
+        etxekoaSortu: "",
+        eserlekuaSortu: "",
         izenaSortu: "",
         telefonoaSortu: "",
+        fechaSortu: "",
         deskribapenaSortu: "",
         dataSortu: "",
         hasiera_orduaSortu: "",
         amaiera_orduaSortu: "",
-        asientoSortu: "", */
+        asientoSortu: "",
 
         fecha: '',
         fechaFormateada: '',
@@ -61,22 +63,14 @@ new Vue({
 
         },
         obtenerFechaSeleccionada() {
-            // FIXME: que coja la fecha del input y lo pase al formato que necesito
             const fechaInput = this.fecha ? new Date(this.fecha) : new Date();
-            console.log(fechaInput);
+            /* console.log(fechaInput); */
 
             const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
             const numeroDiaSemana = fechaInput.getDay();
             const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
             const fechaFormateada = fechaInput.toLocaleDateString('es-ES', options);
-            /* console.log(this.fechaFormateada); */
 
-            /* this.cargaLangile(); */
-            /* this.cargaHorariosPorGrupo(); */
-            // Llama a cargaHorariosPorGrupo y espera a que se complete antes de llamar a cargaHitzordu
-            /* this.cargaHorariosPorGrupo().then(() => {
-                this.cargaHitzordu();
-            }); */
             try {
                 // Llama a cargaHorariosPorGrupo solo si no hay una fecha proporcionada
                 if (!this.fecha) {
@@ -90,7 +84,6 @@ new Vue({
 
         async cargaHitzordu() {
             try {
-                // console.log("cargaHitzordu");
                 const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
                     method: 'GET',
@@ -107,9 +100,8 @@ new Vue({
                 }
 
                 const datuak = await response.json();
-                console.log(this.fecha);
+                // console.log(this.fecha);
                 const fechaSeleccionada = new Date(this.fecha);
-                console.log("fecha filtrada");
 
 
                 const formattedFechaSeleccionada = fechaSeleccionada.toISOString().substring(0, 10);
@@ -118,29 +110,13 @@ new Vue({
                         cita.data.includes(formattedFechaSeleccionada)
                     );
 
-                console.log(this.listaHitzordu);
+                /* console.log(this.listaHitzordu); */
 
                 this.hitzorduSinFiltro = datuak;
 
-                console.log(datuak);
-
-
-                // FALTA AÑADIR EL FIlTER !!!!!!!
-                //.filter(produktu => produktu.deleted_at === null || produktu.deleted_at === "0000-00-00 00:00:00");
-
-                /* this.cargaLangile(); */
-
-                // Organizar las citas por hora y asiento
-                this.organizarCitasPorHora();
-
-                // Actualizar asientos por hora
-                //this.actualizarAsientosPorHora();
-
                 /* console.log(datuak); */
 
-                /*  console.log(this.listaHitzordu); */
-
-                // console.log("fin cargaHitzordu");
+                this.organizarCitasPorHora();
 
 
             } catch (error) {
@@ -148,7 +124,6 @@ new Vue({
             }
 
             try {
-                // console.log("2 cargaHitzordu");
                 this.eserlekuKop = [];
 
                 /* const response2 = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta' + this.dataSelec, { */
@@ -168,19 +143,13 @@ new Vue({
                 for (let i = 1; i <= datuak2; i++) {
                     this.eserlekuKop.push({ id: i });
                 }
-                // console.log("2 fin cargaHitzordu");
+
             } catch (error) {
                 console.error('Errorea:', error);
             }
         },
 
-        fechaHoy() {
-            /* this.fecha = new Date();
-            console.log(this.fecha); */
-        },
-
         async cargaLangile() {
-            // console.log("cargaLangile");
             this.totalLangile = 0;
             try {
                 const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
@@ -198,38 +167,24 @@ new Vue({
                 }
 
                 const datuak = await response.json();
-                /* console.log(datuak); */
                 this.listaLangile = datuak
 
                     .filter(langile => langile.deleted_at === null && langile.kodea === this.grupoPorDia);
                 this.totalLangile = this.listaLangile.length - 1;
 
-                /* console.log(this.totalLangile); */
-
-                /*                 console.log(this.listaLangile);
-                 */
-                // this.ordenarPorNombre();
             } catch (error) {
                 console.error('Errorea: ', error);
             }
-            // console.log("fin cargaLangile");
-            /* console.log(this.citas); */
         },
 
         async cargaHorariosPorGrupo(fechaInput) {
             this.grupoPorDia = '';
             this.fechaFormateada = fechaInput;
-            /* const fechaActual = new Date(); */
             const fechaActual = fechaInput ? new Date(this.fechaFormateada) : new Date();
 
-            /* console.log(fechaActual);
-            console.log(fechaActual.getDay()); */
             const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
             const numeroDiaSemana = fechaActual ? fechaActual.getDay() : -1;
 
-
-
-            /* console.log(numeroDiaSemana); */
             try {
                 const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
                     method: 'GET',
@@ -251,13 +206,10 @@ new Vue({
 
                 if (diaGrupo) {
                     this.grupoPorDia = diaGrupo.kodea;
-                    /* console.log(this.grupoPorDia); */
                     this.cargaLangile();
                 } else {
                     console.error('No se encontró el día de trabajo para el grupo');
                 }
-
-                /* console.log(this.grupoPorDia); */
 
                 this.cargaLangile();
             } catch (error) {
@@ -304,11 +256,6 @@ new Vue({
             // Formatear la fecha de la cita a yyyy-mm-dd
             const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
             const fechaFormateada = fechaCita.toLocaleDateString('es-ES', options);
-            /* return fechaCita.toDateString() === this.fechaFormateada; */
-            /* console.log('Cita:', cita);
-            console.log('Fecha cita:', fechaCita);
-            console.log('Fecha formateada cita:', fechaFormateada);
-            console.log('Fecha seleccionada:', this.fecha); */
             return fechaFormateada === this.fecha;
         },
         isCeldaOcupada(cita, hora) {
@@ -327,15 +274,7 @@ new Vue({
         },
 
         si(hora, asiento) {
-            /* console.log(hora);
-            console.log(asiento); */
 
-            // /* console.log(this.listaHitzordu); */
-            /* console.log(hora);
-            console.log(this.listaHitzordu[0].amaiera_ordua) */
-            if (hora <= this.listaHitzordu[0].amaiera_ordua) {
-                console.log("aa")
-            }
             const citaActual = this.listaHitzordu.filter(hitzordu => hora >= hitzordu.hasiera_ordua && hora < hitzordu.amaiera_ordua && hitzordu.eserlekua == asiento);
             // console.log(citaActual);
             return citaActual;
@@ -353,19 +292,59 @@ new Vue({
                 hilabetea = '0' + hilabetea
             }
             return urtea + '-' + hilabetea + '-' + eguna;
-        }
+        },
+
+        async createHitzordua() {
+            try {
+                const eserlekua = this.eserlekuaSortu;
+                const data = this.fechaSortu;
+                const hasiera_ordua = this.hasiera_orduaSortu;
+                const amaiera_ordua = this.amaiera_orduaSortu;
+                const izena = this.izenaSortu;
+                const telefonoa = this.telefonoaSortu;
+                const deskribapena = this.deskribapenaSortu;
+                const etxekoa = this.etxekoaSortu;
+                const arraySortu = {
+                    'eserlekua': eserlekua,
+                    'data': data,
+                    'hasiera_ordua': hasiera_ordua,
+                    'amaiera_ordua': amaiera_ordua,
+                    'izena': izena,
+                    'telefonoa': telefonoa,
+                    'deskribapena': deskribapena,
+                    'etxekoa': etxekoa,
+                };
+
+                console.log(JSON.stringify(arraySortu));
+
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduagorde', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
+                });
+
+                if (!response.ok) {
+                    console.log('Errorea sortzerakoan');
+                    throw new Error('Errorea sortzerakoan');
+                }
+
+                alert('Sortu da');
+                this.cargaHitzordu();
+            } catch (error) {
+                console.log('Errorea: ', error);
+            }
+        },
 
 
     },
     mounted() {
         this.fecha = this.lortuData();
         this.obtenerFechaSeleccionada({ target: { value: undefined } }); // Llamar obtenerFechaSeleccionada al cargar la página
-        // Llama a tu función cargarPagina cuando el componente se monta
-        /* this.cargaHorariosPorGrupo(); */
-        /* this.cargaLangile(); */
         this.cargaHitzordu();
         this.cargarDatos();
-        this.fechaHoy();
 
 
 
@@ -373,7 +352,7 @@ new Vue({
         const fechaActual = new Date();
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
         this.fechaFormateada = fechaActual.toLocaleDateString('es-ES', options);
-        console.log(this.fechaFormateada);
+        /* console.log(this.fechaFormateada); */
 
     },
     watch: {

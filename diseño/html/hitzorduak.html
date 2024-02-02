@@ -147,13 +147,90 @@
         <div class="container">
             <div class="row table-responsive">
                 <!-- Iconos para editar los datos -->
-                <div class="icons h4 text-end mt-4">
-                    <!-- <i class="bi bi-check-circle m-2" @click="actuHitzordua()"></i> -->
-                    <!-- <i class="bi bi-dash-circle" @click="ezabHitzordua()"></i> -->
-                </div>
 
-                <input type="date" class="col-4" v-model="fecha" @change="cargarDatos">
-                <table class="table ">
+                <div class="mt-4">
+                    <div>
+                        <input type="date" class="col-4 float-start" v-model="fecha" @change="cargarDatos">
+                    </div>
+                    <div>
+                        <i class="bi bi-plus-circle float-end h4" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            @click=""></i>
+
+                        <!-- Modal -->
+                        <div class="modal fade" aria-hidden="true" id="exampleModal" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Añadir cita</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <fieldset>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Fecha
+                                                    </label>
+                                                    <input type="date" id="disabledTextInput" class="form-control"
+                                                        placeholder="Disabled input" v-model="fechaSortu">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Asiento</label>
+                                                    <input type="number" class="form-control" min="0" value="0"
+                                                        placeholder="0" v-model="eserlekuaSortu">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Hora inicio</label>
+                                                    <input type="time" v-model="hasiera_orduaSortu">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Hora fin</label>
+                                                    <input type="time" v-model="amaiera_orduaSortu">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nombre</label>
+                                                    <input type="text" class="form-control" min="0" value="0"
+                                                        placeholder="0" v-model="eserlekuaSortu">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Teléfono</label>
+                                                    <input type="tel" class="form-control" v-model="telefonoaSortu"
+                                                        maxlength="9">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Descripción</label>
+                                                    <input type="text" class="form-control" v-model="deskribapenaSortu"
+                                                        maxlength="250">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tipo cliente</label>
+                                                    <select class="form-select" v-model="etxekoaSortu">
+                                                        <option value="e">Interno</option>
+                                                        <option value="k">Externo</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary">Añadir cita</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
                     <thead>
                         <tr>
                             <th></th>
@@ -168,8 +245,8 @@
                                 {{ hora }}
                             </td>
                             <td v-for="eserleku in totalLangile" :key="eserleku">
-                                <div v-for="cA in si(hora, eserleku)" class="celda-libre">
-                                    {{cA.izena}} id
+                                <div v-for="cA in si(hora, eserleku)" class="bg-primary text-white text-center">
+                                    {{cA.izena}}
                                     <!-- Empty cell -->
                                 </div>
 

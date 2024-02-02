@@ -254,8 +254,8 @@ new Vue({
                 const id_bezeroa = this.asd;
                 var id_produktua = "";
                 if (this.histProduktuUpdate != "") {
-                   id_produktua = this.histProduktuUpdate;
-                }else{
+                    id_produktua = this.histProduktuUpdate;
+                } else {
                     id_produktua = this.listaHistorial.find(historial => historial.id === this.historialId[0]).id_produktua;
                 }
                 const data = this.listaHistorial.find(historial => historial.id === this.historialId[0]).data;
