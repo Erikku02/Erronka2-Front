@@ -10,20 +10,24 @@
 .navbar {
     background-color: #F7F7F7;
 }
+
 .navbar-brand {
     color: #24A0E6;
     font-size: 180%;
 }
+
 /* Estilo para la barra de navegación fija en la parte superior */
 .navbar.fixed-top {
     position: fixed;
     width: 100%;
-    z-index: 1000; /* Asegura que la barra de navegación esté sobre otros elementos */
+    z-index: 1000;
+    /* Asegura que la barra de navegación esté sobre otros elementos */
 }
 
 /* Margen superior para el contenido principal */
 main {
-    margin-top: 70px; /* Ajusta el valor según sea necesario para dar espacio a la barra de navegación */
+    margin-top: 70px;
+    /* Ajusta el valor según sea necesario para dar espacio a la barra de navegación */
 }
 
 .offcanvas-start .navbar-nav .nav-link,
@@ -34,6 +38,7 @@ main {
 .offcanvas-start .navbar-toggler-icon {
     font: white;
 }
+
 span {
     color: black;
 }
@@ -49,4 +54,14 @@ form .col-sm-6 {
 
 form button {
     margin-top: 15px;
+}
+
+.cita-asignada {
+    background-color: #00ff00;
+    /* Cambia el color según tus preferencias */
+}
+
+.sin-cita {
+    background-color: #ffffff;
+    /* Cambia el color según tus preferencias */
 }

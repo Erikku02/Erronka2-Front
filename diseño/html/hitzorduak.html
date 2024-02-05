@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Taldeak</title>
+    <title>Citas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
@@ -21,8 +21,8 @@
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="materiala_erabili.html">
-                Productos
+            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="hitzorduak.html">
+                Citas
                 <!-- FIXME: buscar como hacero sin puntitos  -->
                 <!-- sin los puntos no se ve bien centrado -->
                 <p class="puntos" style="color: #F7F7F7;">........</p>
@@ -145,150 +145,183 @@
 
     <main id="app">
         <div class="container">
-            <div class="row">
+            <div class="row table-responsive">
                 <!-- Iconos para editar los datos -->
-                <div class="icons h4 text-end mt-4">
-                    <i class="bi bi-check-circle m-2" @click="actuProduktu()"></i>
-                    <i class="bi bi-dash-circle" @click="ezabProduktu()"></i>
-                </div>
 
-                <!-- Tabla -->
-                <table class="table table-hover">
+                <div class="mt-4">
+                    <div>
+                        <input type="date" class="col-4 float-start" v-model="fecha" @change="cargarDatos">
+                    </div>
+                    <div>
+                        <i class="bi bi-plus-circle float-end h4" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            @click=""></i>
+
+                        <!-- Modal -->
+                        <div class="modal fade" aria-hidden="true" id="exampleModal" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Añadir cita</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <fieldset>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Fecha
+                                                    </label>
+                                                    <input type="date" id="disabledTextInput" class="form-control"
+                                                        placeholder="Disabled input" v-model="fechaSortu">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Asiento</label>
+                                                    <input type="number" class="form-control" min="0" value="0"
+                                                        placeholder="0" v-model="eserlekuaSortu">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Hora inicio</label>
+                                                    <input type="time" v-model="hasiera_orduaSortu">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Hora fin</label>
+                                                    <input type="time" v-model="amaiera_orduaSortu">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Nombre</label>
+                                                    <input type="text" class="form-control" min="0" value="0"
+                                                        placeholder="0" v-model="eserlekuaSortu">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Teléfono</label>
+                                                    <input type="tel" class="form-control" v-model="telefonoaSortu"
+                                                        maxlength="9">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Descripción</label>
+                                                    <input type="text" class="form-control" v-model="deskribapenaSortu"
+                                                        maxlength="250">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Tipo cliente</label>
+                                                    <select class="form-select" v-model="etxekoaSortu">
+                                                        <option value="e">Interno</option>
+                                                        <option value="k">Externo</option>
+                                                    </select>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary">Añadir cita</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
-                            <th @click="ordenarPorNombre" scope="col">Nombre <i class="bi bi-arrow-down-up"></i></th>
-                            <th scope="col">Descripcion</th>
-                            <th @click="ordenarPorCategoria" scope="col">Categoria <i class="bi bi-arrow-down-up"></i>
+                            <th></th>
+                            <th v-for="eserleku in totalLangile" :key="eserleku">
+                                Asiento {{eserleku}}
                             </th>
-                            <th @click="ordenarPorMarka" scope="col">Marca <i class="bi bi-arrow-down-up"></i></th>
-
-                            <th @click="ordenarPorStock" scope="col">Stock <i class="bi bi-arrow-down-up"></i></th>
-
-                            <th @click="ordenarPorStockAlerta" scope="col">Stock de seguridad <i
-                                    class="bi bi-arrow-down-up"></i></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(produktu) in listaProduktu">
-                            <td><input type="checkbox" :value="produktu.id" v-model="arrayId" /></td>
+                        <tr v-for="hora in horas" :key="hora">
                             <td>
-                                <span v-if="!arrayId.includes(produktu.id)">
-                                    {{ produktu.izena }}
-                                </span>
-
-                                <input v-else type="text" v-model="produktu.izena" :placeholder="produktu.izena" />
+                                {{ hora }}
                             </td>
-
-                            <td>
-                                <span v-if="!arrayId.includes(produktu.id)">
-                                    {{ produktu.deskribapena }}
-                                </span>
-
-                                <input v-else type="text" v-model="produktu.deskribapena"
-                                    :placeholder="produktu.deskribapena" />
-                            </td>
-
-                            <td>
-                                <span v-if="!arrayId.includes(produktu.id)">
-                                    {{ produktu.k_izena }}
-                                </span>
-
-                                <select v-else class="form-select w-100" v-model="kategoriaEgu">
-                                    <option selected hidden :value="produktu.id_kategoria">Categoria</option>
-                                    <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{
-                                        kategoria.izena }}</option>
-                                </select>
+                            <td v-for="eserleku in totalLangile" :key="eserleku">
+                                <div v-for="cA in si(hora, eserleku)" class="bg-primary text-white text-center">
+                                    {{cA.izena}}
+                                    <!-- Empty cell -->
+                                </div>
 
                             </td>
-
-                            <td>
-                                <span v-if="!arrayId.includes(produktu.id)">
-                                    {{produktu.marka}}
-                                </span>
-
-                                <input v-else type="text" v-model="produktu.marka" :placeholder="produktu.marka" />
-                            </td>
-
-                            <td>
-                                <span v-if="!arrayId.includes(produktu.id)">
-                                    {{produktu.stock}}
-                                </span>
-
-                                <input v-else type="text" v-model="produktu.stock" :placeholder="produktu.stock" />
-                            </td>
-
-                            <td>
-                                <span v-if="!arrayId.includes(produktu.id)">
-                                    {{produktu.stock_alerta}}
-                                </span>
-
-                                <input v-else type="text" v-model="produktu.stock_alerta"
-                                    :placeholder="produktu.stock_alerta" />
-                            </td>
-
                         </tr>
-
                     </tbody>
+
                 </table>
+
+
+
             </div>
 
 
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
-            <div class="row d-flex justify-content-center p-5" style="width: 100%;">
-                <h4 class="text-center pt-5 mx-auto">Añadir producto</h4>
+            <!-- <div class="row d-flex justify-content-center p-5" style="width: 100%;">
+                <h4 class="text-center pt-5 mx-auto">Añadir cita</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
                     <div class="col-sm-6 col-lg-3">
-                        <!-- <label for="input1" class="">Código</label> -->
-                        <input type="text" class="form-control" id="input1" v-model="izenaSortu" placeholder="Nombre" />
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <!-- <label for="input2" class="">Nombre</label> -->
-                        <input type="text" class="form-control" id="input2" v-model="deskribSortu"
-                            placeholder="Descripcion" />
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3">
-                        <select class="form-select" id="kategoria" v-model="kategoriaSortu">
-                            <option value="" disabled>Categoría</option>
-                            <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{
-                                kategoria.izena }}</option>
+                        <label for="input2" class="">Tipo de cliente</label>
+                        <select class="form-select">
+                            <option value="">Seleccione una opción</option>
+                            <option value="k">Externo</option>
+                            <option value="e">Interno</option>
                         </select>
+
                     </div>
                     <div class="col-sm-6 col-lg-3">
-                        <!-- <label for="input2" class="">Nombre</label> -->
-                        <input type="text" class="form-control" id="input2" v-model="markaSortu" placeholder="Marca" />
+                        // <label for="input2" class="">Nombre</label>
+                        <input type="text" class="form-control" v-model="izenaSortu" placeholder="Nombre" />
                     </div>
                     <div class="col-sm-6 col-lg-3">
-                        <!-- <label for="input2" class="">Nombre</label> -->
-                        <input type="text" class="form-control" id="input2" v-model="stockSortu" placeholder="Stock" />
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <!-- <label for="input2" class="">Nombre</label> -->
-                        <input type="text" class="form-control" id="input2" v-model="stock_alertaSortu"
-                            placeholder="Stock Alerta" />
+                        // <label for="input2" class="">Descripción</label>
+                        <input type="text" class="form-control" v-model="deskribapenaSortu" placeholder="Descripción" />
                     </div>
 
-                    <!-- FIXME: el button solo se centra cuando esta en pantalla completa-->
-                    <!-- <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto"> -->
-                    <div class="col-1 align-self-center">
-                        <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
-                        <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
-                            <button @click.prevent="createProduktu()" class="btn btn-primary">Añadir</button>
-                        </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <label for="input2" class="">Fecha</label>
+                        <input type="date" class="form-control" v-model="dataSortu" />
                     </div>
-                </form>
+                    <div class="col-sm-6 col-lg-3">
+                        <label for="input2" class="">Hora inicio</label>
+                        <input type="time" class="form-control" v-model="hasiera_orduaSortu" />
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <label for="input2" class="">Hora fin (estimada)</label>
+                        <input type="time" class="form-control" v-model="amaiera_orduaSortu" />
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3">
+                        // <label for="input1" class="">Asiento</label>
+                        <input type="text" class="form-control" id="input1" v-model="asientoSortu"
+                            placeholder="Asiento" />
+                    </div> -->
+
+            <!-- FIXME: el button solo se centra cuando esta en pantalla completa -->
+            <!-- <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto"> -->
+            <div class="col-1 align-self-center">
+                <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
+                <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
+                    <!-- <button @click.prevent="createHitzordu()" class="btn btn-primary">Añadir</button> -->
+                </div>
             </div>
+            </form>
+        </div>
         </div>
     </main>
 
     <!-- FOOTER -->
     <footer class="bg-dark text-light text-center py-3" id="sticky-footer">
         <div class="container">
-            <p>&copy; 2024 Produktuak. Todos los derechos reservados.</p>
+            <p>&copy; 2024 Bezero_fitxak. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -299,7 +332,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
-    <script src="../js/produktuak.js"></script>
+    <script src="../js/hitzorduak.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
 </body>
 
 </html>
