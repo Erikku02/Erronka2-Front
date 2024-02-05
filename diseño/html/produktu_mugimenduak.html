@@ -1,0 +1,604 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Extraer productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+</head>
+
+<body>
+    <!-- BARRA DE NAVEGACION -->
+    <nav class="navbar bg-body-tertiary fixed-top">
+        <div class="container d-flex align-items-center">
+            <!-- <div class="container-fluid"> -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="#">
+                Extraer productos
+            </a>
+
+            <!-- Barra de navegacion fija -->
+            <i class="bi bi-box-arrow-right h3"></i>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+
+                <!-- Barra de navegacion "oculta" -->
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <!-- Citas -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle link-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-calendar3 m-2"></i>
+                                Citas
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Asignar citas</a></li>
+                                <li><a class="dropdown-item" href="#">Comfirmar citas</a></li>
+                                <li><a class="dropdown-item" href="#">Ficha técnica</a></li>
+                                <li><a class="dropdown-item" href="#">Listado tickets</a></li>
+                                <li><a class="dropdown-item" href="#">Agenda de citas</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Almacen -->
+                        <li class="nav-item">
+                            <a class="nav-link active link-light" href="#">
+                                <i class="bi bi-box-seam-fill m-2"></i>
+                                Almacén
+                            </a>
+                        </li>
+
+                        <!-- Productos -->
+                        <li class="nav-item">
+                            <a class="nav-link active link-light" href="produktuak.html">
+                                <i class="bi bi-tags-fill m-2"></i>
+                                Productos
+                            </a>
+                        </li>
+
+                        <!-- Material -->
+                        <li class="nav-item">
+                            <a class="nav-link active link-light" href="#">
+                                <!-- <i class="bi bi-brush"></i> -->
+                                <i class="bi bi-palette2 m-2"></i>
+                                Material
+                            </a>
+                        </li>
+
+                        <!-- Tratamientos -->
+                        <li class="nav-item">
+                            <a class="nav-link active link-light" href="#">
+                                <i class="bi bi-scissors m-2"></i>
+                                Tratamientos
+                            </a>
+                        </li>
+
+                        <!-- Tareas -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle link-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-calendar-check-fill m-2"></i>
+                                Tareas
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="gaurko_txandak.html">Turnos de hoy</a></li>
+                                <li><a class="dropdown-item" href="txandak.html">Turnos</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Usuarios -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle link-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-fill m-2"></i>
+                                Usuarios
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- <li><a class="dropdown-item" href="#">Rotaciones</a></li> -->
+                                <li><a class="dropdown-item" href="taldeak.html">Grupos</a></li>
+                                <li><a class="dropdown-item" href="langileak.html">Trabajadores</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="ordutegiak.html">Horarios por grupo</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <!-- Resumen tratamiento -->
+                        <li class="nav-item">
+                            <a class="nav-link active link-light" href="#">
+                                <i class="bi bi-receipt m-2"></i>
+                                Resumen tratamiento
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Buscador (por defecto, se puede quitar) -->
+                    <form class="d-flex mt-3" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                        <button class="btn btn-outline-success" type="submit">
+                            Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+
+    <main id="app">
+        <br>
+        <div class="icons h4 text-center mt-4 me-4">
+            <span>{{ fechaFormateada }} - {{ grupoPorDia }}</span>
+        </div>
+        <div class="container">
+            <div class="container-fluid text-center">
+                <div class="col-sm-6 col-lg-3 mt-5">
+                    <div class="mb-3">
+                        <select class="form-select w-100" id="y" required v-model="izenaSortu">
+                            <option disabled value="">Alumno</option>
+                            <option v-for="(langile) in alumnosPorGrupo" :key="langile.id" :value="langile.id">{{langile.izena}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla -->
+            <table class="table table-hover mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Casa comercial</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        <!-- Contenido de la fila (igual que antes) -->
+                        <tr>
+                            <td>
+                                <select class="form-select w-100" id="x" required v-model="kategoriaIzenaSortu">
+                                    <option disabled value="">Categoría</option>
+                                    <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{kategoria.izena}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select w-100" id="x" required v-model="casaSortu">
+                                    <option disabled value="">Casa comercial</option>
+                                    <option v-for="(marka) in listaMarkaFiltrada">{{marka.marka}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select w-100" v-model="produktuIzenaSortu">
+                                    <option disabled value="">Producto</option>
+                                    <option v-for="produktua in listaFiltrada" :key="produktua.id" :value="produktua.id">
+                                        {{ formatProductName(produktua) }}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <!-- Input tipo número para la cantidad -->
+                                <div class="input-group">
+                                    <input type="number" class="form-control" v-model="kantitateaSortu" min="0"/>
+                                </div>
+                            </td>    
+                        </tr>
+                        <tr v-for="(fila, index) in registros" :key="index">
+                            <td>{{fila.kategoria}}</td>
+                            <td>{{fila.marka}}</td>
+                            <td>{{fila.produktua}}</td>
+                            <td>{{fila.kantitatea}}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" @click="eliminarFila(index)">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end mt-2">
+                <!-- Botón para añadir una fila con el mismo contenido -->
+                <button class="btn btn-primary" @click="añadirFila()">Añadir</button>
+            </div>
+            <div class="d-flex justify-content-end mt-2">
+                <!-- Botón para añadir una fila con el mismo contenido -->
+                <button class="btn btn-primary" @click="createProduktu()">Confirmar todo</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 fixed-bottom">
+        <div class="container">
+            <p>&copy; 2024 Taldeak. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                selectedTalde: "",
+                arrayKodea: [],
+                kodeaSortu: "",
+                izenaSortu: "",
+                kategoriaIzenaSortu: "",
+                produktuIzenaSortu: "",
+                kantitateaSortu: 0,
+                casaSortu: "",
+                listaTalde: [],
+                listaLangile: [],
+                fechaFormateada: '',
+                listaOrdutegia: [],
+                grupoPorDia: '',
+                alumnosPorGrupo: [],
+                listaKategoria: [],
+                listaProduktua: [],
+                listaFiltrada: [],
+                listaFiltrada2: [],
+                listaMarka: [],
+                registroBerri: [],
+                guardarRegistro: [],
+                registros: [],
+                marcasUnicas: new Set(),
+                listaMarkaFiltrada: [],
+                uniqueMarcas: [0],
+                stockTotala: 0
+            },
+            methods: {
+                formatProductName(produktua) {
+                    const truncatedName = produktua.izena.length > 30 ? produktua.izena.slice(0, 30) : produktua.izena;
+                    const truncatedDescription = produktua.deskribapena.length > 40 ? produktua.deskribapena.slice(0, 40) + '' : produktua.deskribapena;
+                    return `${truncatedName} - ${truncatedDescription}`;
+                },
+                obtenerFechaActual() {
+                    const fechaActual = new Date();
+                    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                    const numeroDiaSemana = fechaActual.getDay();
+                    const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                    this.fechaFormateada = `${fechaActual.toLocaleDateString('es-ES', options)}`;
+                },
+                // Para cargar los grupos que están activos
+                async cargaHorariosPorGrupo() {
+                    const fechaActual = new Date();
+                    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+                    const numeroDiaSemana = fechaActual.getDay();
+
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+
+                        if (!response.ok) {
+                            console.log('Error al solicitar trabajadores por grupo');
+                            throw new Error('Error al realizar la solicitud');
+                        }
+
+                        const datuak = await response.json();
+                        this.listaOrdutegia = datuak;
+                        
+                        // Verificar si se encontró un grupo antes de acceder a 'kodea'
+                        const grupoEncontrado = this.listaOrdutegia.find(ordutegia => ordutegia.eguna === numeroDiaSemana && ordutegia.deleted_at === null);
+
+                        if (grupoEncontrado) {
+                            this.grupoPorDia = grupoEncontrado.kodea;
+                        } else {
+                            // Manejar el caso cuando no se encuentra un grupo
+                            console.error('No se encontró un grupo para el día actual.');
+                        }
+                        
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                    this.cargaLangile();
+                },
+
+                filtrarAlumnosPorGrupo() {
+                    const grupoSeleccionado = this.grupoPorDia;
+                    // Filtrar la lista de alumnos por el grupo seleccionado
+                    this.alumnosPorGrupo = this.listaLangile.filter(langile => langile.kodea === this.grupoPorDia);
+                },
+                async cargaKategoria() {
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/kategoriaruta', {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
+                            method: 'GET',
+                            // mode: "no-cors",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+                        if (!response.ok) {
+                            console.log('Errorea eskera eskaera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+
+                        const datuak = await response.json();
+                        this.listaKategoria = datuak
+                             .filter(kategoria => kategoria.deleted_at === null || kategoria.deleted_at === "0000-00-00 00:00:00");
+                            console.log(this.listaKategoria);
+                    } catch (error) {
+                        console.error('Errorea: ', error);
+                    }
+                },
+                async cargaProduktuaById(idPro) {
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/produktuaruta', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+
+                        if (!response.ok) {
+                            console.log('Errorea eskera eskaera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+
+                        const datuak = await response.json();
+                        this.listaProduktua = datuak;
+
+                        const stockT = this.listaProduktua.find(produktua => produktua.id === idPro)?.stock;
+                        const stockS = this.listaProduktua.find(produktua => produktua.id === idPro)?.stock_alerta;
+
+                        stockT !== undefined ? stockT : 0;
+                        stockS !== undefined ? stockS : 0;
+
+                        const arrStock = [stockT, stockS];
+                 
+                        return ( arrStock );
+                    } catch (error) {
+                        console.error('Errorea: ', error);
+                        return 0; // Devolver un valor por defecto en caso de error
+                    }
+                },
+                async cargaProduktua() {
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/produktuaruta', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+
+                        if (!response.ok) {
+                            console.log('Errorea eskera eskaera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+
+                        const datuak = await response.json();
+                        this.listaProduktua = datuak;
+                        this.listaFiltrada = datuak;
+
+                    } catch (error) {
+                        console.error('Errorea: ', error);
+                    }
+                },
+                async cargaMarka() {
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/markaruta', {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
+                            method: 'GET',
+                            // mode: "no-cors",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+                        if (!response.ok) {
+                            console.log('Errorea eskera eskaera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+                        const datuak = await response.json();
+                        this.listaMarka = datuak;
+                        this.listaMarkaFiltrada = datuak;
+                        console.log(this.cargaMarka)
+                    } catch (error) {
+                        console.error('Errorea: ', error);
+                    }
+                },
+                async añadirFila() {
+                    
+                    // Validar que los campos obligatorios no estén vacíos
+                    if (!this.produktuIzenaSortu || this.kantitateaSortu <= 0) {
+                        
+                        // Mostrar un mensaje de error (puedes reemplazar esto con tu lógica de pop-up)
+                        alert("Por favor, completa los campos obligatorios: Producto y Cantidad");
+                        return; // No continuar con la función si hay campos obligatorios vacíos
+                    }
+                    
+                    const arrProduktuarenStock = await this.cargaProduktuaById(this.produktuIzenaSortu);
+                    const stockTotalProducto = arrProduktuarenStock[0];
+                    const stockSeguridadProducto = arrProduktuarenStock[1];
+
+                    console.log(stockSeguridadProducto);
+
+                    if (this.kantitateaSortu <= stockTotalProducto){
+                        if((stockTotalProducto - this.kantitateaSortu) <= stockSeguridadProducto){
+                            alert("¡¡¡Stock de alerta superado!!!, ahora quedan " + (stockTotalProducto - this.kantitateaSortu) + " unidades.")
+                        }
+                        const nuevaFila = {
+                            "kategoria": this.kategoriaIzenaSortu ? this.listaKategoria.find(kategoria => kategoria.id == this.kategoriaIzenaSortu).izena : "",
+                            "marka": this.casaSortu,
+                            "produktua": this.produktuIzenaSortu ? this.listaFiltrada.find(produktua => produktua.id == this.produktuIzenaSortu).izena + ' - ' + this.listaFiltrada.find(produktua => produktua.id == this.produktuIzenaSortu).deskribapena : "",
+                            "kantitatea": this.kantitateaSortu,
+                            "idProduktua": this.produktuIzenaSortu     
+                        };
+
+                        // Agregar la nueva fila al array
+                        this.registros.push(nuevaFila);
+
+                        // Limpiar los campos de entrada
+                        this.kategoriaIzenaSortu = "";
+                        this.casaSortu = "";
+                        this.produktuIzenaSortu = "";
+                        this.kantitateaSortu = 0;
+                    }else{
+                        alert("No puede añadir esa cantidad porque el stock actual de este producto es de " + stockTotalProducto);
+                    }
+                },
+                eliminarFila(index) {
+                    this.registros.splice(index, 1);
+                },
+                actualizarListaFiltrada() {
+                    if (this.kategoriaIzenaSortu) {
+                        if (this.casaSortu) {
+                            this.listaFiltrada = this.listaProduktua
+                                .filter(produktuak => produktuak.id_kategoria == this.kategoriaIzenaSortu)
+                                .filter(produktuak => produktuak.marka == this.casaSortu);
+                        } else {
+                            this.listaFiltrada = this.listaProduktua
+                                .filter(produktuak => produktuak.id_kategoria == this.kategoriaIzenaSortu);
+                        }
+                    } else {
+                        if (this.casaSortu) {
+                            this.listaFiltrada = this.listaProduktua
+                                .filter(produktuak => produktuak.marka == this.casaSortu);
+                        } else {
+                            this.listaFiltrada = [...this.listaProduktua]; // Mostrar todos si no hay categoría ni marca seleccionada
+                        }
+                    }
+                },
+                actualizarListaMarkaFiltrada() {
+                    if (this.kategoriaIzenaSortu) {
+                        // Filtrar marcas para la categoría seleccionada
+                        this.listaMarkaFiltrada = this.listaMarka.filter(marka => marka.id_kategoria == this.kategoriaIzenaSortu);
+
+                        // Obtener marcas únicas para la categoría seleccionada
+                        this.uniqueMarcas = [...new Set(this.listaMarkaFiltrada.map(marka => marka.marka))];
+                    } else {
+                        // Obtener todas las marcas únicas
+                        this.uniqueMarcas = [...new Set(this.listaMarka.map(marka => marka.marka))];
+                        this.listaMarkaFiltrada = this.listaMarka; // Mantener todas las marcas si no hay categoría seleccionada
+                    }
+
+                    // Agregar marcas únicas al conjunto (¿marcasUnicas es necesario?)
+                    this.uniqueMarcas.forEach(marka => this.marcasUnicas.add(marka));
+                },
+                async createProduktu() {
+                    try {
+                        if (this.registros.length === 0) {
+                            alert('Añade al menos una fila antes de extraer.');
+                            return;
+                        }
+
+                        const data1 = new Date();
+                        const data = data1.toISOString().split('T')[0];  // Obtener la fecha en formato 'YYYY-MM-DD'
+
+                        const registrosAEnviar = this.registros.map(registro => {
+                            return {
+                                'id_langilea': this.izenaSortu,
+                                'id_produktua': registro.idProduktua,
+                                'kopurua': registro.kantitatea
+                            };
+                        });
+                        console.log(JSON.stringify(registrosAEnviar) + " aqu");
+
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/produktumugimenduagorde', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                            body: JSON.stringify(registrosAEnviar),
+                        });
+
+                        if (!response.ok) {
+                            console.log('Errorea sortzerakoan');
+                            throw new Error('Errorea sortzerakoan');
+                        }
+
+                        alert('Sortu da');
+                        // Limpiar la lista de registros después de la extracción
+                        this.registros = [];
+                    } catch (error) {
+                        console.log('Errorea: ', error);
+                    }
+                },
+                async cargaLangile() {
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                            method: 'GET',
+                            // mode: "no-cors",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+                        if (!response.ok) {
+                            console.log('Errorea eskera eskaera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+
+                        const datuak = await response.json();
+                        // this.listaTalde = datuak
+                        //      .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
+                        this.listaLangile = datuak
+                            .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
+                            //  console.log(this.listaLangile)
+                    } catch (error) {
+                        console.error('Errorea: ', error);
+                    }
+                    this.filtrarAlumnosPorGrupo();
+                },
+            },
+            
+            watch:{
+
+                kategoriaIzenaSortu: function () {
+                    this.actualizarListaFiltrada();
+                    this.actualizarListaMarkaFiltrada();
+                },
+                casaSortu: function () {
+                    this.actualizarListaFiltrada();
+                }
+
+            },
+            mounted() {
+                // Llama a tu función cargarPagina cuando el componente se monta
+                this.obtenerFechaActual();
+                this.cargaHorariosPorGrupo();
+                this.cargaKategoria();
+                this.cargaProduktua();
+                this.cargaMarka();
+                this.actualizarListaFiltrada(); // Añade esta línea para cargar la lista filtrada inicialmente
+
+                // this.cargaTalde();
+            }
+        });
+    </script>
+</body>
+</html>

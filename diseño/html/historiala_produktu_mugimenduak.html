@@ -1,18 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Turnos</title>
+    <title>Historial de productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- BARRA DE NAVEGACION -->
     <nav class="navbar bg-body-tertiary fixed-top">
         <div class="container d-flex align-items-center">
@@ -22,10 +22,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand mx-auto h3 d-flex d-inline" href="#">
-                Turnos de hoy
-                <!-- FIXME: buscar como hacero sin puntitos  -->
-                <!-- sin los puntos no se ve bien centrado -->
-                <p class="puntos" style="color: #F7F7F7;">........</p>
+                Historial de extracción de productos
             </a>
 
             <!-- Barra de navegacion fija -->
@@ -66,7 +63,7 @@
 
                         <!-- Productos -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="produktuak.html">
                                 <i class="bi bi-tags-fill m-2"></i>
                                 Productos
                             </a>
@@ -141,45 +138,56 @@
         </div>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
 
     <main id="app">
         <br>
-        <div class="icons h4 text-center mt-4 me-4">
-            <span>{{ fechaFormateada }} - {{ grupoPorDia }}</span>
+        <div class="icons h4 text-center mb-4 me-4">
+            <span>{{ dataSortu ? fechaFormateada : obtenerFechaActual() }}</span>
         </div>
-        <div class="container">
-            <div class="row">
-                <!-- Iconos para editar los datos -->
-                <div class="icons h4 text-end mt-4">
-                    
-                </div>
-
-                <!-- Tabla -->
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Tareas</th>
-                            <th scope="col">Alumno/s</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Limpieza</td>
-                            <td v-for="(txanda) in listaTxandaG">{{txanda.izena}}</td>
-                        </tr>
-                        <tr>
-                            <td>Mostrador</td>
-                            <td>{{listaTxandaM.izena}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="container mb-5">
+            <!-- Tabla -->
+            <template>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="selectCategoria" class="form-label">Categoría:</label>
+                        <select class="form-select" id="selectCategoria" required v-model="kategoriaIzenaSortu">
+                            <option disabled value="">Selecciona una categoría</option>
+                            <option value="">Todos</option>
+                            <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{kategoria.izena}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputFecha" class="form-label">Fecha:</label>
+                        <input type="date" id="inputFecha" class="form-control" required v-model="dataSortu" @input="actualizarFecha" />
+                    </div>
+                </div>                
+            </template>
+            <table  class="table table-hover mt-5 mb-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Casa</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Alumno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(registro, index) in listaFiltrada" :key="index">
+                        <td>{{ registro.produktua ? registro.produktua.izena : ''  }} - {{ registro.produktua ? registro.produktua.deskribapena : ''  }}</td>
+                        <td>{{ registro.produktua ? registro.produktua.kategoria.izena : '' }}</td>
+                        <td>{{ registro.produktua ? registro.produktua.marka : '' }}</td>
+                        <td>{{ registro.kopurua }}</td>
+                        <td>{{ registro.langilea ? registro.langilea.izena : '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-dark text-light text-center py-3 fixed-bottom">
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
         <div class="container">
             <p>&copy; 2024 Taldeak. Todos los derechos reservados.</p>
         </div>
@@ -198,57 +206,56 @@
             el: '#app',
             data: {
                 selectedTalde: "",
-                listaTxanda: [],
+                kategoriaIzenaSortu: "",
+                dataSortu: "",
                 arrayKodea: [],
-                kodeaSortu: "",
                 listaTalde: [],
                 listaLangile: [],
                 fechaFormateada: '',
                 listaOrdutegia: [],
-                grupoPorDia: '',
-                listaTxandaM: [],
-                listaTxandaG: []
+                listaKategoria: [],
+                listaProduktua: [],
+                listaFiltrada: [],
+                listaFiltrada2: [],
+                listaMarka: [],
+                listaProduktuMugimendua: [],
+                registroBerri: [],
+                guardarRegistro: [],
+                registros: [],
+                marcasUnicas: new Set(),
+                listaMarkaFiltrada: [],
+                uniqueMarcas: [0],
+                stockTotala: 0,
+                mapaProduktua: {},  // Mapa para almacenar datos adicionales de productos
+                mapaLangilea: {}   // Mapa para almacenar datos adicionales de langileak
             },
             methods: {
+                actualizarFecha() {
+                    if (!this.dataSortu) {
+                        this.dataSortu = new Date().toISOString().slice(0, 10); // Establecer la fecha actual si no hay fecha seleccionada
+                    }
+                    this.obtenerFechaActual();
+                    this.actualizarListaFiltrada();
+                },
+                actualizarFechaAutomaticamente() {
+                // Función para actualizar automáticamente la fecha cada minuto
+                    setInterval(() => {
+                        this.obtenerFechaActual();
+                    }, 60000); // 60000 milisegundos = 1 minuto
+                },
+                formatProductName(produktua) {
+                    const truncatedName = produktua.izena.length > 30 ? produktua.izena.slice(0, 30) : produktua.izena;
+                    const truncatedDescription = produktua.deskribapena.length > 40 ? produktua.deskribapena.slice(0, 40) + '' : produktua.deskribapena;
+                    return `${truncatedName} - ${truncatedDescription}`;
+                },
                 obtenerFechaActual() {
-                    const fechaActual = new Date();
+                    const fechaSeleccionada = new Date(this.dataSortu);
                     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-                    const numeroDiaSemana = fechaActual.getDay();
-                    const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-                    this.fechaFormateada = `${fechaActual.toLocaleDateString('es-ES', options)}`;
+                    this.fechaFormateada = `${fechaSeleccionada.toLocaleDateString('es-ES', options)}`;
                 },
-                // Para cargar los grupos que están activos
-                async cargaHorariosPorGrupo() {
-                    const fechaActual = new Date();
-                    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-                    const numeroDiaSemana = fechaActual.getDay();
-
-                    console.log(numeroDiaSemana);
+                async cargaKategoria() {
                     try {
-                            const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
-                                method: 'GET',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Access-Control-Allow-Origin': '*'
-                                },
-                            });
-
-                            if (!response.ok) {
-                                console.log('Error al solicitar trabajadores por grupo');
-                                throw new Error('Error al realizar la solicitud');
-                            }
-
-                            const datuak = await response.json();
-                            this.listaOrdutegia = datuak;
-                            this.grupoPorDia = this.listaOrdutegia.find(ordutegia => ordutegia.eguna === numeroDiaSemana && ordutegia.deleted_at === null).kodea
-                        } catch (error) {
-                        console.error('Error:', error);
-                    }
-                    this.cargaLangile();
-                },
-                async cargaTxanda() {
-                    try {
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaruta', {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/kategoriaruta', {
                             // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                             method: 'GET',
                             // mode: "no-cors",
@@ -263,45 +270,16 @@
                         }
 
                         const datuak = await response.json();
-                        this.listaTxanda = datuak;
-
-                            // .filter(txanda => txanda.deleted_at === null || txanda.deleted_at === "0000-00-00 00:00:00");
-                            
+                        this.listaKategoria = datuak
+                             .filter(kategoria => kategoria.deleted_at === null || kategoria.deleted_at === "0000-00-00 00:00:00");
+                            console.log(this.listaKategoria);
                     } catch (error) {
                         console.error('Errorea: ', error);
                     }
                 },
-                async cargaLangile() {
+                async cargaProduktuMugimendua() {
                     try {
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
-                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
-                            method: 'GET',
-                            // mode: "no-cors",
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Access-Control-Allow-Origin': '*'
-                            },
-                        });
-                        if (!response.ok) {
-                            console.log('Errorea eskera eskaera egiterakoan');
-                            throw new Error('Errorea eskaera egiterakoan');
-                        }
-
-                        const datuak = await response.json();
-                        // this.listaTalde = datuak
-                        //      .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
-                        this.listaLangile = datuak
-                            .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
-                            console.log(this.listaLangile)
-                    } catch (error) {
-                        console.error('Errorea: ', error);
-                    }
-                    this.cargaLangileakG();
-                    this.cargaLangileakM();
-                },
-                async cargaLangileakG() {
-                    try {
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaGarbiketa/' + this.grupoPorDia, {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/produktumugimenduaruta', {
                             // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                             method: 'GET',
                             // mode: "no-cors",
@@ -314,50 +292,46 @@
                             console.log('Errorea eskera eskaera egiterakoan');
                             throw new Error('Errorea eskaera egiterakoan');
                         }
-
                         const datuak = await response.json();
-                        this.listaTxandaG = datuak;
-
-                            // .filter(txanda => txanda.deleted_at === null || txanda.deleted_at === "0000-00-00 00:00:00");
-                        console.log(this.listaTxandaG);
+                        this.listaProduktuMugimendua = datuak;
+                        this.actualizarListaFiltrada();
                     } catch (error) {
                         console.error('Errorea: ', error);
                     }
                 },
+                compararFechas(fechaRegistro, fechaSeleccionada) {
+                    // Convierte las fechas a objetos Date para facilitar la comparación
+                    const fechaRegistroObj = new Date(fechaRegistro);
+                    const fechaSeleccionadaObj = new Date(fechaSeleccionada);
 
-                async cargaLangileakM() {
-                    try {
-                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaMostradorea/' + this.grupoPorDia, {
-                            // const response =listaTxandaMdatuak await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
-                            method: 'GET',
-                            // mode: "no-cors",
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Access-Control-Allow-Origin': '*'
-                            },
-                        });
-                        if (!response.ok) {
-                            console.log('Errorea eskera eskaera egiterakoan');
-                            throw new Error('Errorea eskaera egiterakoan');
-                        }
-
-                        const datuak = await response.json();
-                        this.listaTxandaM = datuak;
-
-                            // .filter(txanda => txanda.data === const fechaActual = new Date(); || txanda.deleted_at === "0000-00-00 00:00:00");
-                        console.log(this.listaTxandaM);
-                    } catch (error) {
-                        console.error('Errorea: ', error);
-                    }
+                    // Compara solo el año, mes y día
+                    return fechaRegistroObj.toISOString().split('T')[0] === fechaSeleccionadaObj.toISOString().split('T')[0];
                 },
+                actualizarListaFiltrada() {
+                    if (!this.kategoriaIzenaSortu && !this.dataSortu) {
+                        this.listaFiltrada = this.listaProduktuMugimendua;
+                        
+                    } else {
+                        this.listaFiltrada = this.listaProduktuMugimendua
+                            .filter(registro => 
+                            (!this.kategoriaIzenaSortu || (registro.produktua && registro.produktua.kategoria.id == this.kategoriaIzenaSortu)) &&
+                            (!this.dataSortu || this.compararFechas(registro.data, this.dataSortu)));
+                    }
+                }
             },
+
+            watch:{
+                kategoriaIzenaSortu: function () {
+                    this.actualizarListaFiltrada();
+                }
+            },
+
             mounted() {
-                // Llama a tu función cargarPagina cuando el componente se monta
-                this.obtenerFechaActual();
-                this.cargaHorariosPorGrupo();
-                // this.filterTaldea();
-                this.cargaTxanda();
-                // this.cargaTalde();
+                this.dataSortu = this.obtenerFechaActual();
+                this.actualizarFecha();
+                this.cargaKategoria();
+                this.cargaProduktuMugimendua();
+                this.actualizarFechaAutomaticamente();
             }
         });
     </script>
