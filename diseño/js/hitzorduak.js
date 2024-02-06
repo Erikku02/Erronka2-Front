@@ -1,8 +1,10 @@
 new Vue({
     el: '#app',
     data: {
+        // modalVisible: false, // Para controlarla visibilidad del modal
         selectedCheckbox: null, // Esta variable almacenará la ID del checkbox seleccionado
-        /* arrayId: [], */
+        arrayId: [],
+        hitzorduId: [],
         etxekoaSortu: "",
         eserlekuaSortu: "",
         izenaSortu: "",
@@ -13,9 +15,14 @@ new Vue({
         hasiera_orduaSortu: "",
         amaiera_orduaSortu: "",
         asientoSortu: "",
+        langileUpdate: "",
 
         fecha: '',
         fechaFormateada: '',
+
+        idCitaSeleccionada: [],
+        datosCitaSeleccionada: [],
+        langileDatos: [],
 
         /* citas: [], */
 
@@ -151,6 +158,7 @@ new Vue({
 
         async cargaLangile() {
             this.totalLangile = 0;
+
             try {
                 const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
@@ -167,6 +175,9 @@ new Vue({
                 }
 
                 const datuak = await response.json();
+                this.langileDatos = datuak;
+                /* console.log(this.langileDatos); */
+
                 this.listaLangile = datuak
 
                     .filter(langile => langile.deleted_at === null && langile.kodea === this.grupoPorDia);
@@ -294,7 +305,7 @@ new Vue({
             return urtea + '-' + hilabetea + '-' + eguna;
         },
 
-        async createHitzordua() {
+        async createHitzordu() {
             try {
                 const eserlekua = this.eserlekuaSortu;
                 const data = this.fechaSortu;
@@ -309,10 +320,14 @@ new Vue({
                     'data': data,
                     'hasiera_ordua': hasiera_ordua,
                     'amaiera_ordua': amaiera_ordua,
+                    'hasiera_ordua_erreala': null,
+                    'amaiera_ordua_erreala': null,
                     'izena': izena,
                     'telefonoa': telefonoa,
                     'deskribapena': deskribapena,
                     'etxekoa': etxekoa,
+                    'prezio_totala': null,
+                    'id_langilea': null
                 };
 
                 console.log(JSON.stringify(arraySortu));
@@ -332,11 +347,112 @@ new Vue({
                 }
 
                 alert('Sortu da');
+                // this.modalVisible = false;
+                this.$emit('close')
                 this.cargaHitzordu();
             } catch (error) {
                 console.log('Errorea: ', error);
             }
         },
+        async cargaHitzorduDatos(idCita) {
+            try {
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
+                    // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
+                    method: 'GET',
+                    // mode: "no-cors",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+
+                if (!response.ok) {
+                    console.log('Errorea eskera egiterakoan');
+                    throw new Error('Errorea eskaera egiterakoan');
+                }
+
+                const datuak = await response.json();
+
+                this.datosCitaSeleccionada = datuak
+                    .filter(cita => cita.id == idCita);
+                console.log(this.datosCitaSeleccionada);
+
+            } catch (error) {
+                console.error('Errorea:', error);
+            }
+        },
+
+        async ezabHitzordu(id) {
+            try {
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduaezabatu/' + id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify(id),
+                });
+
+                alert('Ondo ezabatuta');
+                console.log(this.hitzorduId);
+            } catch (error) {
+
+            }
+        },
+
+        async updateHitzordu() {
+            try {
+                const id = this.idCitaSeleccionada[0];
+                const eserlekua = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).eserlekua;
+                const data = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).data;
+                const hasiera_ordua = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).hasiera_ordua;
+                const amaiera_ordua = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).amaiera_ordua;
+                const hasiera_ordua_erreala = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).hasiera_ordua_erreala;
+                const amaiera_ordua_erreala = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).amaiera_ordua_erreala;
+                const izena = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).izena;
+                const telefonoa = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).telefonoa;
+                const deskribapena = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).deskribapena;
+                const etxekoa = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).etxekoa;
+                const prezio_totala = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).prezio_totala;
+                var id_langilea = "";
+                if (this.langileUpdate != "") {
+                    id_langilea = this.langileUpdate;
+                } else {
+                    id_langilea = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).id_langilea;
+                }
+                const arrayActu = {
+                    'id': id,
+                    'eserlekua': eserlekua,
+                    'data': data,
+                    'hasiera_ordua': hasiera_ordua,
+                    'amaiera_ordua': amaiera_ordua,
+                    'hasiera_ordua_erreala': hasiera_ordua_erreala,
+                    'amaiera_ordua_erreala': amaiera_ordua_erreala,
+                    'izena': izena,
+                    'telefonoa': telefonoa,
+                    'deskribapena': deskribapena,
+                    'etxekoa': etxekoa,
+                    'prezio_totala': prezio_totala,
+                    'id_langilea': id_langilea,
+                };
+
+                console.log(arrayActu);
+
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduaeguneratu/' + id, {
+                    // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify(arrayActu),
+                });
+
+                alert('Ondo Updated');
+            } catch (error) {
+                console.log('Errorea: ', error);
+            }
+        }
 
 
     },

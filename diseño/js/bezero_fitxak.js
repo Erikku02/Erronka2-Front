@@ -250,7 +250,7 @@ new Vue({
         },
         async updateHistorial() {
             try {
-                const id = this.historialId[0]
+                const id = this.historialId[0];
                 const id_bezeroa = this.asd;
                 var id_produktua = "";
                 if (this.histProduktuUpdate != "") {

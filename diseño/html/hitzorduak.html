@@ -194,8 +194,7 @@
 
                                                 <div class="mb-3">
                                                     <label class="form-label">Nombre</label>
-                                                    <input type="text" class="form-control" min="0" value="0"
-                                                        placeholder="0" v-model="eserlekuaSortu">
+                                                    <input type="text" class="form-control" v-model="izenaSortu">
                                                 </div>
 
                                                 <div class="mb-3">
@@ -223,7 +222,8 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-primary">Añadir cita</button>
+                                        <button type="button" class="btn btn-primary" @click="createHitzordu">Añadir
+                                            cita</button>
                                     </div>
                                 </div>
                             </div>
@@ -245,9 +245,152 @@
                                 {{ hora }}
                             </td>
                             <td v-for="eserleku in totalLangile" :key="eserleku">
-                                <div v-for="cA in si(hora, eserleku)" class="bg-primary text-white text-center">
+                                <div v-for="cA in si(hora, eserleku)" class="bg-primary text-white text-center"
+                                    data-bs-toggle="modal" :data-bs-target="'#citaPopup' + eserleku"
+                                    @click="cargaHitzorduDatos(cA.id)">
                                     {{cA.izena}}
                                     <!-- Empty cell -->
+
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" :id="'citaPopup' + eserleku" tabindex="-1"
+                                    aria-labelledby="citaPopupLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
+                                                    Información de
+                                                    la cita
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <fieldset v-for="citaSelect in datosCitaSeleccionada">
+                                                        <input type="checkbox" class="btn" @click=""
+                                                            :value="citaSelect.id" v-model="idCitaSeleccionada">
+                                                        Modificar cita
+                                                        </input>
+                                                        <button type="button" class="btn btn-primary"
+                                                            @click="ezabHitzordu(citaSelect.id)">
+                                                            Borrar cita
+                                                        </button>
+
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">
+                                                                Fecha
+                                                            </label>
+                                                            <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                {{citaSelect.data}}
+                                                            </p>
+                                                            <input v-else type="date" id="disabledTextInput"
+                                                                class="form-control" placeholder="Disabled input"
+                                                                v-model="citaSelect.data">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">
+                                                                Asiento
+                                                            </label>
+                                                            <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                {{citaSelect.eserlekua}}
+                                                            </p>
+                                                            <input v-else type="number" class="form-control" min="0"
+                                                                value="0" placeholder="0"
+                                                                v-model="citaSelect.eserlekua" />
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Hora inicio</label>
+                                                            <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                {{citaSelect.hasiera_ordua}}</p>
+                                                            <input v-else type="time"
+                                                                v-model="citaSelect.hasiera_ordua">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Hora fin</label>
+                                                            <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                {{citaSelect.amaiera_ordua}}</p>
+                                                            <input v-else type="time"
+                                                                v-model="citaSelect.amaiera_ordua">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Nombre</label>
+                                                            <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                {{citaSelect.izena}}</p>
+                                                            <input v-else type="text" class="form-control"
+                                                                v-model="citaSelect.izena">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Teléfono</label>
+                                                            <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                {{citaSelect.telefonoa}}</p>
+                                                            <input v-else type="tel" class="form-control"
+                                                                v-model="citaSelect.telefonoa" maxlength="9">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Descripción</label>
+                                                            <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                {{citaSelect.deskribapena}}</p>
+                                                            <input v-else type="text" class="form-control"
+                                                                v-model="citaSelect.deskribapena" maxlength="250">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Tipo cliente</label>
+                                                            <span v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                <p v-if="citaSelect.etxekoa == 'k'">
+                                                                    Externo
+                                                                </p>
+                                                                <p v-else>
+                                                                    Interno
+                                                                </p>
+                                                            </span>
+
+                                                            <select v-else class="form-select"
+                                                                v-model="citaSelect.etxekoa">
+                                                                <option value="e">Interno</option>
+                                                                <option value="k">Externo</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Alumno</label>
+                                                            <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                {{citaSelect.id_langilea}}</p>
+                                                            <select v-else class="form-select" v-model="langileUpdate">
+                                                                <option :value="null" selected>Todas las casas
+                                                                </option>
+                                                                <option v-for="(langile) in langileDatos"
+                                                                    :value="langile.id">
+                                                                    {{langile.izena}}</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Precio</label>
+                                                            <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                {{citaSelect.prezio_totala}}</p>
+                                                            <input v-else type="text" class="form-control"
+                                                                v-model="citaSelect.prezio_totala">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    @click="updateHitzordu">Actualizar
+                                                    cita</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </td>
