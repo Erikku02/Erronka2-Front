@@ -1,3 +1,21 @@
+// Para formatear la hora y que salga con el formato hh:mm
+Vue.filter('formatHour', function (value) {
+    if (!value) return '';
+
+    // Dividir la cadena de hora en partes utilizando ":"
+    const parts = value.split(':');
+
+    // Asegurarse de que hay al menos dos partes
+    if (parts.length >= 2) {
+        // Tomar las dos primeras partes y unirlas con ":"
+        return `${parts[0]}:${parts[1]}`;
+    }
+
+    // Si no hay dos partes, devolver la cadena original
+    return value;
+});
+
+
 new Vue({
     el: '#app',
     data: {
@@ -217,9 +235,9 @@ new Vue({
 
                 if (diaGrupo) {
                     this.grupoPorDia = diaGrupo.kodea;
-                    this.cargaLangile();
+                    /* this.cargaLangile(); */
                 } else {
-                    console.error('No se encontró el día de trabajo para el grupo');
+                    console.log('No se encontró el día de trabajo para el grupo');
                 }
 
                 this.cargaLangile();
@@ -452,7 +470,7 @@ new Vue({
             } catch (error) {
                 console.log('Errorea: ', error);
             }
-        }
+        },
 
 
     },
