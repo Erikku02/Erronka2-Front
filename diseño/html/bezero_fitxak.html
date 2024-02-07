@@ -244,8 +244,10 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr v-for="(historial) in listaHistorial">
-                                                            <td><input type="checkbox" :value="historial.id"
-                                                                    v-model="historialId" /></td>
+                                                            <td>
+                                                                <input type="checkbox" :value="historial.id"
+                                                                    v-model="historialId" />
+                                                            </td>
                                                             <td>
                                                                 <span v-if="!historialId.includes(historial.id)">
                                                                     {{ historial.data }}
