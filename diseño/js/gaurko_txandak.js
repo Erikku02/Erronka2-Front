@@ -154,37 +154,6 @@ new Vue({
                 console.error('Errorea: ', error);
             }
         },
-        // async filterTaldea(talde) {
-        //     this.selectedTalde = talde;
-        //     try {
-        //         const kodea = this.selectedTalde;
-        //         if (!kodea) {
-        //             // Si no se selecciona ningún grupo, cargar todos los trabajadores
-        //             this.cargaLangile();
-        //         } else {
-        //             const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaruta/' + kodea, {
-        //                 method: 'GET',
-        //                 headers: {
-        //                     'Content-Type': 'application/json',
-        //                     'Access-Control-Allow-Origin': '*'
-        //                 },
-        //             });
-
-        //             if (!response.ok) {
-        //                 console.log('Error al solicitar trabajadores por grupo');
-        //                 throw new Error('Error al realizar la solicitud');
-        //             }
-
-        //             const datuak = await response.json();
-        //             this.listaTxanda = datuak
-        //                 //   .filter(langilea => langilea.deleted_at === null || langilea.deleted_at === "0000-00-00 00:00:00");
-        //              this.contarTurnosPorAlumno();
-        //              //this.contarTurnosByKodea(kodea);
-        //         }
-        //     } catch (error) {
-        //         console.error('Error:', error);
-        //     }
-        // },
     },
     mounted() {
         // Llama a tu función cargarPagina cuando el componente se monta
