@@ -1,18 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Turnos</title>
+    <title>Historial de material</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- BARRA DE NAVEGACION -->
     <nav class="navbar bg-body-tertiary fixed-top">
         <div class="container d-flex align-items-center">
@@ -22,10 +22,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand mx-auto h3 d-flex d-inline" href="#">
-                Turnos
-                <!-- FIXME: buscar como hacero sin puntitos  -->
-                <!-- sin los puntos no se ve bien centrado -->
-                <p class="puntos" style="color: #F7F7F7;">........</p>
+                Historial de extracción de material
             </a>
 
             <!-- Barra de navegacion fija -->
@@ -66,7 +63,7 @@
 
                         <!-- Productos -->
                         <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
+                            <a class="nav-link active link-light" href="produktuak.html">
                                 <i class="bi bi-tags-fill m-2"></i>
                                 Productos
                             </a>
@@ -94,7 +91,7 @@
                             <a class="nav-link dropdown-toggle link-light" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-calendar-check-fill m-2"></i>
-                                Turnos
+                                Tareas
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="gaurko_txandak.html">Turnos de hoy</a></li>
@@ -141,101 +138,48 @@
         </div>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
 
     <main id="app">
-        <div class="container">
-            <header class="row">
-                <ul class="nav nav-tabs mt-5">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#" @click="cargaTxanda()">Todos</a>
-                    </li>
-                    <li class="nav-item" v-for="(talde,index) in listaTalde" :key="index">
-                        <a href="#" class="nav-link active" aria-current="page" @click="filterTaldea(talde.kodea)">
-                            {{ talde.kodea }}
-                        </a>
-                    </li>
-                </ul>
-            </header>
-
-            <div class="row">
-                <!-- Iconos para editar los datos -->
-                <div class="icons h4 text-end mt-4">
-
+        <br>
+        <div class="container mb-5">
+            <!-- Tabla -->
+            <template>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <select class="form-select form-select-sm" id="selectMateriala" required v-model="materialaIzenaSortu">
+                            <option disabled value="" class="fs-5">Filtra por material</option>
+                            <option value="">Todos</option>
+                            <option v-for="(materiala_erabili) in listaMateriala" :value="materiala_erabili.id">{{ materiala_erabili.etiketa }}</option>
+                        </select>
+                    </div>
                 </div>
-
-                <!-- Tabla -->
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Limpieza</th>
-                            <th scope="col">Mostrador</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(alumno, index) in contarTurnosPorAlumno()" :key="index"
-                            v-if="contarTurnos(alumno.turnos, 'G') !== 1 || contarTurnos(alumno.turnos, 'M') !== 1">
-                            <td>{{ alumno.nombre }}</td>
-                            <td>{{ contarTurnos(alumno.turnos, 'G')-1 }}</td>
-                            <td>{{ contarTurnos(alumno.turnos, 'M')-1 }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- FORMULARIO AÑADIR GRUPO -->
-            <!-- <div class="row justify-content-center align-items-center"> -->
-            <div class="row d-flex justify-content-center p-5" style="width: 100%;">
-                <h4 class="text-center pt-5 mx-auto">Añadir turno</h4>
-
-                <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
-                    style="width: 100%;">
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="mb-3">
-                            <select class="form-select w-100" id="x" required v-model="kodeaSortu"
-                                @change="filtrarAlumnosPorGrupo">
-                                <option disabled value="">Grupo</option>
-                                <option v-for="(talde) in listaTalde" :key="talde.kodea">{{talde.kodea}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="mb-3">
-                            <select class="form-select w-100" id="y" required v-model="izenaSortu">
-                                <option disabled value="">Nombre</option>
-                                <option v-for="(langile) in alumnosPorGrupo" :key="langile.id" :value="langile.id">
-                                    {{langile.izena}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="mb-3">
-                            <select class="form-select w-100" id="z" required v-model="tareaSortu">
-                                <option disabled value="">Tarea</option>
-                                <option value='G'>Limpieza</option>
-                                <option value='M'>Mostrador</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- FIXME: el button solo se centra cuando esta en pantalla completa-->
-                    <!-- <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto"> -->
-                    <div class="col-1 align-self-center">
-                        <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
-                        <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
-                            <button @click.prevent="createTxanda()" class="btn btn-primary">Añadir</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            </template>
+            <table  class="table table-hover mt-5 mb-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Material</th>
+                        <th scope="col">Alumno</th>
+                        <th scope="col">Fecha extracción</th>
+                        <th scope="col">Fecha devolución</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(registro, index) in listaFiltrada" :key="index">
+                        <td>{{registro.materiala.etiketa}}</td>
+                        <td>{{registro.langilea.izena}}</td>
+                        <td>{{registro.hasiera_data}}</td>
+                        <td>{{registro.amaiera_data ? registro.amaiera_data : 'EN USO'}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-dark text-light text-center py-3" id="sticky-footer">
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
         <div class="container">
-            <p>&copy; 2024 Taldeak. Todos los derechos reservados.</p>
+            <p>&copy; 2024 Historial de material. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -246,7 +190,102 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
-    <script src="../js/txandak.js"></script>
-</body>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                selectedTalde: "",
+                materialaIzenaSortu: "",
+                dataSortu: "",
+                arrayKodea: [],
+                fechaFormateada: '',
+                listaOrdutegia: [],
+                listaMateriala: [],
+                listaMaterialaErabili: [],
+                listaProduktua: [],
+                listaFiltrada: [],
+                listaMarka: [],
+                registroBerri: [],
+                guardarRegistro: [],
+                registros: [],
+                stockTotala: 0,
+            },
+            methods: {
 
+                async cargaMateriala() {    
+                    
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaruta', {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+
+                        if (!response.ok) {
+                            console.log('Errorea eskera eskaera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+                        // Verificar si el material ya está en uso
+
+
+                        const datuak = await response.json();
+
+                        // Filtrar los materiales que no están en uso
+                        this.listaMateriala = datuak
+                            .filter(materiala => materiala.deleted_at === null || materiala.deleted_at === "0000-00-00 00:00:00")
+                    } catch (error) {
+                        console.error('Errorea: ', error);
+                    }
+                    this.actualizarListaFiltrada();
+                },
+                async cargaMaterialaErabili() {
+                    try {
+                        const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaerabiliruta', {
+                            // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
+                            method: 'GET',
+                            // mode: "no-cors",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                        });
+                        if (!response.ok) {
+                            console.log('Errorea eskera eskaera egiterakoan');
+                            throw new Error('Errorea eskaera egiterakoan');
+                        }
+                        const datuak = await response.json();
+                        this.listaMaterialaErabili = datuak;
+                        this.actualizarListaFiltrada();
+                    } catch (error) {
+                        console.error('Errorea: ', error);
+                    }
+                },
+                actualizarListaFiltrada() {
+                    if (!this.materialaIzenaSortu) {
+                        this.listaFiltrada = this.listaMaterialaErabili
+                            .sort((a, b) => new Date(b.hasiera_data) - new Date(a.hasiera_data));
+                    } else {
+                        this.listaFiltrada = this.listaMaterialaErabili
+                            .sort((a, b) => new Date(b.hasiera_data) - new Date(a.hasiera_data))
+                            .filter(registro => 
+                                (!this.materialaIzenaSortu || (registro.materiala && registro.materiala.id == this.materialaIzenaSortu))
+                            );
+                    }
+                }
+            },
+            watch:{
+                materialaIzenaSortu: function () {
+                    this.actualizarListaFiltrada();
+                }
+            },
+
+            mounted() {
+                this.cargaMateriala();
+                this.cargaMaterialaErabili();
+            }
+        });
+    </script>
+</body>
 </html>
