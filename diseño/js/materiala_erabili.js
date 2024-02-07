@@ -1,30 +1,44 @@
-
-
-/* ESTA SIN HACER
-    Es la kudeakea del material del almacen */
-
-
 new Vue({
     el: '#app',
     data: {
         selectedTalde: "",
-        selectedCheckbox: null, // Esta variable almacenará la ID del checkbox seleccionado
-        listaLangile: [],
-        arrayId: [],
         arrayKodea: [],
         kodeaSortu: "",
         izenaSortu: "",
-        etiketaSortu: "",
+        materialaSortu: "",
+        listaTalde: [],
+        listaLangile: [],
+        fechaFormateada: '',
+        listaOrdutegia: [],
+        grupoPorDia: '',
+        alumnosPorGrupo: [],
         listaMateriala: [],
+        materialesDisponibles: [],
+        materialesEnUso: [], // Nueva propiedad para almacenar los materiales en uso
+        listaMaterialaErabili: [],
+        registroBerri: [],
+        guardarRegistro: [],
+        registros: [],
+        stockTotala: 0,
+        actualizarMateriales: false
     },
     methods: {
-        // Para cargar los grupos que estan activos
-        async cargaMaterialaErabili() {
+        obtenerFechaActual() {
+            const fechaActual = new Date();
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const numeroDiaSemana = fechaActual.getDay();
+            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            this.fechaFormateada = `${fechaActual.toLocaleDateString('es-ES', options)}`;
+        },
+        // Para cargar los grupos que están activos
+        async cargaHorariosPorGrupo() {
+            const fechaActual = new Date();
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const numeroDiaSemana = fechaActual.getDay();
+
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaruta', {
-                    // const response = await fetch('https://www.materiala3-back.edu/Erronka2/laravel_e2t3/public/api/materialaaruta', {
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
                     method: 'GET',
-                    // mode: "no-cors",
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
@@ -32,34 +46,144 @@ new Vue({
                 });
 
                 if (!response.ok) {
-                    console.log('Errorea eskera egiterakoan');
+                    console.log('Error al solicitar trabajadores por grupo');
+                    throw new Error('Error al realizar la solicitud');
+                }
+
+                const datuak = await response.json();
+                this.listaOrdutegia = datuak;
+                
+                // Verificar si se encontró un grupo antes de acceder a 'kodea'
+                const grupoEncontrado = this.listaOrdutegia.find(ordutegia => ordutegia.eguna === numeroDiaSemana && ordutegia.deleted_at === null);
+
+                if (grupoEncontrado) {
+                    this.grupoPorDia = grupoEncontrado.kodea;
+                } else {
+                    // Manejar el caso cuando no se encuentra un grupo
+                    console.error('No se encontró un grupo para el día actual.');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
+            this.cargaLangile();
+        },
+
+        filtrarAlumnosPorGrupo() {
+            const grupoSeleccionado = this.grupoPorDia;
+            // Filtrar la lista de alumnos por el grupo seleccionado
+            this.alumnosPorGrupo = this.listaLangile.filter(langile => langile.kodea === this.grupoPorDia);
+        },
+        async actualizarMaterialesDisponibles() {
+            try {
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaruta', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+
+                if (!response.ok) {
+                    console.log('Errorea eskera eskaera egiterakoan');
                     throw new Error('Errorea eskaera egiterakoan');
                 }
 
                 const datuak = await response.json();
-                // console.log(datuak);
-                this.listaMateriala = datuak
-                    .filter(materiala => materiala.deleted_at === null || materiala.deleted_at === "0000-00-00 00:00:00");
-                console.log(datuak);
+
+                // Filtrar los materiales que no están en uso
+                this.materialesDisponibles = datuak
+                    .filter(materiala => materiala.deleted_at === null || materiala.deleted_at === "0000-00-00 00:00:00")
+                    .filter(materiala => !this.materialesEnUso.includes(materiala.id));
+                // Cambiar el valor de la variable para forzar la actualización
+                this.actualizarMateriales = !this.actualizarMateriales;
             } catch (error) {
-                console.error('Errorea:', error);
+                console.error('Errorea: ', error);
             }
         },
-
-        /*async createMateriala() {
+        async cargaMateriala() {    
+            
             try {
-                // const id = this.kodeaSortu;
-                const etiketa = this.etiketaSortu;
-                const izena = this.izenaSortu;
-                const arraySortu = {
-                    "etiketa": etiketa,
-                    "izena": izena
-                };
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaruta', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
 
+                if (!response.ok) {
+                    console.log('Errorea eskera eskaera egiterakoan');
+                    throw new Error('Errorea eskaera egiterakoan');
+                }
+                // Verificar si el material ya está en uso
+
+
+                const datuak = await response.json();
+
+                // Filtrar los materiales que no están en uso
+                this.materialesDisponibles = datuak
+                    .filter(materiala => materiala.deleted_at === null || materiala.deleted_at === "0000-00-00 00:00:00")
+                    .filter(materiala => !this.materialesEnUso.includes(materiala.id));
+            } catch (error) {
+                console.error('Errorea: ', error);
+            }
+            this.cargaMaterialaErabili();
+        },
+
+
+        async cargaMaterialaErabili() {
+            this.actualizarMaterialesDisponibles();
+            try {
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaerabiliruta', {
+                    // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
+                    method: 'GET',
+                    // mode: "no-cors",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+                if (!response.ok) {
+                    console.log('Errorea eskera eskaera egiterakoan');
+                    throw new Error('Errorea eskaera egiterakoan');
+                }
+                const datuak = await response.json();
+                this.listaMaterialaErabili = datuak.filter(materiala_erabili => materiala_erabili.amaiera_data === null || materiala_erabili.amaiera_data === "0000-00-00 00:00:00");
+
+                // Actualizar la lista de materiales en uso
+                this.materialesEnUso = this.listaMaterialaErabili.map(item => item.materiala.id);  
+
+            } catch (error) {
+                console.error('Errorea: ', error);
+            }
+        },
+        
+        // // Nuevo método para filtrar la lista de materiales disponibles
+        // materialesDisponibles() {
+        //     return this.listaMateriala.filter(materiala => !this.materialesEnUso.includes(materiala.id));
+        // },
+        
+        async createMaterialErabili() {
+            try {
+                const langile = this.izenaSortu;
+                const materiala = this.materialaSortu;
+                
+                // Verificar si el material ya está en uso
+                if (this.materialesEnUso.includes(materiala)) {
+                    alert('¡El material ya está en uso!');
+                    return; // Detener la ejecución si el material ya está en uso
+                }
+
+                const arraySortu = {
+                    "id_langilea": langile,
+                    "id_materiala": materiala
+                };
+                
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialagorde', {
-                    // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileagorde', {
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaerabiligorde', {
+                    // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
@@ -72,127 +196,72 @@ new Vue({
                     console.log('Errorea sortzerakoan');
                     throw new Error('Errorea sortzerakoan');
                 }
-
-                alert('Sortu da');
-                await this.cargaMateriala();
-                location.reload();
+                await this.cargaMaterialaErabili();
+                await this.actualizarMaterialesDisponibles(); // Llamada a la nueva función
 
             } catch (error) {
-                console.log("Errorea: ", error);
+                console.log('Errorea: ', error);
             }
-        },*/
+        },
 
-        // TODO:ordenar tabla por columnas
-        /*ordenarColumna(){
-            for (let i = 0; i < th.length; i++) {
-                const element = th[i];
-                
-            }
-        }*/
-        // TODO: actuMateriala
-        /*async actuMateriala() {
+        async materialaItzuli(id){
+
             try {
-                const id = this.arrayId[0];
-                const etiketa = this.listaMateriala.find(materiala => materiala.id === this.arrayId[0]).etiketa;
-                const izena = this.listaMateriala.find(materiala => materiala.id === this.arrayId[0]).izena;
-                console.log(id);
-                console.log(etiketa);
-                console.log(izena);
-                
-                const arrayActu = {
-                "id": id,
-                "etiketa": etiketa,
-                "izena": izena
-                }
 
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaeguneratu/' + id, {
-                // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
-                method: 'PUT',
-                headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-                },
-                body: JSON.stringify(arrayActu),
+                const response = await fetch(`http://localhost/Erronka2/laravel_e2t3/public/api/materialaerabiliezabatu/` + id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify({}),
                 });
 
                 if (!response.ok) {
-                console.log('Errorea eguneratzerakoan');
-                throw new Error('Errorea eguneratzerakoan');
+                    console.log('Errorea eguneratzerakoan');
+                    throw new Error('Errorea eguneratzerakoan');
                 }
-
-                alert('Ondo eguneratuta');
-                await this.cargaMateriala();
-                location.reload();
-
-            } catch (error) {
-                console.log('Errorea: ', error);
-            }
-        },*/
-        /*async ezabMateriala() {
-            try {
-                for (var i = 0; i < this.arrayId.length; i++) {
-                    const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaezabatu/' + this.arrayId[i], {
-                        // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/materialaaezabatu/' + this.arrayKodea[i], {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': '*'
-                        },
-                        body: JSON.stringify(this.arrayId[i]),
-                    });
-                }
-
-
-                // if (!response.ok) {
-                //     console.log('Errorea eguneratzerakoan');
-                //     throw new Error('Errorea eguneratzerakoan');
-                // }
-
-                alert('Ondo ezabatuta');
-                await this.cargaMateriala();
+                await this.cargaMaterialaErabili();
                 location.reload();
             } catch (error) {
                 console.log('Errorea: ', error);
             }
-        },*/
+        },
 
-        /*async filtermateriala(materiala) {
-            this.selectedmateriala = materiala;
-            console.log("rfrfr");
+        async cargaLangile() {
             try {
-                const kodea = this.selectedmateriala;
-                console.log(kodea);
-
-                if (!kodea) {
-                    // Si no se selecciona ningún grupo, cargar todos los trabajadores
-                    this.cargaLangile();
-                } else {
-                    const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta/' + kodea, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': '*'
-                        },
-                    });
-
-                    if (!response.ok) {
-                        console.log('Error al solicitar trabajadores por grupo');
-                        throw new Error('Error al realizar la solicitud');
-                    }
-
-                    const datuak = await response.json();
-                    console.log(datuak);
-                    this.listaLangile = datuak
-                        .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
-                    console.log(datuak);
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                    // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                    method: 'GET',
+                    // mode: "no-cors",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+                if (!response.ok) {
+                    console.log('Errorea eskera eskaera egiterakoan');
+                    throw new Error('Errorea eskaera egiterakoan');
                 }
+
+                const datuak = await response.json();
+                // this.listaTalde = datuak
+                //      .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
+                this.listaLangile = datuak
+                    .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
+                    //  console.log(this.listaLangile)
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Errorea: ', error);
             }
-        },*/
+            this.filtrarAlumnosPorGrupo();
+        },
     },
+    
     mounted() {
         // Llama a tu función cargarPagina cuando el componente se monta
+        this.cargaMaterialaErabili();
+        this.obtenerFechaActual();
+        this.cargaHorariosPorGrupo();
         this.cargaMateriala();
     }
 });
