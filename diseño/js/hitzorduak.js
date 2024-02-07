@@ -55,6 +55,8 @@ new Vue({
         hitzorduSinFiltro: [],
         listaLangile: [], // lista de langilea
         listaOrdutegia: [],
+        listaTratamenduSinFiltro: [],
+        listaTratamendua: [],
 
         grupoPorDia: '',
         citasPorHora: {},
@@ -70,6 +72,10 @@ new Vue({
         /* hairdressersPerGroup: [] */
 
         asientosPorHora: [],
+
+        generarTicket: false,
+        tratamientosSeleccionados: [],
+        precioTotal: 0,
     },
     methods: {
 
@@ -302,6 +308,7 @@ new Vue({
             );
         },
 
+        // encuentra citas para una hora y asiento específicos
         si(hora, asiento) {
 
             const citaActual = this.listaHitzordu.filter(hitzordu => hora >= hitzordu.hasiera_ordua && hora < hitzordu.amaiera_ordua && hitzordu.eserlekua == asiento);
@@ -451,7 +458,7 @@ new Vue({
                     'deskribapena': deskribapena,
                     'etxekoa': etxekoa,
                     'prezio_totala': prezio_totala,
-                    'id_langilea': id_langilea,
+                    'id_langilear': id_langilea,
                 };
 
                 console.log(arrayActu);
@@ -471,6 +478,61 @@ new Vue({
                 console.log('Errorea: ', error);
             }
         },
+
+        async cargaTratamendu() {
+            try {
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/tratamenduaruta', {
+                    // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                    method: 'GET',
+                    // mode: "no-cors",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+
+                if (!response.ok) {
+                    console.log('Errorea eskera egiterakoan');
+                    throw new Error('Errorea eskaera egiterakoan');
+                }
+
+                const datuak = await response.json();
+                console.log(datuak);
+                this.listaTratamenduSinFiltro = datuak;
+                this.listaTratamendua = datuak
+
+                    .filter(tratamendu => tratamendu.deleted_at === null || tratamendu.deleted_at === "0000-00-00 00:00:00");
+                console.log(this.listaTratamendua);
+
+            } catch (error) {
+                console.error('Errorea:', error);
+            }
+        },
+
+        // Método para calcular el precio total de los tratamientos seleccionados
+        /* calcularPrecioTotal() {
+            // Inicializar el precio total en 0
+            let precioTotal = 0;
+
+            // Iterar sobre los tratamientos seleccionados
+            for (const tratamiento of this.tratamientosSeleccionados) {
+                // Sumar el precio de cada tratamiento al precio total
+                precioTotal += tratamiento.precio;
+            }
+
+            // Actualizar el precio total en el estado de Vue
+            this.precioTotal = precioTotal;
+        }, */
+        // Función para calcular el precio total basado en los tratamientos seleccionados
+        calcularPrecioTotal() {
+            this.precioTotal = this.tratamientosSeleccionados.reduce((total, tratamiento) => {
+                if (this.etxekoaSortu === 'e') {
+                    return total + parseFloat(tratamiento.etxeko_prezioa);
+                } else {
+                    return total + parseFloat(tratamiento.kanpoko_prezioa);
+                }
+            }, 0);
+        }
 
 
     },
@@ -492,6 +554,15 @@ new Vue({
     watch: {
         fecha: function (fecha) {
             this.cargaHorariosPorGrupo(fecha);
+        },
+
+        // Observador que se activa cuando cambia la selección de tratamientos
+        tratamientosSeleccionados: {
+            handler() {
+                // Calcular el precio total al cambiar la selección de tratamientos
+                this.calcularPrecioTotal();
+            },
+            deep: true // Observar cambios profundos en el array de tratamientos seleccionados
         }
     }
 });
