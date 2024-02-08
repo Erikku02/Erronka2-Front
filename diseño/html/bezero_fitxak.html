@@ -12,19 +12,18 @@
 
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- BARRA DE NAVEGACION -->
     <nav class="navbar bg-body-tertiary fixed-top">
         <div class="container d-flex align-items-center">
-            <!-- <div class="container-fluid"> -->
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand mx-auto h3 d-flex d-inline" href="materiala_erabili.html">
-                Fichas de cliente
+            <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
+                Fichas de clientes
             </a>
-
+        
             <!-- Barra de navegacion fija -->
             <i class="bi bi-box-arrow-right h3"></i>
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
@@ -33,110 +32,98 @@
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-
+        
                 <!-- Barra de navegacion "oculta" -->
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <!-- Citas -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle link-light" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-calendar3 m-2"></i>
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-calendar3 m-2"></i>
                                 Citas
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Asignar citas</a></li>
-                                <li><a class="dropdown-item" href="#">Comfirmar citas</a></li>
-                                <li><a class="dropdown-item" href="bezero_fitxak.html">Ficha técnica</a></li>
-                                <li><a class="dropdown-item" href="#">Listado tickets</a></li>
-                                <li><a class="dropdown-item" href="#">Agenda de citas</a></li>
+                                <li><a class="dropdown-item" href="hitzorduak.html">Gestión de citas</a></li>
+                                <li><a class="dropdown-item" href="#">Tickets</a></li>
+                            </ul>
+                        </li>
+        
+                        <!-- Productos -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-tags-fill m-2"></i>
+                                    Productos
+                                </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="produktu_mugimenduak.html">Extraer productos</a></li>
+                                <li><a class="dropdown-item" href="produktuak.html">Gestionar productos</a></li>
+                                <li><a class="dropdown-item" href="kategoriak.html">Gestionar categorías</a></li>
+                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de extracción de productos</a></li>
                             </ul>
                         </li>
 
-                        <!-- Almacen -->
-                        <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
-                                <i class="bi bi-box-seam-fill m-2"></i>
-                                Almacén
-                            </a>
-                        </li>
-
-                        <!-- Productos -->
-                        <li class="nav-item">
-                            <a class="nav-link active link-light" href="produktuak.html">
-                                <i class="bi bi-tags-fill m-2"></i>
-                                Productos
-                            </a>
-                        </li>
-
                         <!-- Material -->
-                        <li class="nav-item">
-                            <a class="nav-link active link-light" href="materiala.html">
-                                <!-- <i class="bi bi-brush"></i> -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-palette2 m-2"></i>
-                                Material
-                            </a>
+                                    Material
+                                </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="materiala.html">Gestionar material</a></li>
+                                <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a></li>
+                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de movimientos de material</a></li>
+                            </ul>
                         </li>
+
 
                         <!-- Tratamientos -->
-                        <li class="nav-item">
-                            <a class="nav-link active link-light" href="tratamenduak.html">
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="tratamenduak.html" role="button" aria-expanded="false">
                                 <i class="bi bi-scissors m-2"></i>
                                 Tratamientos
                             </a>
                         </li>
 
-                        <!-- Tareas -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle link-light" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- Turnos -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-calendar-check-fill m-2"></i>
-                                Tareas
+                                Turnos
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="txandak.html">Asignación de tareas</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">Resumen de tareas</a>
-                                </li>
+                                <li><a class="dropdown-item" href="txandak.html">Asignación de turnos</a></li>
+                                <li><a class="dropdown-item" href="gaurko_txandak.html">Turnos de hoy</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Grupos -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-people-fill m-2"></i>
+                                Grupos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="taldeak.html">Gestionar grupos</a></li>
+                                <li><a class="dropdown-item" href="ordutegiak.html">Horarios por grupo</a></li>
                             </ul>
                         </li>
 
                         <!-- Usuarios -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle link-light" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="langileak.html" role="button" aria-expanded="false">
                                 <i class="bi bi-person-fill m-2"></i>
                                 Usuarios
                             </a>
-                            <ul class="dropdown-menu">
-                                <!-- <li><a class="dropdown-item" href="#">Rotaciones</a></li> -->
-                                <li><a class="dropdown-item" href="taldeak.html">Grupos</a></li>
-                                <li><a class="dropdown-item" href="langileak.html">Trabajadores</a></li>
-                                <li>
-                                    <a class="dropdown-item" href="ordutegiak.html">Horarios por grupo</a>
-                                </li>
-                            </ul>
                         </li>
 
-
-                        <!-- Resumen tratamiento -->
-                        <li class="nav-item">
-                            <a class="nav-link active link-light" href="#">
-                                <i class="bi bi-receipt m-2"></i>
-                                Resumen tratamiento
+                        <!-- Ficha Clientes -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="bezero_fitxak.html" role="button" aria-expanded="false">
+                                <i class="bi bi-person-vcard m-2"></i>
+                                Ficha-clientes
                             </a>
                         </li>
                     </ul>
-
-                    <!-- Buscador (por defecto, se puede quitar) -->
-                    <form class="d-flex mt-3" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button class="btn btn-outline-success" type="submit">
-                            Search
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -160,7 +147,7 @@
                             <th scope="col"></th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellidos</th>
-                            <th scope="col">Telefono</th>
+                            <th scope="col">Teléfono</th>
                             <th scope="col">Piel sensible</th>
                         </tr>
                     </thead>
@@ -402,7 +389,7 @@
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input2" class="">Nombre</label> -->
                         <input type="text" class="form-control" id="input2" v-model="telefonoaSortu"
-                            placeholder="Telefono" />
+                            placeholder="Teléfono" />
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input2" class="">Nombre</label> -->
