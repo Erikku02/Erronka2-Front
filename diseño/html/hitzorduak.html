@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <script src="../js/route.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Citas</title>
@@ -457,7 +458,7 @@
                                                                                 :id="'tratamiento_' + index"
                                                                                 v-model="tratamientosSeleccionados"
                                                                                 :value="tratamiento"
-                                                                                @change="calcularPrecioTotal"
+                                                                                @change="calcularPrecioTotal(tratamiento.id)"
                                                                                 class="form-check-input" />
                                                                             <label :for="'tratamiento_' + index">{{
                                                                                 tratamiento.izena }} -
@@ -477,6 +478,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
                                                     </fieldset>
                                                 </form>
                                             </div>

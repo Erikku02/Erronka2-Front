@@ -29,7 +29,7 @@ new Vue({
 
             console.log(numeroDiaSemana);
             try {
-                    const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
+                    const response = await fetch(window.ruta +'ordutegiaruta', {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ new Vue({
         },
         async cargaTxanda() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaruta', {
+                const response = await fetch(window.ruta +'txandaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -77,7 +77,7 @@ new Vue({
         },
         async cargaLangile() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                const response = await fetch(window.ruta +'langilearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -105,7 +105,7 @@ new Vue({
         },
         async cargaLangileakG() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaGarbiketa/' + this.grupoPorDia, {
+                const response = await fetch(window.ruta +'txandaGarbiketa/' + this.grupoPorDia, {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -131,7 +131,7 @@ new Vue({
 
         async cargaLangileakM() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaMostradorea/' + this.grupoPorDia, {
+                const response = await fetch(window.ruta +'txandaMostradorea/' + this.grupoPorDia, {
                     // const response =listaTxandaMdatuak await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",

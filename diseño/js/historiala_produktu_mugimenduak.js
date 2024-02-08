@@ -51,7 +51,7 @@ new Vue({
         },
         async cargaKategoria() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/kategoriaruta', {
+                const response = await fetch(window.ruta +'kategoriaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -75,7 +75,7 @@ new Vue({
         },
         async cargaProduktuMugimendua() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/produktumugimenduaruta', {
+                const response = await fetch(window.ruta +'produktumugimenduaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",

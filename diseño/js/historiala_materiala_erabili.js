@@ -22,7 +22,7 @@ new Vue({
         async cargaMateriala() {    
             
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaruta', {
+                const response = await fetch(window.ruta +'materialaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ new Vue({
         },
         async cargaMaterialaErabili() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/materialaerabiliruta', {
+                const response = await fetch(window.ruta +'materialaerabiliruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",

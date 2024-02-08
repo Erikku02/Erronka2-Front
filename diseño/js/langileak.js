@@ -17,7 +17,7 @@ new Vue({
         // Para cargar los grupos que estan activos
         async cargaTalde() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                const response = await fetch(window.ruta +'taldearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -44,7 +44,7 @@ new Vue({
         },
         async cargaLangile() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                const response = await fetch(window.ruta +'langilearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -82,7 +82,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langileagorde', {
+                const response = await fetch(window.ruta +'langileagorde', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileagorde', {
                     method: 'POST',
                     headers: {
@@ -164,7 +164,7 @@ new Vue({
                     "abizenak": abizenak
                 }
 
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
+                const response = await fetch(window.ruta +'langileaeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
                     method: 'PUT',
                     headers: {
@@ -190,7 +190,7 @@ new Vue({
         async ezabLangile() {
             try {
                 for (var i = 0; i < this.arrayId.length; i++) {
-                    const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langileaezabatu/' + this.arrayId[i], {
+                    const response = await fetch(window.ruta +'langileaezabatu/' + this.arrayId[i], {
                         // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
                         method: 'PUT',
                         headers: {
@@ -225,7 +225,7 @@ new Vue({
                     // Si no se selecciona ningún grupo, cargar todos los trabajadores
                     this.cargaLangile();
                 } else {
-                    const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta/' + kodea, {
+                    const response = await fetch(window.ruta +'langilearuta/' + kodea, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',

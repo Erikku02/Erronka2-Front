@@ -42,11 +42,6 @@ new Vue({
         datosCitaSeleccionada: [],
         langileDatos: [],
 
-        /* citas: [], */
-
-        /* translations: {},
-        currentLocale: '', */
-
         eserlekuKop: [],
         hoursArray: [],
         /* hitzorduArray: [], */
@@ -76,6 +71,8 @@ new Vue({
         generarTicket: false,
         tratamientosSeleccionados: [],
         precioTotal: 0,
+
+        idTratSelect: [], // lista de los id de tratamientos que se seleccionan
     },
     methods: {
 
@@ -115,7 +112,7 @@ new Vue({
 
         async cargaHitzordu() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
+                const response = await fetch(window.ruta +'hitzorduaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -158,7 +155,7 @@ new Vue({
                 this.eserlekuKop = [];
 
                 /* const response2 = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta' + this.dataSelec, { */
-                const response2 = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                const response2 = await fetch(window.ruta +'langilearuta', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
@@ -184,7 +181,7 @@ new Vue({
             this.totalLangile = 0;
 
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                const response = await fetch(window.ruta +'langilearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -221,7 +218,7 @@ new Vue({
             const numeroDiaSemana = fechaActual ? fechaActual.getDay() : -1;
 
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
+                const response = await fetch(window.ruta +'ordutegiaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -357,7 +354,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduagorde', {
+                const response = await fetch(window.ruta +'hitzorduagorde', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
@@ -381,7 +378,7 @@ new Vue({
         },
         async cargaHitzorduDatos(idCita) {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
+                const response = await fetch(window.ruta +'hitzorduaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -409,7 +406,7 @@ new Vue({
 
         async ezabHitzordu(id) {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduaezabatu/' + id, {
+                const response = await fetch(window.ruta +'hitzorduaezabatu/' + id, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -466,7 +463,7 @@ new Vue({
 
                 console.log(arrayActu);
 
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduaeguneratu/' + id, {
+                const response = await fetch(window.ruta +'hitzorduaeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
                     method: 'PUT',
                     headers: {
@@ -477,6 +474,8 @@ new Vue({
                 });
 
                 alert('Ondo Updated');
+
+                this.createTicketLerroa();
             } catch (error) {
                 console.log('Errorea: ', error);
             }
@@ -484,7 +483,7 @@ new Vue({
 
         async cargaTratamendu() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/tratamenduaruta', {
+                const response = await fetch(window.ruta +'tratamenduaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -512,22 +511,13 @@ new Vue({
             }
         },
 
-        // Método para calcular el precio total de los tratamientos seleccionados
-        /* calcularPrecioTotal() {
-            // Inicializar el precio total en 0
-            let precioTotal = 0;
-
-            // Iterar sobre los tratamientos seleccionados
-            for (const tratamiento of this.tratamientosSeleccionados) {
-                // Sumar el precio de cada tratamiento al precio total
-                precioTotal += tratamiento.precio;
-            }
-
-            // Actualizar el precio total en el estado de Vue
-            this.precioTotal = precioTotal;
-        }, */
         // Función para calcular el precio total basado en los tratamientos seleccionados
-        calcularPrecioTotal() {
+        calcularPrecioTotal(idSelect) {
+            /* console.log(this.idTratSelect); 
+            console.log(idSelect); */
+            // Filtrar los valores undefined del array idTratSelect
+            this.idTratSelect = this.idTratSelect.filter(id => id !== undefined);
+
             this.precioTotal = this.tratamientosSeleccionados.reduce((total, tratamiento) => {
                 if (this.etxekoaSortu === 'e') {
                     return total + parseFloat(tratamiento.etxeko_prezioa);
@@ -535,6 +525,72 @@ new Vue({
                     return total + parseFloat(tratamiento.kanpoko_prezioa);
                 }
             }, 0);
+
+            if (this.idTratSelect.includes(idSelect)) {
+                // si el tratamiento ya esta seleccionado, eliminarlo del array
+                const index = this.idTratSelect.indexOf(idSelect);
+                if (index > -1) {
+                    this.idTratSelect.splice(index, 1);
+                }
+            } else {
+                // si el tratamiento no esta seleccionado, agregarlo al array
+                this.idTratSelect.push(idSelect);
+            }
+
+            /* console.log(this.idTratSelect);
+            console.log(idSelect); */
+        },
+
+        async createTicketLerroa() {
+            try {
+
+                // Hacer un POST por cada tratamiento
+                for (const idTratamiento of this.idTratSelect) {
+                    // Obtener el precio del tratamiento segun etxekoaSortu
+                    let precioTratamiento;
+                    if (this.etxekoaSortu === 'e') {
+                        precioTratamiento = this.listaTratamendua.find(tratamiento => tratamiento.id === idTratamiento)?.etxeko_prezioa;
+                    } else {
+                        precioTratamiento = this.listaTratamendua.find(tratamiento => tratamiento.id === idTratamiento)?.kanpoko_prezioa;
+                    }
+
+                    // verificar que se ha encontrado el precio del tratamiento
+                    if (!precioTratamiento) {
+                        console.error('No se encontró el precio del tratamiento con ID: ', idTratamiento);
+                        continue;
+                    }
+
+                    // Extraer el primer elemento del array id_hitzordua
+                    const idHitzordua = this.idCitaSeleccionada[0];
+
+                    // crear el objeto con los datos a enviar 
+                    const arraySortu = {
+                        'id_hitzordua': idHitzordua,
+                        'id_tratamendua': idTratamiento,
+                        'prezioa': precioTratamiento
+                    };
+
+                    console.log(JSON.stringify(arraySortu));
+
+                    const response = await fetch(window.ruta +'ticketlerroagorde', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
+                    });
+
+                    if (!response.ok) {
+                        console.log('Errorea sortzerakoan');
+                        throw new Error('Errorea sortzerakoan');
+                    }
+
+                    console.log('ticket lerroa sortuta');
+                }
+            } catch (error) {
+                console.log('Errorea: ', error);
+            }
         }
 
 

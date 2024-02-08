@@ -12,7 +12,7 @@ new Vue({
     methods: {
         async cargaTratamendu() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/tratamenduaruta', {
+                const response = await fetch(window.ruta +'tratamenduaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -61,7 +61,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/tratamenduagorde', {
+                const response = await fetch(window.ruta +'tratamenduagorde', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
                     headers: {
@@ -97,7 +97,7 @@ new Vue({
                     "kanpoko_prezioa": kanpoko_prezioa
                 };
 
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/tratamenduaeguneratu/' + id, {
+                const response = await fetch(window.ruta +'tratamenduaeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
                     method: 'PUT',
                     headers: {
@@ -122,7 +122,7 @@ new Vue({
         async ezabTratamendu() {
             try {
                 for (var i = 0; i < this.arrayId.length; i++) {
-                    const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/tratamenduaezabatu/' + this.arrayId[i], {
+                    const response = await fetch(window.ruta +'tratamenduaezabatu/' + this.arrayId[i], {
                         // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayId[i], {
                         method: 'PUT',
                         headers: {

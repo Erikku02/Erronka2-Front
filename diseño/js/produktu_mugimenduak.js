@@ -48,7 +48,7 @@ new Vue({
             const numeroDiaSemana = fechaActual.getDay();
 
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
+                const response = await fetch(window.ruta +'ordutegiaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ new Vue({
         },
         async cargaKategoria() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/kategoriaruta', {
+                const response = await fetch(window.ruta +'kategoriaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -111,7 +111,7 @@ new Vue({
         },
         async cargaProduktuaById(idPro) {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/produktuaruta', {
+                const response = await fetch(window.ruta +'produktuaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ new Vue({
         },
         async cargaProduktua() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/produktuaruta', {
+                const response = await fetch(window.ruta +'produktuaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ new Vue({
         },
         async cargaMarka() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/markaruta', {
+                const response = await fetch(window.ruta +'markaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -284,7 +284,7 @@ new Vue({
                 });
                 console.log(JSON.stringify(registrosAEnviar) + " aqu");
 
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/produktumugimenduagorde', {
+                const response = await fetch(window.ruta +'produktumugimenduagorde', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -307,7 +307,7 @@ new Vue({
         },
         async cargaLangile() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                const response = await fetch(window.ruta +'langilearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     method: 'GET',
                     // mode: "no-cors",

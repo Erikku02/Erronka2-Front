@@ -34,7 +34,7 @@ new Vue({
     methods: {
         async cargaOrdutegia() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
+                const response = await fetch(window.ruta +'ordutegiaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/ordutegiaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -81,7 +81,7 @@ new Vue({
 
                 // console.log(arraySortu);
 
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiagorde', {
+                const response = await fetch(window.ruta +'ordutegiagorde', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/ordutegiagorde', {
                     method: 'POST',
                     headers: {
@@ -125,7 +125,7 @@ new Vue({
                     'hasiera_ordua': hasiera_ordua,
                     'amaiera_ordua': amaiera_ordua
                 }
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaeguneratu/' + id, {
+                const response = await fetch(window.ruta +'ordutegiaeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
                     method: 'PUT',
                     headers: {
@@ -152,7 +152,7 @@ new Vue({
             try {
                 for (let i = 0; i < this.arrayId.length; i++) {
                     console.log(this.arrayId[i]);
-                    const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/ordutegiaezabatu/' + this.arrayId[i], {
+                    const response = await fetch(window.ruta +'ordutegiaezabatu/' + this.arrayId[i], {
                         // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/ordutegiaezabatu/' + this.arrayId[i], {
                         method: 'PUT',
                         headers: {
@@ -175,7 +175,7 @@ new Vue({
         },
         async cargaTalde() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/taldearuta', {
+                const response = await fetch(window.ruta +'taldearuta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
