@@ -146,7 +146,7 @@ new Vue({
                     "izena": izena
                 };
 
-                const response = await fetch(window.ruta +'taldeaeguneratu/${ kodea }', {
+                const response = await fetch(window.ruta +'taldeaeguneratu/'+ kodea, {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
                     method: 'PUT',
                     headers: {
