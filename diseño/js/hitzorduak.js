@@ -438,7 +438,9 @@ new Vue({
                 const telefonoa = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).telefonoa;
                 const deskribapena = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).deskribapena;
                 const etxekoa = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).etxekoa;
-                const prezio_totala = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).prezio_totala;
+                // const prezio_totala = this.datosCitaSeleccionada.find(cita => cita.id === this.idCitaSeleccionada[0]).prezio_totala;
+                const prezio_totala = this.datosCitaSeleccionada.find(cita => cita.id === this.precioTotal);
+                // const prezio_totala = this.precioTotal;
                 var id_langilea = "";
                 if (this.langileUpdate != "") {
                     id_langilea = this.langileUpdate;
@@ -457,8 +459,9 @@ new Vue({
                     'telefonoa': telefonoa,
                     'deskribapena': deskribapena,
                     'etxekoa': etxekoa,
-                    'prezio_totala': prezio_totala,
-                    'id_langilear': id_langilea,
+                    // 'prezio_totala': prezio_totala,
+                    'prezio_totala': this.precioTotal,
+                    'id_langilea': id_langilea,
                 };
 
                 console.log(arrayActu);
