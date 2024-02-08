@@ -264,11 +264,16 @@
                                                             :value="citaSelect.id" v-model="idCitaSeleccionada">
                                                         Modificar cita
                                                         </input>
+
+                                                        <input type="checkbox" class="btn" @click="cargaTratamendu"
+                                                            :value="citaSelect.id" v-model="idCitaSeleccionada">
+                                                        Generar ticket
+                                                        </input>
+
                                                         <button type="button" class="btn btn-primary"
                                                             @click="ezabHitzordu(citaSelect.id)">
                                                             Borrar cita
                                                         </button>
-
 
                                                         <div class="mb-3">
                                                             <label class="form-label h6">
@@ -370,10 +375,40 @@
 
                                                         <div class="mb-3">
                                                             <label class="form-label h6">Precio</label>
-                                                            <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
-                                                                {{citaSelect.prezio_totala}}</p>
-                                                            <input v-else type="text" class="form-control"
-                                                                v-model="citaSelect.prezio_totala">
+                                                            <div v-if="!idCitaSeleccionada.includes(citaSelect.id)">
+                                                                <p>
+                                                                    {{citaSelect.prezio_totala}}
+                                                                </p>
+                                                            </div>
+                                                            <!-- <input v-else type="text" class="form-control"
+                                                                v-model="citaSelect.prezio_totala"> -->
+
+                                                            <!-- Generar ticket -->
+                                                            <div v-else>
+                                                                <div class="mb-3">
+                                                                    <div v-for="(tratamiento, index) in listaTratamendua"
+                                                                        :key="index">
+                                                                        <input type="checkbox"
+                                                                            :id="'tratamiento_' + index"
+                                                                            v-model="tratamientosSeleccionados"
+                                                                            :value="tratamiento"
+                                                                            @change="calcularPrecioTotal" />
+                                                                        <label :for="'tratamiento_' + index">{{
+                                                                            tratamiento.izena }} -
+                                                                            <span v-if="citaSelect.etxekoa === 'e'">
+                                                                                {{tratamiento.etxeko_prezioa}}
+                                                                            </span>
+                                                                            <span v-else>
+                                                                                {{tratamiento.kanpoko_prezioa}}
+                                                                            </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label h6">Precio total</label>
+                                                            <p>{{ precioTotal }}</p>
                                                         </div>
                                                     </fieldset>
                                                 </form>
