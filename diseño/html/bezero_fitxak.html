@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="../js/route.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fichas de cliente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- BARRA DE NAVEGACION -->
+    <nav class="navbar bg-body-tertiary fixed-top">
+        <div class="container d-flex align-items-center">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
+                Fichas de clientes
+            </a>
+
+            <!-- Barra de navegacion fija -->
+            <i class="bi bi-box-arrow-right h3"></i>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+
+                <!-- Barra de navegacion "oculta" -->
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <!-- Citas -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-calendar3 m-2"></i>
+                                Citas
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="hitzorduak.html">Gestión de citas</a></li>
+                                <li><a class="dropdown-item" href="#">Tickets</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Productos -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-tags-fill m-2"></i>
+                                Productos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="produktu_mugimenduak.html">Extraer productos</a></li>
+                                <li><a class="dropdown-item" href="produktuak.html">Gestionar productos</a></li>
+                                <li><a class="dropdown-item" href="kategoriak.html">Gestionar categorías</a></li>
+                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de
+                                        extracción de productos</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Material -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-palette2 m-2"></i>
+                                Material
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="materiala.html">Gestionar material</a></li>
+                                <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a>
+                                </li>
+                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de
+                                        movimientos de material</a></li>
+                            </ul>
+                        </li>
+
+
+                        <!-- Tratamientos -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="tratamenduak.html" role="button"
+                                aria-expanded="false">
+                                <i class="bi bi-scissors m-2"></i>
+                                Tratamientos
+                            </a>
+                        </li>
+
+                        <!-- Turnos -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-calendar-check-fill m-2"></i>
+                                Turnos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="txandak.html">Asignación de turnos</a></li>
+                                <li><a class="dropdown-item" href="gaurko_txandak.html">Turnos de hoy</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Grupos -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-people-fill m-2"></i>
+                                Grupos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="taldeak.html">Gestionar grupos</a></li>
+                                <li><a class="dropdown-item" href="ordutegiak.html">Horarios por grupo</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Usuarios -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="langileak.html" role="button"
+                                aria-expanded="false">
+                                <i class="bi bi-person-fill m-2"></i>
+                                Usuarios
+                            </a>
+                        </li>
+
+                        <!-- Ficha Clientes -->
+                        <li class="nav-item dropdown mb-3">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="bezero_fitxak.html"
+                                role="button" aria-expanded="false">
+                                <i class="bi bi-person-vcard m-2"></i>
+                                Ficha-clientes
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <main id="app">
+        <div class="container">
+            <div class="row">
+                <!-- Iconos para editar los datos -->
+                <div class="icons h4 text-end mt-4">
+                    <i class="bi bi-check-circle m-2" @click="actuFitxa()"></i>
+                    <i class="bi bi-dash-circle" @click="ezabFitxa()"></i>
+                </div>
+
+                <!-- Tabla -->
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Piel sensible</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(fitxa) in listaFitxa">
+                            <td><input type="checkbox" :value="fitxa.id" v-model="arrayId" /></td>
+                            <td hidden><input v-model="asd">{{fitxa.id}}</input></td>
+                            <td>
+                                <span v-if="!arrayId.includes(fitxa.id)">
+                                    {{fitxa.izena}}
+                                </span>
+
+                                <input v-else type="text" v-model="fitxa.izena" :placeholder="fitxa.izena" />
+                            </td>
+                            <td>
+                                <span v-if="!arrayId.includes(fitxa.id)">
+                                    {{fitxa.abizena}}
+                                </span>
+
+                                <input v-else type="text" v-model="fitxa.abizena" :placeholder="fitxa.abizena" />
+                            </td>
+                            <td>
+                                <span v-if="!arrayId.includes(fitxa.id)">
+                                    {{fitxa.telefonoa}}
+                                </span>
+
+                                <input v-else type="text" v-model="fitxa.telefonoa" :placeholder="fitxa.telefonoa" />
+                            </td>
+                            <td>
+                                <span v-if="!arrayId.includes(fitxa.id)">
+                                    <span v-if="fitxa.azal_sentikorra == 'E'">
+                                        Ez
+                                    </span>
+                                    <span v-else="fitxa.azal_sentikorra == 'B'">
+                                        Bai
+                                    </span>
+
+                                </span>
+
+                                <select v-else class="form-select w-100" v-model="fitxa.azal_sentikorra">
+                                    <option disabled>Categoria</option>
+                                    <option value="B"> Bai</option>
+                                    <option value="E"> Ez</option>
+                                </select>
+                            </td>
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModalToggle" @click="cargaHistorial(fitxa.id)">
+                                    Historial de color
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5 text-center" id="staticBackdropLabel">
+                                                    Historial de color</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="icons h4 text-end mt-4">
+                                                    <i class="bi bi-check-circle m-2" @click="updateHistorial()"></i>
+                                                    <i class="bi bi-dash-circle" @click="ezabHistorial()"></i>
+                                                </div>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col"></th>
+                                                            <th scope="col">Fecha</th>
+                                                            <th scope="col">Marka</th>
+                                                            <th scope="col">Producto</th>
+                                                            <th scope="col">Cantidad</th>
+                                                            <th scope="col">Volumen</th>
+                                                            <th scope="col">Notas</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(historial) in listaHistorial">
+                                                            <td>
+                                                                <input type="checkbox" :value="historial.id"
+                                                                    v-model="historialId" />
+                                                            </td>
+                                                            <td>
+                                                                <span v-if="!historialId.includes(historial.id)">
+                                                                    {{ historial.data }}
+                                                                </span>
+                                                                <input v-else type="date" v-model="historial.data"
+                                                                    :placeholder="historial.data" />
+                                                            </td>
+                                                            <td>
+                                                                <span v-if="!historialId.includes(historial.id)">
+                                                                    {{ historial.marka }}
+                                                                </span>
+                                                                <select v-else id="disabledSelect" class="form-select"
+                                                                    v-model="histMarkaUpdate">
+                                                                    <option :value="null" selected>Todas las casas
+                                                                    </option>
+                                                                    <option v-for="(produktu) in listaProduktu">
+                                                                        {{produktu.marka}}</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <span v-if="!historialId.includes(historial.id)">
+                                                                    {{ historial.izena }}
+                                                                </span>
+                                                                <select v-else id="disabledSelect" class="form-select"
+                                                                    v-model="histProduktuUpdate">
+                                                                    <option v-for="(produktu) in listaProduktuFilter"
+                                                                        :value="produktu.id">{{produktu.izena}}</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <span v-if="!historialId.includes(historial.id)">
+                                                                    {{ historial.kantitatea }}
+                                                                </span>
+                                                                <input v-else type="text" v-model="historial.kantitatea"
+                                                                    :placeholder="historial.kantitatea" />
+                                                            </td>
+                                                            <td>
+                                                                <span v-if="!historialId.includes(historial.id)">
+                                                                    {{ historial.bolumena }}
+                                                                </span>
+                                                                <input v-else type="text" v-model="historial.bolumena"
+                                                                    :placeholder="historial.bolumena" />
+                                                            </td>
+                                                            <td>
+                                                                <span v-if="!historialId.includes(historial.id)">
+                                                                    {{ historial.oharrak }}
+                                                                </span>
+                                                                <input v-else type="text" v-model="historial.oharrak"
+                                                                    :placeholder="historial.oharrak" />
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Agregar
+                                                    historial</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true"
+                                    aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Agregar
+                                                    historial</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <fieldset>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Fecha
+                                                            </label>
+                                                            <input type="date" id="disabledTextInput"
+                                                                class="form-control" placeholder="Disabled input"
+                                                                v-model="histDataSortu">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Casa del producto</label>
+                                                            <select id="disabledSelect" class="form-select"
+                                                                v-model="histMarkaSortu">
+                                                                <option :value="null" selected>Todas las casas</option>
+                                                                <option v-for="(produktu) in listaProduktu">
+                                                                    {{produktu.marka}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Producto</label>
+                                                            <select id="disabledSelect" class="form-select"
+                                                                v-model="histProduktuSortu">
+                                                                <option v-for="(produktu) in listaProduktuFilter"
+                                                                    :value="produktu.id">{{produktu.izena}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Cantidad</label>
+                                                            <input type="number" class="form-control" min="0" value="0"
+                                                                placeholder="0" v-model="histKatitateaSortu">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Volumen</label>
+                                                            <input type="text" class="form-control"
+                                                                v-model="histBolumenaSortu" maxlength="100">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Notas</label>
+                                                            <input type="text" class="form-control"
+                                                                v-model="histOharraSortu" maxlength="250">
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-secondary" data-bs-target="#exampleModalToggle"
+                                                    data-bs-toggle="modal">Cerrar</button>
+                                                <button class="btn btn-primary" data-bs-target="#exampleModalToggle"
+                                                    data-bs-toggle="modal" @click="createHistorial()">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!-- FORMULARIO AÑADIR GRUPO -->
+            <!-- <div class="row justify-content-center align-items-center"> -->
+            <div class="row d-flex justify-content-center p-5" style="width: 100%;">
+                <h4 class="text-center pt-5 mx-auto">Añadir Ficha Cliente</h4>
+
+                <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
+                    style="width: 100%;">
+                    <div class="col-sm-6 col-lg-3">
+                        <!-- <label for="input1" class="">Código</label> -->
+                        <input type="text" class="form-control" id="input1" v-model="izenaSortu" placeholder="Nombre" />
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <!-- <label for="input2" class="">Nombre</label> -->
+                        <input type="text" class="form-control" id="input2" v-model="abizenaSortu"
+                            placeholder="Apellidos" />
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <!-- <label for="input2" class="">Nombre</label> -->
+                        <input type="text" class="form-control" id="input2" v-model="telefonoaSortu"
+                            placeholder="Teléfono" />
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <!-- <label for="input2" class="">Nombre</label> -->
+                        <select class="form-select w-100" id="dia" required v-model="sentikorraSortu">
+                            <option disabled value="">Piel sensible</option>
+                            <option value="B">Bai</option>
+                            <option value="E">Ez</option>
+                        </select>
+                    </div>
+
+                    <!-- FIXME: el button solo se centra cuando esta en pantalla completa-->
+                    <!-- <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto"> -->
+                    <div class="col-1 align-self-center">
+                        <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
+                        <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
+                            <button @click.prevent="createFitxa()" class="btn btn-primary">Añadir</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
+        <div class="container">
+            <p>&copy; 2024 Fichas de clientes. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script src="../js/bezero_fitxak.js"></script>
+</body>
+
+</html>

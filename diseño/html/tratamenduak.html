@@ -5,7 +5,7 @@
     <script src="../js/route.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Grupos</title>
+    <title>Tratamientos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
@@ -22,7 +22,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
-                Grupos
+                Tratamientos
             </a>
         
             <!-- Barra de navegacion fija -->
@@ -137,8 +137,8 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i class="bi bi-check-circle m-2" @click="actuTalde()"></i>
-                    <i class="bi bi-dash-circle" @click="ezabTalde()"></i>
+                    <i class="bi bi-check-circle m-2" @click="actuTratamendu()"></i>
+                    <i class="bi bi-dash-circle" @click="ezabTratamendu()"></i>
                 </div>
 
                 <!-- Tabla -->
@@ -146,20 +146,36 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">Código</th>
                             <th scope="col">Nombre</th>
+                            <th scope="col">Precio casa</th>
+                            <th scope="col">Precio fuera</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(talde) in listaTalde">
-                            <td><input type="checkbox" :value="talde.kodea" v-model="arrayKodea" /></td>
-                            <td>{{talde.kodea}}</td>
+                        <tr v-for="(tratamendu) in listaTratamendua">
+                            <td><input type="checkbox" :value="tratamendu.id" v-model="arrayId" /></td>
                             <td>
-                                <span v-if="!arrayKodea.includes(talde.kodea)">
-                                    {{talde.izena}}
+                                <span v-if="!arrayId.includes(tratamendu.id)">
+                                    {{tratamendu.izena}}
                                 </span>
 
-                                <input v-else type="text" v-model="talde.izena" :placeholder="talde.izena" />
+                                <input v-else type="text" v-model="tratamendu.izena" :placeholder="tratamendu.izena" />
+                            </td>
+                            <td>
+                                <span v-if="!arrayId.includes(tratamendu.id)">
+                                    {{tratamendu.etxeko_prezioa}}
+                                </span>
+
+                                <input v-else type="text" v-model="tratamendu.etxeko_prezioa"
+                                    :placeholder="tratamendu.etxeko_prezioa" />
+                            </td>
+                            <td>
+                                <span v-if="!arrayId.includes(tratamendu.id)">
+                                    {{tratamendu.kanpoko_prezioa}}
+                                </span>
+
+                                <input v-else type="text" v-model="tratamendu.kanpoko_prezioa"
+                                    :placeholder="tratamendu.kanpoko_prezioa" />
                             </td>
                         </tr>
                     </tbody>
@@ -170,18 +186,23 @@
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
-                <h4 class="text-center pt-5 mx-auto">Añadir grupo</h4>
+                <h4 class="text-center pt-5 mx-auto">Añadir tratamiento</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input1" class="">Código</label> -->
-                        <input type="text" class="form-control" id="input1" v-model="kodeaSortu" placeholder="Código" />
+                        <input type="text" class="form-control" id="input1" v-model="izenaSortu" placeholder="Nombre" />
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input2" class="">Nombre</label> -->
-                        <input type="text" class="form-control" id="input2" v-model="izenaSortu"
-                            placeholder="Nombre del grupo" />
+                        <input type="text" class="form-control" id="input2" v-model="etxeSortu"
+                            placeholder="Precio casa" />
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <!-- <label for="input2" class="">Nombre</label> -->
+                        <input type="text" class="form-control" id="input2" v-model="kanpoSortu"
+                            placeholder="Precio fuera" />
                     </div>
 
                     <!-- FIXME: el button solo se centra cuando esta en pantalla completa-->
@@ -189,7 +210,7 @@
                     <div class="col-1 align-self-center">
                         <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
                         <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
-                            <button @click.prevent="createTalde()" class="btn btn-primary">Añadir</button>
+                            <button @click.prevent="createTratamendu()" class="btn btn-primary">Añadir</button>
                         </div>
                     </div>
                 </form>
@@ -200,7 +221,7 @@
     <!-- FOOTER -->
     <footer class="bg-dark text-light text-center py-3 mt-auto">
         <div class="container">
-            <p>&copy; 2024 Grupos. Todos los derechos reservados.</p>
+            <p>&copy; 2024 Tratamientos. Todos los derechos reservados.</p>
         </div>
     </footer>
 
@@ -211,7 +232,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
-    <script src="../js/taldeak.js"></script>
+    <script src="../js/tratameduak.js"></script>
 
 </body>
+
 </html>
