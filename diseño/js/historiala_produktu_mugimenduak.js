@@ -34,7 +34,7 @@ new Vue({
             this.actualizarListaFiltrada();
         },
         actualizarFechaAutomaticamente() {
-        // Función para actualizar automáticamente la fecha cada minuto
+            // Función para actualizar automáticamente la fecha cada minuto
             setInterval(() => {
                 this.obtenerFechaActual();
             }, 60000); // 60000 milisegundos = 1 minuto
@@ -51,7 +51,7 @@ new Vue({
         },
         async cargaKategoria() {
             try {
-                const response = await fetch(window.ruta +'kategoriaruta', {
+                const response = await fetch(window.ruta + 'kategoriaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -67,15 +67,15 @@ new Vue({
 
                 const datuak = await response.json();
                 this.listaKategoria = datuak
-                        .filter(kategoria => kategoria.deleted_at === null || kategoria.deleted_at === "0000-00-00 00:00:00");
-                    console.log(this.listaKategoria);
+                    .filter(kategoria => kategoria.deleted_at === null || kategoria.deleted_at === "0000-00-00 00:00:00");
+                console.log(this.listaKategoria);
             } catch (error) {
                 console.error('Errorea: ', error);
             }
         },
         async cargaProduktuMugimendua() {
             try {
-                const response = await fetch(window.ruta +'produktumugimenduaruta', {
+                const response = await fetch(window.ruta + 'produktumugimenduaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -106,17 +106,17 @@ new Vue({
         actualizarListaFiltrada() {
             if (!this.kategoriaIzenaSortu && !this.dataSortu) {
                 this.listaFiltrada = this.listaProduktuMugimendua;
-                
+
             } else {
                 this.listaFiltrada = this.listaProduktuMugimendua
-                    .filter(registro => 
-                    (!this.kategoriaIzenaSortu || (registro.produktua && registro.produktua.kategoria.id == this.kategoriaIzenaSortu)) &&
-                    (!this.dataSortu || this.compararFechas(registro.data, this.dataSortu)));
+                    .filter(registro =>
+                        (!this.kategoriaIzenaSortu || (registro.produktua && registro.produktua.kategoria.id == this.kategoriaIzenaSortu)) &&
+                        (!this.dataSortu || this.compararFechas(registro.data, this.dataSortu)));
             }
         }
     },
 
-    watch:{
+    watch: {
         kategoriaIzenaSortu: function () {
             this.actualizarListaFiltrada();
         }
