@@ -6,12 +6,16 @@ new Vue({
         kodeaSortu: "",
         izenaSortu: "",
         listaTalde: [],
-        listaTaldeSinFiltro: []
+        listaTaldeSinFiltro: [],
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        // languageStrings: {},
+        translations: translations,
     },
     methods: {
         async cargaTalde() {
             try {
-                const response = await fetch(window.ruta +'taldearuta', {
+                const response = await fetch(window.ruta + 'taldearuta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -63,7 +67,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta +'taldeagorde', {
+                const response = await fetch(window.ruta + 'taldeagorde', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
                     headers: {
@@ -112,7 +116,7 @@ new Vue({
                     // grupoExistente.izena = this.izenaSortu;
 
                     // Realizar la actualización en la base de datos
-                    const response = await fetch(window.ruta +`taldeaeguneratu/${kodea}`, {
+                    const response = await fetch(window.ruta + `taldeaeguneratu/${kodea}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -146,7 +150,7 @@ new Vue({
                     "izena": izena
                 };
 
-                const response = await fetch(window.ruta +'taldeaeguneratu/'+ kodea, {
+                const response = await fetch(window.ruta + 'taldeaeguneratu/' + kodea, {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
                     method: 'PUT',
                     headers: {
@@ -171,7 +175,7 @@ new Vue({
         async ezabTalde() {
             try {
                 for (var i = 0; i < this.arrayKodea.length; i++) {
-                    const response = await fetch(window.ruta +'taldeaezabatu/' + this.arrayKodea[i], {
+                    const response = await fetch(window.ruta + 'taldeaezabatu/' + this.arrayKodea[i], {
                         // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
                         method: 'PUT',
                         headers: {
@@ -231,7 +235,11 @@ new Vue({
                     this.alphanumCompare(a.kodea, b.kodea) :
                     this.alphanumCompare(b.kodea, a.kodea);
             });
-        }
+        },
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
 
     },
     mounted() {
