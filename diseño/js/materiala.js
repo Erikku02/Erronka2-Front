@@ -11,13 +11,17 @@ new Vue({
         etiketaSortu: "",
         listaMateriala: [],
         ordenEtiketa: 'asc', // para ordenar los datos de la tabla
-        ordenIzena: 'asc'
+        ordenIzena: 'asc',
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        // languageStrings: {},
+        translations: translations,
     },
     methods: {
         // Para cargar los grupos que estan activos
         async cargaMateriala() {
             try {
-                const response = await fetch(window.ruta +'materialaruta', {
+                const response = await fetch(window.ruta + 'materialaruta', {
                     // const response = await fetch('https://www.materiala3-back.edu/Erronka2/laravel_e2t3/public/api/materialaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -55,7 +59,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta +'materialagorde', {
+                const response = await fetch(window.ruta + 'materialagorde', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileagorde', {
                     method: 'POST',
                     headers: {
@@ -151,7 +155,7 @@ new Vue({
                     "izena": izena
                 }
 
-                const response = await fetch(window.ruta +'materialaeguneratu/' + id, {
+                const response = await fetch(window.ruta + 'materialaeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
                     method: 'PUT',
                     headers: {
@@ -177,7 +181,7 @@ new Vue({
         async ezabMateriala() {
             try {
                 for (var i = 0; i < this.arrayId.length; i++) {
-                    const response = await fetch(window.ruta +'materialaezabatu/' + this.arrayId[i], {
+                    const response = await fetch(window.ruta + 'materialaezabatu/' + this.arrayId[i], {
                         // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/materialaaezabatu/' + this.arrayKodea[i], {
                         method: 'PUT',
                         headers: {
@@ -201,6 +205,11 @@ new Vue({
                 console.log('Errorea: ', error);
             }
         },
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
+
 
         /*async filtermateriala(materiala) {
             this.selectedmateriala = materiala;
