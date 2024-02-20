@@ -6,8 +6,17 @@ new Vue({
         izenaEgu: "",
         izenaSortu: "",
         listaKategoria: [],
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        // languageStrings: {},
+        translations: translations,
     },
     methods: {
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
+
         async cargaKategoria() {
             try {
                 const response = await fetch(window.ruta +'kategoriaruta', {

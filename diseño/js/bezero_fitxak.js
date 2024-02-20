@@ -21,9 +21,18 @@ new Vue({
         listaProduktuFilter: [],
         histMarkaUpdate: "",
         histProduktuUpdate: "",
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        // languageStrings: {},
+        translations: translations,
 
     },
     methods: {
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
+
         async cargaFitxa() {
             try {
                 const response = await fetch(window.ruta + 'bezero_fixaruta', {

@@ -14,7 +14,24 @@ const translations = {
 
         },
         bezero_fitxak: {
-
+            apellidos:"Apellidos",
+            tlf: "Telefono",
+            piel_sensible: "Piel sensible",
+            categoria: "Categoria",
+            hist_color: "Historial de color",
+            fecha: "Fecha",
+            marka:"Marka",
+            producto:"Producto",
+            cantidad:"Cantidad",
+            volumen:"Volumen",
+            notas:"Notas",
+            cerrar:"Cerrar",
+            agr_hist:"Agregar Historial",
+            cas_prod:"Casa del producto",
+            tod_cas:"Todas las casas",
+            guardar:"Guardar",
+            añad_ficha:"Añadir Ficha Cliente",
+            footer:"2024 Fichas de clientes. Todos los derechos reservados.",
         },
         gaurko_txandak: {
 
@@ -29,7 +46,7 @@ const translations = {
 
         },
         kategoriak: {
-
+            
         },
         langileak: {
 
@@ -83,6 +100,27 @@ const translations = {
             añadir: "Gehitu taldea",
             form_nombre: "Nombre del grupo",
             footer: "2024 Taldeak. Eskubide guztiak erreserbatuta.",
-        }
+        },
+        bezero_fitxak: {
+            apellidos:"Abizenak",
+            tlf: "Telefonoa",
+            piel_sensible: "Azal sentikorra",
+            categoria: "Kategoria",
+            hist_color: "Kolore historiala",
+            fecha: "Data",
+            marka:"Marka",
+            producto:"Produktua",
+            cantidad:"Kopurua",
+            volumen:"Bolumena",
+            notas:"Oharrak",
+            cerrar:"Itxi",
+            agr_hist:"Historia Gehitu",
+            cas_prod:"Produktuen Etxea",
+            tod_cas:"Etxe guztiak",
+            guardar:"Gorde",
+            añad_ficha:"Bezero Fitxa Gehitu",
+            footer:"2024 Bezero Fitxak. Eskubide guztiak gordeta.",
+        },
+        
     }
 }
