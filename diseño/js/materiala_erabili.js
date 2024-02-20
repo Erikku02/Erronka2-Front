@@ -20,9 +20,17 @@ new Vue({
         guardarRegistro: [],
         registros: [],
         stockTotala: 0,
-        actualizarMateriales: false
+        actualizarMateriales: false,
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        // languageStrings: {},
+        translations: translations,
     },
     methods: {
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
         obtenerFechaActual() {
             const fechaActual = new Date();
             const options = { day: '2-digit', month: '2-digit', year: 'numeric' };

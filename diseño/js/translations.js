@@ -100,7 +100,12 @@ const translations = {
             footer: '2024 Trabajadores. Todos los derechos reservados.',
         },
         mat_era: {
-
+            alumno:"Alumno",
+            material:"Material",
+            en_uso:"En uso",
+            dia_hora:"Día/hora extracción",
+            devolver:"Devolver",
+            footer:"2024 Extracción/Devolución de material. Todos los derechos reservados.",
         },
         materiala: {
             etiketa: 'Etiqueta',
@@ -219,7 +224,12 @@ const translations = {
             footer: '2024 Langile. Eskubide guztiak erreserbatuta.',
         },
         mat_era: {
-
+            alumno:"Ikaslea",
+            material:"Materiala",
+            en_uso:"Erabiltzen",
+            dia_hora:"Egun/ordu aterapena",
+            devolver:"Itzuli",
+            footer:"2024 Materiala aterapena/itzulpena. Eskubide guztiak gordeta.",
         },
         materiala: {
             etiketa: 'Etiketa',
