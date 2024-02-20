@@ -23,7 +23,13 @@ const translations = {
             footer: '2024 Turnos de hoy. Todos los derechos reservados.',
         },
         hist_mat_era: {
-
+            filtro: 'Filtra por material',
+            material: 'Material',
+            alumno: 'Alumno',
+            fecha_ext: 'Fecha extracción',
+            fecha_dev: 'Fecha devolución',
+            uso: 'EN USO',
+            footer: '2024 Historial de material. Todos los derechos reservados.',
         },
         hist_prod_era: {
 
@@ -93,7 +99,13 @@ const translations = {
 
         },
         hist_mat_era: {
-
+            filtro: 'Iragazi materialaren arabera',
+            material: 'Materiala',
+            alumno: 'Ikasle',
+            fecha_ext: 'Erauzketa-data',
+            fecha_dev: 'Itzulketa-data',
+            uso: 'ERABILTZEN',
+            footer: '2024 Materialaren historiala. Eskubide guztiak erreserbatuta.'
         },
         hist_prod_era: {
 
