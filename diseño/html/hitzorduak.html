@@ -147,9 +147,12 @@
         <div class="container">
             <div class="row table-responsive">
                 <!-- Iconos para editar los datos -->
+                <!-- CAMBIAR EL IDIOMA (probisional) -->
+                <p @click="changeLanguage('es')">ES</p>
+                <p @click="changeLanguage('eus')">EUS</p>
 
                 <h3 v-if="grupoPorDia !== null" class="mt-4 text-center">
-                    Grupo del día: {{grupoPorDia}}
+                    {{ translations[selectedLanguage].hitzorduak.grupo_dia }} {{grupoPorDia}}
                 </h3>
 
                 <div class="mt-4">
@@ -166,7 +169,8 @@
                             <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Añadir cita</h1>
+                                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">{{
+                                            translations[selectedLanguage].hitzorduak.añadir }}</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
@@ -174,60 +178,72 @@
                                         <form>
                                             <fieldset>
                                                 <div class="mb-3 h6">
-                                                    <label class="form-label">Fecha
-                                                    </label>
+                                                    <label class="form-label">{{
+                                                        translations[selectedLanguage].hitzorduak.fecha }}</label>
                                                     <input type="date" id="disabledTextInput" class="form-control"
                                                         placeholder="Disabled input" v-model="fechaSortu">
                                                 </div>
 
                                                 <div class="mb-3 h6">
-                                                    <label class="form-label">Asiento</label>
+                                                    <label class="form-label">{{
+                                                        translations[selectedLanguage].hitzorduak.asiento }}</label>
                                                     <input type="number" class="form-control" min="0" value="0"
                                                         placeholder="0" v-model="eserlekuaSortu">
                                                 </div>
 
                                                 <div class="mb-3 h6">
-                                                    <label class="form-label">Hora inicio</label>
+                                                    <label class="form-label">{{
+                                                        translations[selectedLanguage].hitzorduak.hora_inicio }}</label>
                                                     <input type="time" v-model="hasiera_orduaSortu">
                                                 </div>
 
                                                 <div class="mb-3 h6">
-                                                    <label class="form-label">Hora fin</label>
+                                                    <label class="form-label">{{
+                                                        translations[selectedLanguage].hitzorduak.hora_fin }}</label>
                                                     <input type="time" v-model="amaiera_orduaSortu">
                                                 </div>
 
                                                 <div class="mb-3 h6">
-                                                    <label class="form-label">Nombre</label>
+                                                    <label class="form-label">{{
+                                                        translations[selectedLanguage].hitzorduak.nombre }}</label>
                                                     <input type="text" class="form-control" v-model="izenaSortu">
                                                 </div>
 
                                                 <div class="mb-3 h6">
-                                                    <label class="form-label">Teléfono</label>
+                                                    <label class="form-label">{{
+                                                        translations[selectedLanguage].hitzorduak.tlf }}</label>
                                                     <input type="tel" class="form-control" v-model="telefonoaSortu"
                                                         maxlength="9">
                                                 </div>
 
                                                 <div class="mb-3 h6">
-                                                    <label class="form-label">Descripción</label>
+                                                    <label class="form-label">{{
+                                                        translations[selectedLanguage].hitzorduak.descripcion }}</label>
                                                     <input type="text" class="form-control" v-model="deskribapenaSortu"
                                                         maxlength="250">
                                                 </div>
 
                                                 <div class="mb-3 h6">
-                                                    <label class="form-label">Tipo cliente</label>
+                                                    <label class="form-label">{{
+                                                        translations[selectedLanguage].hitzorduak.tipo_cliente
+                                                        }}</label>
                                                     <select class="form-select" v-model="etxekoaSortu">
-                                                        <option value="e">Interno</option>
-                                                        <option value="k">Externo</option>
+                                                        <option value="e">{{
+                                                            translations[selectedLanguage].hitzorduak.interno }}
+                                                        </option>
+                                                        <option value="k">{{
+                                                            translations[selectedLanguage].hitzorduak.externo }}
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </fieldset>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-primary" @click="createHitzordu">Añadir
-                                            cita</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{
+                                            translations[selectedLanguage].hitzorduak.cancelar }}</button>
+                                        <button type="button" class="btn btn-primary" @click="createHitzordu">{{
+                                            translations[selectedLanguage].hitzorduak.añadir }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -239,7 +255,7 @@
                         <tr>
                             <th></th>
                             <th v-for="eserleku in totalLangile" :key="eserleku" class="text-center">
-                                Asiento {{eserleku}}
+                                {{ translations[selectedLanguage].hitzorduak.asiento }} {{eserleku}}
                             </th>
                         </tr>
                     </thead>
@@ -263,8 +279,8 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h1 class="modal-title fs-5" id="exampleModalToggleLabel">
-                                                    Información de
-                                                    la cita
+                                                    {{
+                                                    translations[selectedLanguage].hitzorduak.info_cita }}
                                                 </h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
@@ -286,7 +302,9 @@
                                                                             v-model="idCitaSeleccionada">
                                                                         <label class="btn btn-primary"
                                                                             for="modificar_cita">
-                                                                            Modificar cita
+                                                                            {{
+                                                                            translations[selectedLanguage].hitzorduak.modificar_cita
+                                                                            }}
                                                                         </label>
 
 
@@ -297,7 +315,9 @@
                                                                             v-model="idCitaSeleccionada">
                                                                         <label class="btn btn-primary"
                                                                             for="generar_ticket">
-                                                                            Generar ticket
+                                                                            {{
+                                                                            translations[selectedLanguage].hitzorduak.generar_ticket
+                                                                            }}
                                                                         </label>
                                                                     </div>
 
@@ -308,7 +328,9 @@
                                                                             @click="ezabHitzordu(citaSelect.id)">
                                                                         <label class="btn btn-danger text-nowrap"
                                                                             for="borrar_cita">
-                                                                            Borrar cita
+                                                                            {{
+                                                                            translations[selectedLanguage].hitzorduak.borrar_cita
+                                                                            }}
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -318,7 +340,9 @@
                                                                 <!-- FECHA -->
                                                                 <div class="mb-3">
                                                                     <label class="form-label h6">
-                                                                        Fecha
+                                                                        {{
+                                                                        translations[selectedLanguage].hitzorduak.fecha
+                                                                        }}
                                                                     </label>
                                                                     <p
                                                                         v-if="!idCitaSeleccionada.includes(citaSelect.id)">
@@ -333,7 +357,9 @@
                                                                 <!-- ASIENTO -->
                                                                 <div class="mb-3">
                                                                     <label class="form-label h6">
-                                                                        Asiento
+                                                                        {{
+                                                                        translations[selectedLanguage].hitzorduak.asiento
+                                                                        }}
                                                                     </label>
                                                                     <p
                                                                         v-if="!idCitaSeleccionada.includes(citaSelect.id)">
@@ -346,7 +372,9 @@
 
                                                                 <!-- HORA INICIO -->
                                                                 <div class="mb-3">
-                                                                    <label class="form-label h6">Hora inicio</label>
+                                                                    <label class="form-label h6">{{
+                                                                        translations[selectedLanguage].hitzorduak.hora_inicio
+                                                                        }}</label>
                                                                     <p
                                                                         v-if="!idCitaSeleccionada.includes(citaSelect.id)">
                                                                         {{citaSelect.hasiera_ordua | formatHour}}
@@ -357,7 +385,9 @@
 
                                                                 <!-- HORA FIN -->
                                                                 <div class="mb-3">
-                                                                    <label class="form-label h6">Hora fin</label>
+                                                                    <label class="form-label h6">{{
+                                                                        translations[selectedLanguage].hitzorduak.hora_fin
+                                                                        }}</label>
                                                                     <p
                                                                         v-if="!idCitaSeleccionada.includes(citaSelect.id)">
                                                                         {{citaSelect.amaiera_ordua | formatHour }}
@@ -371,7 +401,9 @@
 
                                                         <div class="col-12">
                                                             <div class="mb-3">
-                                                                <label class="form-label h6">Nombre</label>
+                                                                <label class="form-label h6">{{
+                                                                    translations[selectedLanguage].hitzorduak.nombre
+                                                                    }}</label>
                                                                 <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
                                                                     {{citaSelect.izena}}</p>
                                                                 <input v-else type="text" class="form-control"
@@ -379,7 +411,9 @@
                                                             </div>
 
                                                             <div class="mb-3">
-                                                                <label class="form-label h6">Teléfono</label>
+                                                                <label class="form-label h6">{{
+                                                                    translations[selectedLanguage].hitzorduak.tlf
+                                                                    }}</label>
                                                                 <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
                                                                     {{citaSelect.telefonoa}}</p>
                                                                 <input v-else type="tel" class="form-control"
@@ -387,7 +421,9 @@
                                                             </div>
 
                                                             <div class="mb-3">
-                                                                <label class="form-label h6">Descripción</label>
+                                                                <label class="form-label h6">{{
+                                                                    translations[selectedLanguage].hitzorduak.descripcion
+                                                                    }}</label>
                                                                 <p v-if="!idCitaSeleccionada.includes(citaSelect.id)">
                                                                     {{citaSelect.deskribapena}}</p>
                                                                 <input v-else type="text" class="form-control"
@@ -395,36 +431,51 @@
                                                             </div>
 
                                                             <div class="mb-3">
-                                                                <label class="form-label h6">Tipo cliente</label>
+                                                                <label class="form-label h6">{{
+                                                                    translations[selectedLanguage].hitzorduak.tipo_cliente
+                                                                    }}</label>
                                                                 <span
                                                                     v-if="!idCitaSeleccionada.includes(citaSelect.id)">
                                                                     <p v-if="citaSelect.etxekoa == 'k'">
-                                                                        Externo
+                                                                        {{
+                                                                        translations[selectedLanguage].hitzorduak.externo
+                                                                        }}
                                                                     </p>
                                                                     <p v-else>
-                                                                        Interno
+                                                                        {{
+                                                                        translations[selectedLanguage].hitzorduak.interno
+                                                                        }}
                                                                     </p>
                                                                 </span>
 
                                                                 <select v-else class="form-select"
                                                                     v-model="citaSelect.etxekoa">
-                                                                    <option value="e">Interno</option>
-                                                                    <option value="k">Externo</option>
+                                                                    <option value="e">{{
+                                                                        translations[selectedLanguage].hitzorduak.interno
+                                                                        }}</option>
+                                                                    <option value="k">{{
+                                                                        translations[selectedLanguage].hitzorduak.externo
+                                                                        }}</option>
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label class="form-label  h6">Alumno</label>
+                                                                <label class="form-label  h6">{{
+                                                                    translations[selectedLanguage].hitzorduak.alumno
+                                                                    }}</label>
                                                                 <span
                                                                     v-if="!idCitaSeleccionada.includes(citaSelect.id)">
                                                                     <p v-if="citaSelect.l_izena !== null">
                                                                         {{citaSelect.l_izena}}
                                                                     </p>
-                                                                    <p v-else>No tiene un alumno asignado</p>
+                                                                    <p v-else>{{
+                                                                        translations[selectedLanguage].hitzorduak.sin_alumno
+                                                                        }}</p>
                                                                 </span>
                                                                 <select v-else class="form-select"
                                                                     v-model="langileUpdate">
-                                                                    <option :value="null" selected disabled>Asignar
-                                                                        alumno
+                                                                    <option :value="null" selected disabled>{{
+                                                                        translations[selectedLanguage].hitzorduak.asignar_alumno
+                                                                        }}
                                                                     </option>
                                                                     <option v-for="(langile) in listaLangile"
                                                                         :value="langile.id">
@@ -437,7 +488,9 @@
                                                             <div class="mb-3">
                                                                 <div v-if="!idCitaSeleccionada.includes(citaSelect.id)">
                                                                     <label class="form-label h6">
-                                                                        Precio
+                                                                        {{
+                                                                        translations[selectedLanguage].hitzorduak.precio
+                                                                        }}
                                                                     </label>
                                                                     <p>
                                                                         {{citaSelect.prezio_totala}}€
@@ -450,7 +503,9 @@
                                                                 <div v-else>
                                                                     <div class="mb-3">
                                                                         <label class="form-label h6">
-                                                                            Tratamientos
+                                                                            {{
+                                                                            translations[selectedLanguage].hitzorduak.tratamientos
+                                                                            }}
                                                                         </label>
                                                                         <div v-for="(tratamiento, index) in listaTratamendua"
                                                                             :key="index">
@@ -472,8 +527,9 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label class="form-label h6">Precio
-                                                                            total</label>
+                                                                        <label class="form-label h6">{{
+                                                                            translations[selectedLanguage].hitzorduak.precio_total
+                                                                            }}</label>
                                                                         <p>{{ precioTotal }}€</p>
                                                                     </div>
                                                                 </div>
@@ -484,10 +540,11 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="button" class="btn btn-primary"
-                                                    @click="updateHitzordu">Actualizar
-                                                    cita</button>
+                                                    data-bs-dismiss="modal">{{
+                                                    translations[selectedLanguage].hitzorduak.cancelar }}</button>
+                                                <button type="button" class="btn btn-primary" @click="updateHitzordu">{{
+                                                    translations[selectedLanguage].hitzorduak.actualizar_cita
+                                                    }}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -498,14 +555,18 @@
                 </table>
             </div>
         </div>
+
+
+        <!-- FOOTER -->
+        <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
+            <div class="container">
+                <p>&copy; {{
+                    translations[selectedLanguage].hitzorduak.footer }}</p>
+            </div>
+        </footer>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
-        <div class="container">
-            <p>&copy; 2024 Asignación de citas. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -514,6 +575,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+    <script src="../js/translations.js"></script>
     <script src="../js/hitzorduak.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>

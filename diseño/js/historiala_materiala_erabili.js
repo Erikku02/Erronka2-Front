@@ -16,13 +16,17 @@ new Vue({
         guardarRegistro: [],
         registros: [],
         stockTotala: 0,
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        // languageStrings: {},
+        translations: translations,
     },
     methods: {
 
-        async cargaMateriala() {    
-            
+        async cargaMateriala() {
+
             try {
-                const response = await fetch(window.ruta +'materialaruta', {
+                const response = await fetch(window.ruta + 'materialaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -49,7 +53,7 @@ new Vue({
         },
         async cargaMaterialaErabili() {
             try {
-                const response = await fetch(window.ruta +'materialaerabiliruta', {
+                const response = await fetch(window.ruta + 'materialaerabiliruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -76,13 +80,17 @@ new Vue({
             } else {
                 this.listaFiltrada = this.listaMaterialaErabili
                     .sort((a, b) => new Date(b.hasiera_data) - new Date(a.hasiera_data))
-                    .filter(registro => 
+                    .filter(registro =>
                         (!this.materialaIzenaSortu || (registro.materiala && registro.materiala.id == this.materialaIzenaSortu))
                     );
             }
-        }
+        },
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
     },
-    watch:{
+    watch: {
         materialaIzenaSortu: function () {
             this.actualizarListaFiltrada();
         }

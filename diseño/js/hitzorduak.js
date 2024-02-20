@@ -73,6 +73,10 @@ new Vue({
         precioTotal: 0,
 
         idTratSelect: [], // lista de los id de tratamientos que se seleccionan
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        // languageStrings: {},
+        translations: translations,
     },
     methods: {
 
@@ -112,7 +116,7 @@ new Vue({
 
         async cargaHitzordu() {
             try {
-                const response = await fetch(window.ruta +'hitzorduaruta', {
+                const response = await fetch(window.ruta + 'hitzorduaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -155,7 +159,7 @@ new Vue({
                 this.eserlekuKop = [];
 
                 /* const response2 = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta' + this.dataSelec, { */
-                const response2 = await fetch(window.ruta +'langilearuta', {
+                const response2 = await fetch(window.ruta + 'langilearuta', {
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
@@ -181,7 +185,7 @@ new Vue({
             this.totalLangile = 0;
 
             try {
-                const response = await fetch(window.ruta +'langilearuta', {
+                const response = await fetch(window.ruta + 'langilearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -218,7 +222,7 @@ new Vue({
             const numeroDiaSemana = fechaActual ? fechaActual.getDay() : -1;
 
             try {
-                const response = await fetch(window.ruta +'ordutegiaruta', {
+                const response = await fetch(window.ruta + 'ordutegiaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -354,7 +358,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta +'hitzorduagorde', {
+                const response = await fetch(window.ruta + 'hitzorduagorde', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
@@ -378,7 +382,7 @@ new Vue({
         },
         async cargaHitzorduDatos(idCita) {
             try {
-                const response = await fetch(window.ruta +'hitzorduaruta', {
+                const response = await fetch(window.ruta + 'hitzorduaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -406,7 +410,7 @@ new Vue({
 
         async ezabHitzordu(id) {
             try {
-                const response = await fetch(window.ruta +'hitzorduaezabatu/' + id, {
+                const response = await fetch(window.ruta + 'hitzorduaezabatu/' + id, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -463,7 +467,7 @@ new Vue({
 
                 console.log(arrayActu);
 
-                const response = await fetch(window.ruta +'hitzorduaeguneratu/' + id, {
+                const response = await fetch(window.ruta + 'hitzorduaeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
                     method: 'PUT',
                     headers: {
@@ -483,7 +487,7 @@ new Vue({
 
         async cargaTratamendu() {
             try {
-                const response = await fetch(window.ruta +'tratamenduaruta', {
+                const response = await fetch(window.ruta + 'tratamenduaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -572,7 +576,7 @@ new Vue({
 
                     console.log(JSON.stringify(arraySortu));
 
-                    const response = await fetch(window.ruta +'ticketlerroagorde', {
+                    const response = await fetch(window.ruta + 'ticketlerroagorde', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
@@ -591,7 +595,11 @@ new Vue({
             } catch (error) {
                 console.log('Errorea: ', error);
             }
-        }
+        },
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
 
 
     },

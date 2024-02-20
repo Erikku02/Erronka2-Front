@@ -141,8 +141,6 @@
         </div>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
     <main id="app">
         <br>
         <div class="icons h4 text-center mt-4 me-4">
@@ -152,38 +150,42 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-
+                    <!-- CAMBIAR EL IDIOMA (probisional) -->
+                    <p @click="changeLanguage('es')">ES</p>
+                    <p @click="changeLanguage('eus')">EUS</p>
                 </div>
 
                 <!-- Tabla -->
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Tareas</th>
-                            <th scope="col">Alumno/s</th>
+                            <th scope="col">{{ translations[selectedLanguage].gaurko_txandak.tareas }}</th>
+                            <th scope="col">{{ translations[selectedLanguage].gaurko_txandak.alumnos }}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Limpieza</td>
+                            <td>{{ translations[selectedLanguage].gaurko_txandak.limpieza }}</td>
                             <td v-for="(txanda) in listaTxandaG">{{txanda.izena}}</td>
                         </tr>
                         <tr>
-                            <td>Mostrador</td>
+                            <td>{{ translations[selectedLanguage].gaurko_txandak.mostrador }}</td>
                             <td>{{listaTxandaM.izena}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+
+        <!-- FOOTER -->
+        <footer class="bg-dark text-light text-center py-3 mt-auto">
+            <div class="container">
+                <p>&copy; {{ translations[selectedLanguage].gaurko_txandak.footer }}</p>
+            </div>
+        </footer>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-dark text-light text-center py-3 mt-auto">
-        <div class="container">
-            <p>&copy; 2024 Turnos de hoy. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -192,7 +194,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- IMPORTANTE: primero translations, luego el otro js -->
+    <script src="../js/translations.js"></script>
     <script src="../js/gaurko_txandak.js"></script>
+
 </body>
 
 </html>

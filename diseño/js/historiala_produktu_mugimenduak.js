@@ -23,7 +23,11 @@ new Vue({
         uniqueMarcas: [0],
         stockTotala: 0,
         mapaProduktua: {},  // Mapa para almacenar datos adicionales de productos
-        mapaLangilea: {}   // Mapa para almacenar datos adicionales de langileak
+        mapaLangilea: {},   // Mapa para almacenar datos adicionales de langileak
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        // languageStrings: {},
+        translations: translations,
     },
     methods: {
         actualizarFecha() {
@@ -113,7 +117,11 @@ new Vue({
                         (!this.kategoriaIzenaSortu || (registro.produktua && registro.produktua.kategoria.id == this.kategoriaIzenaSortu)) &&
                         (!this.dataSortu || this.compararFechas(registro.data, this.dataSortu)));
             }
-        }
+        },
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
     },
 
     watch: {
