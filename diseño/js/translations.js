@@ -88,7 +88,8 @@ const translations = {
             footer: '2024 Asignación de citas. Todos los derechos reservados.',
         },
         kategoriak: {
-            
+            añad_cat:"Añadir categoría",
+            footer:"2024 Categorías. Todos los derechos reservados.",
         },
         langileak: {
 
@@ -197,8 +198,10 @@ const translations = {
             footer: '2024 Hitzorduak esleitzea. Eskubide guztiak erreserbatuta.',
         },
         kategoriak: {
-
+            añad_cat:"Kategoria gehitu",
+            footer:"2024 Kategoriak. Eskubide guztiak gordeta.",
         },
+        
         langileak: {
 
         },
