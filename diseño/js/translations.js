@@ -32,7 +32,15 @@ const translations = {
             footer: '2024 Historial de material. Todos los derechos reservados.',
         },
         hist_prod_era: {
-
+            categoria: 'Categoría',
+            selecciona: 'Selecciona una categoría',
+            todos: 'Todos',
+            fecha: 'Fecha',
+            producto: 'Producto',
+            casa: 'Casa',
+            cantidad: 'Cantidad',
+            alumno: 'Alumno',
+            footer: '2024 Historial de movimientos de productos. Todos los derechos reservados.',
         },
         hitzorduak: {
 
@@ -108,7 +116,15 @@ const translations = {
             footer: '2024 Materialaren historiala. Eskubide guztiak erreserbatuta.'
         },
         hist_prod_era: {
-
+            categoria: 'Kategoria',
+            selecciona: 'Hautatu katergoria bat',
+            todos: 'Guztiak',
+            fecha: 'Data',
+            producto: 'Produktua',
+            casa: 'Casa',
+            cantidad: 'Kantitatea',
+            alumno: 'Ikaslea',
+            footer: '2024 Produktuen mugimenduen historia. Eskubide guztiak erreserbatuta.',
         },
         hitzorduak: {
 
