@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +10,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -25,7 +24,7 @@
             <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
                 Extraer productos
             </a>
-        
+
             <!-- Barra de navegacion fija -->
             <i class="bi bi-box-arrow-right h3"></i>
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
@@ -34,14 +33,15 @@
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-        
+
                 <!-- Barra de navegacion "oculta" -->
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <!-- Citas -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-calendar3 m-2"></i>
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-calendar3 m-2"></i>
                                 Citas
                             </a>
                             <ul class="dropdown-menu">
@@ -49,38 +49,44 @@
                                 <li><a class="dropdown-item" href="ticket.html">Tickets</a></li>
                             </ul>
                         </li>
-        
+
                         <!-- Productos -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-tags-fill m-2"></i>
-                                    Productos
-                                </a>
+                                Productos
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="produktu_mugimenduak.html">Extraer productos</a></li>
                                 <li><a class="dropdown-item" href="produktuak.html">Gestionar productos</a></li>
                                 <li><a class="dropdown-item" href="kategoriak.html">Gestionar categorías</a></li>
-                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de extracción de productos</a></li>
+                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de
+                                        extracción de productos</a></li>
                             </ul>
                         </li>
 
                         <!-- Material -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-palette2 m-2"></i>
-                                    Material
-                                </a>
+                                Material
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="materiala.html">Gestionar material</a></li>
-                                <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a></li>
-                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de movimientos de material</a></li>
+                                <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a>
+                                </li>
+                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de
+                                        movimientos de material</a></li>
                             </ul>
                         </li>
 
 
                         <!-- Tratamientos -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link link-info fs-5 fw-bold text-light" href="tratamenduak.html" role="button" aria-expanded="false">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="tratamenduak.html" role="button"
+                                aria-expanded="false">
                                 <i class="bi bi-scissors m-2"></i>
                                 Tratamientos
                             </a>
@@ -88,7 +94,8 @@
 
                         <!-- Turnos -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-calendar-check-fill m-2"></i>
                                 Turnos
                             </a>
@@ -100,7 +107,8 @@
 
                         <!-- Grupos -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-people-fill m-2"></i>
                                 Grupos
                             </a>
@@ -112,7 +120,8 @@
 
                         <!-- Usuarios -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link link-info fs-5 fw-bold text-light" href="langileak.html" role="button" aria-expanded="false">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="langileak.html" role="button"
+                                aria-expanded="false">
                                 <i class="bi bi-person-fill m-2"></i>
                                 Usuarios
                             </a>
@@ -120,7 +129,8 @@
 
                         <!-- Ficha Clientes -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link link-info fs-5 fw-bold text-light" href="bezero_fitxak.html" role="button" aria-expanded="false">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="bezero_fitxak.html"
+                                role="button" aria-expanded="false">
                                 <i class="bi bi-person-vcard m-2"></i>
                                 Ficha-clientes
                             </a>
@@ -131,8 +141,6 @@
         </div>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
-
     <main id="app">
         <br>
         <div class="icons h4 text-center mt-4 me-4">
@@ -140,11 +148,17 @@
         </div>
         <div class="container">
             <div class="container-fluid text-center">
+
+                <!-- CAMBIAR EL IDIOMA (probisional) -->
+                <p @click="changeLanguage('es')">ES</p>
+                <p @click="changeLanguage('eus')">EUS</p>
+
                 <div class="col-sm-6 col-lg-3 mt-5">
                     <div class="mb-3">
                         <select class="form-select w-100" id="y" required v-model="izenaSortu">
-                            <option disabled value="">Alumno</option>
-                            <option v-for="(langile) in alumnosPorGrupo" :key="langile.id" :value="langile.id">{{langile.izena}}</option>
+                            <option disabled value="">{{ translations[selectedLanguage].prod_mug.alumno }}</option>
+                            <option v-for="(langile) in alumnosPorGrupo" :key="langile.id" :value="langile.id">
+                                {{langile.izena}}</option>
                         </select>
                     </div>
                 </div>
@@ -154,74 +168,80 @@
             <table class="table table-hover mt-5">
                 <thead>
                     <tr>
-                        <th scope="col">Categoría</th>
-                        <th scope="col">Casa comercial</th>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Cantidad</th>
+                        <th scope="col">{{ translations[selectedLanguage].prod_mug.categoria }}</th>
+                        <th scope="col">{{ translations[selectedLanguage].prod_mug.casa }}</th>
+                        <th scope="col">{{ translations[selectedLanguage].prod_mug.producto }}</th>
+                        <th scope="col">{{ translations[selectedLanguage].prod_mug.cantidad }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
-                        <!-- Contenido de la fila (igual que antes) -->
-                        <tr>
-                            <td>
-                                <select class="form-select w-100" id="x" required v-model="kategoriaIzenaSortu">
-                                    <option disabled value="">Categoría</option>
-                                    <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{kategoria.izena}}</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-select w-100" id="x" required v-model="casaSortu">
-                                    <option disabled value="">Casa comercial</option>
-                                    <option v-for="(marka) in listaMarkaFiltrada">{{marka.marka}}</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-select w-100" v-model="produktuIzenaSortu">
-                                    <option disabled value="">Producto</option>
-                                    <option v-for="produktua in listaFiltrada" :key="produktua.id" :value="produktua.id">
-                                        {{ formatProductName(produktua) }}
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <!-- Input tipo número para la cantidad -->
-                                <div class="input-group">
-                                    <input type="number" class="form-control" v-model="kantitateaSortu" min="0"/>
-                                </div>
-                            </td>    
-                        </tr>
-                        <tr v-for="(fila, index) in registros" :key="index">
-                            <td>{{fila.kategoria}}</td>
-                            <td>{{fila.marka}}</td>
-                            <td>{{fila.produktua}}</td>
-                            <td>{{fila.kantitatea}}</td>
-                            <td>
-                                <button class="btn btn-danger btn-sm" @click="eliminarFila(index)">
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    
+
+                    <!-- Contenido de la fila (igual que antes) -->
+                    <tr>
+                        <td>
+                            <select class="form-select w-100" id="x" required v-model="kategoriaIzenaSortu">
+                                <option disabled value="">{{ translations[selectedLanguage].prod_mug.categoria }}
+                                </option>
+                                <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{kategoria.izena}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select w-100" id="x" required v-model="casaSortu">
+                                <option disabled value="">{{ translations[selectedLanguage].prod_mug.casa }}</option>
+                                <option v-for="(marka) in listaMarkaFiltrada">{{marka.marka}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select w-100" v-model="produktuIzenaSortu">
+                                <option disabled value="">{{ translations[selectedLanguage].prod_mug.producto }}
+                                </option>
+                                <option v-for="produktua in listaFiltrada" :key="produktua.id" :value="produktua.id">
+                                    {{ formatProductName(produktua) }}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <!-- Input tipo número para la cantidad -->
+                            <div class="input-group">
+                                <input type="number" class="form-control" v-model="kantitateaSortu" min="0" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr v-for="(fila, index) in registros" :key="index">
+                        <td>{{fila.kategoria}}</td>
+                        <td>{{fila.marka}}</td>
+                        <td>{{fila.produktua}}</td>
+                        <td>{{fila.kantitatea}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" @click="eliminarFila(index)">
+                                {{ translations[selectedLanguage].prod_mug.eliminar }}
+                            </button>
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
             <div class="d-flex justify-content-end mt-2">
                 <!-- Botón para añadir una fila con el mismo contenido -->
-                <button class="btn btn-primary" @click="añadirFila()">Añadir</button>
+                <button class="btn btn-primary" @click="añadirFila()">{{
+                    translations[selectedLanguage].default.btn_añadir }}</button>
             </div>
             <div class="d-flex justify-content-end mt-2">
                 <!-- Botón para añadir una fila con el mismo contenido -->
-                <button class="btn btn-primary" @click="createProduktu()">Confirmar todo</button>
+                <button class="btn btn-primary" @click="createProduktu()">{{
+                    translations[selectedLanguage].prod_mug.confirmar }}</button>
             </div>
         </div>
+        <!-- FOOTER -->
+        <footer class="bg-dark text-light text-center py-3 mt-auto">
+            <div class="container">
+                <p>&copy; {{ translations[selectedLanguage].prod_mug.footer }}</p>
+            </div>
+        </footer>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-dark text-light text-center py-3 mt-auto">
-        <div class="container">
-            <p>&copy; 2024 Extracción de productos. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -230,7 +250,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+
+    <script src="../js/translations.js"></script>
     <script src="../js/produktu_mugimenduak.js"></script>
 
 </body>
+
 </html>

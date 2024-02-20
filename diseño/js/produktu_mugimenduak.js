@@ -26,7 +26,11 @@ new Vue({
         marcasUnicas: new Set(),
         listaMarkaFiltrada: [],
         uniqueMarcas: [0],
-        stockTotala: 0
+        stockTotala: 0,
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        // languageStrings: {},
+        translations: translations,
     },
     methods: {
         formatProductName(produktua) {
@@ -48,7 +52,7 @@ new Vue({
             const numeroDiaSemana = fechaActual.getDay();
 
             try {
-                const response = await fetch(window.ruta +'ordutegiaruta', {
+                const response = await fetch(window.ruta + 'ordutegiaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -63,7 +67,7 @@ new Vue({
 
                 const datuak = await response.json();
                 this.listaOrdutegia = datuak;
-                
+
                 // Verificar si se encontró un grupo antes de acceder a 'kodea'
                 const grupoEncontrado = this.listaOrdutegia.find(ordutegia => ordutegia.eguna === numeroDiaSemana && ordutegia.deleted_at === null);
 
@@ -73,7 +77,7 @@ new Vue({
                     // Manejar el caso cuando no se encuentra un grupo
                     console.error('No se encontró un grupo para el día actual.');
                 }
-                
+
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -87,7 +91,7 @@ new Vue({
         },
         async cargaKategoria() {
             try {
-                const response = await fetch(window.ruta +'kategoriaruta', {
+                const response = await fetch(window.ruta + 'kategoriaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -103,15 +107,15 @@ new Vue({
 
                 const datuak = await response.json();
                 this.listaKategoria = datuak
-                        .filter(kategoria => kategoria.deleted_at === null || kategoria.deleted_at === "0000-00-00 00:00:00");
-                    console.log(this.listaKategoria);
+                    .filter(kategoria => kategoria.deleted_at === null || kategoria.deleted_at === "0000-00-00 00:00:00");
+                console.log(this.listaKategoria);
             } catch (error) {
                 console.error('Errorea: ', error);
             }
         },
         async cargaProduktuaById(idPro) {
             try {
-                const response = await fetch(window.ruta +'produktuaruta', {
+                const response = await fetch(window.ruta + 'produktuaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -134,8 +138,8 @@ new Vue({
                 stockS !== undefined ? stockS : 0;
 
                 const arrStock = [stockT, stockS];
-            
-                return ( arrStock );
+
+                return (arrStock);
             } catch (error) {
                 console.error('Errorea: ', error);
                 return 0; // Devolver un valor por defecto en caso de error
@@ -143,7 +147,7 @@ new Vue({
         },
         async cargaProduktua() {
             try {
-                const response = await fetch(window.ruta +'produktuaruta', {
+                const response = await fetch(window.ruta + 'produktuaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -166,7 +170,7 @@ new Vue({
         },
         async cargaMarka() {
             try {
-                const response = await fetch(window.ruta +'markaruta', {
+                const response = await fetch(window.ruta + 'markaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -188,23 +192,23 @@ new Vue({
             }
         },
         async añadirFila() {
-            
+
             // Validar que los campos obligatorios no estén vacíos
             if (!this.produktuIzenaSortu || this.kantitateaSortu <= 0) {
-                
+
                 // Mostrar un mensaje de error (puedes reemplazar esto con tu lógica de pop-up)
                 alert("Por favor, completa los campos obligatorios: Producto y Cantidad");
                 return; // No continuar con la función si hay campos obligatorios vacíos
             }
-            
+
             const arrProduktuarenStock = await this.cargaProduktuaById(this.produktuIzenaSortu);
             const stockTotalProducto = arrProduktuarenStock[0];
             const stockSeguridadProducto = arrProduktuarenStock[1];
 
             console.log(stockSeguridadProducto);
 
-            if (this.kantitateaSortu <= stockTotalProducto){
-                if((stockTotalProducto - this.kantitateaSortu) <= stockSeguridadProducto){
+            if (this.kantitateaSortu <= stockTotalProducto) {
+                if ((stockTotalProducto - this.kantitateaSortu) <= stockSeguridadProducto) {
                     alert("¡¡¡Stock de alerta superado!!!, ahora quedan " + (stockTotalProducto - this.kantitateaSortu) + " unidades.")
                 }
                 const nuevaFila = {
@@ -212,7 +216,7 @@ new Vue({
                     "marka": this.casaSortu,
                     "produktua": this.produktuIzenaSortu ? this.listaFiltrada.find(produktua => produktua.id == this.produktuIzenaSortu).izena + ' - ' + this.listaFiltrada.find(produktua => produktua.id == this.produktuIzenaSortu).deskribapena : "",
                     "kantitatea": this.kantitateaSortu,
-                    "idProduktua": this.produktuIzenaSortu     
+                    "idProduktua": this.produktuIzenaSortu
                 };
 
                 // Agregar la nueva fila al array
@@ -223,7 +227,7 @@ new Vue({
                 this.casaSortu = "";
                 this.produktuIzenaSortu = "";
                 this.kantitateaSortu = 0;
-            }else{
+            } else {
                 alert("No puede añadir esa cantidad porque el stock actual de este producto es de " + stockTotalProducto);
             }
         },
@@ -284,7 +288,7 @@ new Vue({
                 });
                 console.log(JSON.stringify(registrosAEnviar) + " aqu");
 
-                const response = await fetch(window.ruta +'produktumugimenduagorde', {
+                const response = await fetch(window.ruta + 'produktumugimenduagorde', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -307,7 +311,7 @@ new Vue({
         },
         async cargaLangile() {
             try {
-                const response = await fetch(window.ruta +'langilearuta', {
+                const response = await fetch(window.ruta + 'langilearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -326,15 +330,19 @@ new Vue({
                 //      .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
                 this.listaLangile = datuak
                     .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
-                    //  console.log(this.listaLangile)
+                //  console.log(this.listaLangile)
             } catch (error) {
                 console.error('Errorea: ', error);
             }
             this.filtrarAlumnosPorGrupo();
         },
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
     },
-    
-    watch:{
+
+    watch: {
 
         kategoriaIzenaSortu: function () {
             this.actualizarListaFiltrada();

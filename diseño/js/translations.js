@@ -132,7 +132,14 @@ const translations = {
             footer: '2024 Horarios por grupo. Todos los derechos reservados.',
         },
         prod_mug: {
-
+            alumno: 'Alumno',
+            categoria: 'Categoria',
+            casa: 'Casa comercial',
+            producto: 'Producto',
+            cantidad: 'Cantidad',
+            eliminar: 'Eliminar',
+            confirmar: 'Confirmar todo',
+            footer: '2024 Extracción de productos. Todos los derechos reservados.',
         },
         produktuak: {
 
@@ -168,6 +175,24 @@ const translations = {
         },
 
         bezero_fitxak: {
+            apellidos: "Abizenak",
+            tlf: "Telefonoa",
+            piel_sensible: "Azal sentikorra",
+            categoria: "Kategoria",
+            hist_color: "Kolore historiala",
+            fecha: "Data",
+            marka: "Marka",
+            producto: "Produktua",
+            cantidad: "Kopurua",
+            volumen: "Bolumena",
+            notas: "Oharrak",
+            cerrar: "Itxi",
+            agr_hist: "Historia Gehitu",
+            cas_prod: "Produktuen Etxea",
+            tod_cas: "Etxe guztiak",
+            guardar: "Gorde",
+            añad_ficha: "Bezero Fitxa Gehitu",
+            footer: "2024 Bezero Fitxak. Eskubide guztiak gordeta.",
         },
         gaurko_txandak: {
             tareas: 'Tareak',
@@ -271,7 +296,14 @@ const translations = {
             footer: '2024 Ordutegiak taldeka. Eskubide guztiak erreserbatuta.',
         },
         prod_mug: {
-
+            alumno: 'Ikaslea',
+            categoria: 'Kategoria',
+            casa: 'Merkataritza-etxea',
+            producto: 'Produktua',
+            cantidad: 'Kopurua',
+            eliminar: 'Ezabatu',
+            confirmar: 'Dena baieztatu',
+            footer: '2024 Produktuak erauztea. Eskubide guztiak erreserbatuta.',
         },
         produktuak: {
 
@@ -281,26 +313,6 @@ const translations = {
             añadir: "Gehitu taldea",
             form_nombre: "Nombre del grupo",
             footer: "2024 Taldeak. Eskubide guztiak erreserbatuta.",
-        },
-        bezero_fitxak: {
-            apellidos: "Abizenak",
-            tlf: "Telefonoa",
-            piel_sensible: "Azal sentikorra",
-            categoria: "Kategoria",
-            hist_color: "Kolore historiala",
-            fecha: "Data",
-            marka: "Marka",
-            producto: "Produktua",
-            cantidad: "Kopurua",
-            volumen: "Bolumena",
-            notas: "Oharrak",
-            cerrar: "Itxi",
-            agr_hist: "Historia Gehitu",
-            cas_prod: "Produktuen Etxea",
-            tod_cas: "Etxe guztiak",
-            guardar: "Gorde",
-            añad_ficha: "Bezero Fitxa Gehitu",
-            footer: "2024 Bezero Fitxak. Eskubide guztiak gordeta.",
         },
 
     }
