@@ -10,7 +10,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -24,7 +24,7 @@
             <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
                 Horarios
             </a>
-        
+
             <!-- Barra de navegacion fija -->
             <i class="bi bi-box-arrow-right h3"></i>
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
@@ -33,14 +33,15 @@
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-        
+
                 <!-- Barra de navegacion "oculta" -->
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <!-- Citas -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-calendar3 m-2"></i>
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-calendar3 m-2"></i>
                                 Citas
                             </a>
                             <ul class="dropdown-menu">
@@ -48,38 +49,44 @@
                                 <li><a class="dropdown-item" href="ticket.html">Tickets</a></li>
                             </ul>
                         </li>
-        
+
                         <!-- Productos -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-tags-fill m-2"></i>
-                                    Productos
-                                </a>
+                                Productos
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="produktu_mugimenduak.html">Extraer productos</a></li>
                                 <li><a class="dropdown-item" href="produktuak.html">Gestionar productos</a></li>
                                 <li><a class="dropdown-item" href="kategoriak.html">Gestionar categorías</a></li>
-                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de extracción de productos</a></li>
+                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de
+                                        extracción de productos</a></li>
                             </ul>
                         </li>
 
                         <!-- Material -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-palette2 m-2"></i>
-                                    Material
-                                </a>
+                                Material
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="materiala.html">Gestionar material</a></li>
-                                <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a></li>
-                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de movimientos de material</a></li>
+                                <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a>
+                                </li>
+                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de
+                                        movimientos de material</a></li>
                             </ul>
                         </li>
 
 
                         <!-- Tratamientos -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link link-info fs-5 fw-bold text-light" href="tratamenduak.html" role="button" aria-expanded="false">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="tratamenduak.html" role="button"
+                                aria-expanded="false">
                                 <i class="bi bi-scissors m-2"></i>
                                 Tratamientos
                             </a>
@@ -87,7 +94,8 @@
 
                         <!-- Turnos -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-calendar-check-fill m-2"></i>
                                 Turnos
                             </a>
@@ -99,7 +107,8 @@
 
                         <!-- Grupos -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-people-fill m-2"></i>
                                 Grupos
                             </a>
@@ -111,7 +120,8 @@
 
                         <!-- Usuarios -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link link-info fs-5 fw-bold text-light" href="langileak.html" role="button" aria-expanded="false">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="langileak.html" role="button"
+                                aria-expanded="false">
                                 <i class="bi bi-person-fill m-2"></i>
                                 Usuarios
                             </a>
@@ -119,7 +129,8 @@
 
                         <!-- Ficha Clientes -->
                         <li class="nav-item dropdown mb-3">
-                            <a class="nav-link link-info fs-5 fw-bold text-light" href="bezero_fitxak.html" role="button" aria-expanded="false">
+                            <a class="nav-link link-info fs-5 fw-bold text-light" href="bezero_fitxak.html"
+                                role="button" aria-expanded="false">
                                 <i class="bi bi-person-vcard m-2"></i>
                                 Ficha-clientes
                             </a>
@@ -130,8 +141,6 @@
         </div>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
     <main id="app">
         <div class="container">
             <div class="row">
@@ -139,6 +148,10 @@
                 <div class="icons h4 text-end mt-4">
                     <i class="bi bi-check-circle m-2" @click="actuOrdutegia()"></i>
                     <i class="bi bi-dash-circle" @click="ezabOrdutegi()"></i>
+
+                    <!-- CAMBIAR EL IDIOMA (probisional) -->
+                    <p @click="changeLanguage('es')">ES</p>
+                    <p @click="changeLanguage('eus')">EUS</p>
                 </div>
 
                 <!-- Tabla -->
@@ -146,13 +159,13 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">Código</th>
+                            <th scope="col">{{ translations[selectedLanguage].default.tab_codigo }}</th>
                             <!-- <th scope="col">Nombre</th> -->
-                            <th scope="col">Día semanal</th>
-                            <th scope="col">Fecha inicio</th>
-                            <th scope="col">Fecha fin</th>
-                            <th scope="col">Hora inicio</th>
-                            <th scope="col">Hora fin</th>
+                            <th scope="col">{{ translations[selectedLanguage].ordutegiak.dia }}</th>
+                            <th scope="col">{{ translations[selectedLanguage].ordutegiak.fecha_inicio }}</th>
+                            <th scope="col">{{ translations[selectedLanguage].ordutegiak.fecha_fin }}</th>
+                            <th scope="col">{{ translations[selectedLanguage].ordutegiak.hora_inicio }}</th>
+                            <th scope="col">{{ translations[selectedLanguage].ordutegiak.hora_fin }}</th>
 
                         </tr>
                     </thead>
@@ -208,14 +221,15 @@
             <!-- FORMULARIO AÑADIR HORARIO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
-                <h4 class="text-center pt-5 mx-auto">Añadir horario</h4>
+                <h4 class="text-center pt-5 mx-auto">{{ translations[selectedLanguage].ordutegiak.añadir }}</h4>
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center">
                     <div class="btn-group col-sm-6 col-lg-3">
                         <div class="mb-3">
                             <!-- TODO: los grupos se añaden automaticamente -->
-                            <label for="dia" class="form-label">Grupo</label>
+                            <label for="dia" class="form-label">{{ translations[selectedLanguage].ordutegiak.grupo
+                                }}</label>
                             <select class="form-select" id="dia" v-model="kodeaSortu">
-                                <option disabled value="">Grupo</option>
+                                <option disabled value="">{{ translations[selectedLanguage].ordutegiak.grupo }}</option>
                                 <option v-for="(talde, index) in listaTalde" :key="index" :value="talde.kodea">
                                     {{ talde.kodea }}
                                 </option>
@@ -229,35 +243,37 @@
                     <div class="btn-group col-sm-6 col-lg-3">
                         <div class="mb-3">
                             <!-- TODO: hacer que se inserte bien el dia en la db -->
-                            <label for="dia" class="form-label">Dia de la semana</label>
+                            <label for="dia" class="form-label">{{ translations[selectedLanguage].ordutegiak.dia_semana
+                                }}</label>
                             <select class="form-select w-100" id="dia" required v-model="egunaSortu">
-                                <option disabled selected>Seleccione un día</option>
-                                <option value="1">Lunes</option>
-                                <option value="2">Martes</option>
-                                <option value="3">Miercoles</option>
-                                <option value="4">Jueves</option>
-                                <option value="5">Viernes</option>
+                                <option disabled selected>{{ translations[selectedLanguage].ordutegiak.select_dia }}
+                                </option>
+                                <option value="1">{{ translations[selectedLanguage].ordutegiak.lunes }}</option>
+                                <option value="2">{{ translations[selectedLanguage].ordutegiak.martes }}</option>
+                                <option value="3">{{ translations[selectedLanguage].ordutegiak.miercoles }}</option>
+                                <option value="4">{{ translations[selectedLanguage].ordutegiak.jueves }}</option>
+                                <option value="5">{{ translations[selectedLanguage].ordutegiak.viernes }}</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="col-sm-6 col-lg-3">
-                        <label for="fecha-inicio">Fecha inicio</label>
+                        <label for="fecha-inicio">{{ translations[selectedLanguage].ordutegiak.fecha_inicio }}</label>
                         <input type="date" class="form-control" id="input2" v-model="hasiera_dataSortu" />
                     </div>
 
                     <div class="col-sm-6 col-lg-3">
-                        <label for="fecha-fin">Fecha fin</label>
+                        <label for="fecha-fin">{{ translations[selectedLanguage].ordutegiak.fecha_fin }}</label>
                         <input type="date" class="form-control" id="fecha-fin" v-model="amaiera_dataSortu" />
                     </div>
 
                     <div class="col-sm-6 col-lg-3">
-                        <label for="hora-inicio">Hora inicio</label>
+                        <label for="hora-inicio">{{ translations[selectedLanguage].ordutegiak.hora_inicio }}</label>
                         <input type="time" class="form-control" id="hora-inicio" v-model="hasiera_orduaSortu" />
                     </div>
 
                     <div class="col-sm-6 col-lg-3">
-                        <label for="hora-fin">Hora fin</label>
+                        <label for="hora-fin">{{ translations[selectedLanguage].ordutegiak.hora_fin }}</label>
                         <input type="time" class="form-control" id="hora-fin" v-model="amaiera_orduaSortu" />
                     </div>
 
@@ -266,19 +282,20 @@
                     <div class="col-1 align-self-center">
                         <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
                         <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
-                            <button @click.prevent="createOrdutegia" class="btn btn-primary">Añadir</button>
+                            <button @click.prevent="createOrdutegia" class="btn btn-primary">{{
+                                translations[selectedLanguage].default.btn_añadir }}</button>
                         </div>
                 </form>
             </div>
         </div>
+        <!-- FOOTER -->
+        <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
+            <div class="container">
+                <p>&copy; {{ translations[selectedLanguage].ordutegiak.footer }}</p>
+            </div>
+        </footer>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
-        <div class="container">
-            <p>&copy; 2024 Horarios por grupo. Todos los derechos reservados.</p>
-        </div>
-    </footer>
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -287,6 +304,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+    <script src="../js/translations.js"></script>
     <script src="../js/ordutegiak.js"></script>
 
 </body>

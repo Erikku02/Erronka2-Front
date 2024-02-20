@@ -100,12 +100,12 @@ const translations = {
             footer: '2024 Trabajadores. Todos los derechos reservados.',
         },
         mat_era: {
-            alumno:"Alumno",
-            material:"Material",
-            en_uso:"En uso",
-            dia_hora:"Día/hora extracción",
-            devolver:"Devolver",
-            footer:"2024 Extracción/Devolución de material. Todos los derechos reservados.",
+            alumno: "Alumno",
+            material: "Material",
+            en_uso: "En uso",
+            dia_hora: "Día/hora extracción",
+            devolver: "Devolver",
+            footer: "2024 Extracción/Devolución de material. Todos los derechos reservados.",
         },
         materiala: {
             etiketa: 'Etiqueta',
@@ -114,7 +114,22 @@ const translations = {
             footer: '2024 Material. Todos los derechos reservados.',
         },
         ordutegiak: {
-
+            /* codigo: 'Codigo', // default */
+            dia: 'Día semanal',
+            fecha_inicio: 'Fecha inicio',
+            fecha_fin: 'Fecha fin',
+            hora_inicio: 'Hora inicio',
+            hora_fin: 'Hora fin',
+            añadir: 'Añadir horario',
+            grupo: 'Grupo',
+            dia_semana: 'Día de la semana',
+            select_dia: 'Seleccione un día',
+            lunes: 'Lunes',
+            martes: 'Martes',
+            miercoles: 'Miércoles',
+            jueves: 'Jueves',
+            viernes: 'Viernes',
+            footer: '2024 Horarios por grupo. Todos los derechos reservados.',
         },
         prod_mug: {
 
@@ -224,12 +239,12 @@ const translations = {
             footer: '2024 Langile. Eskubide guztiak erreserbatuta.',
         },
         mat_era: {
-            alumno:"Ikaslea",
-            material:"Materiala",
-            en_uso:"Erabiltzen",
-            dia_hora:"Egun/ordu aterapena",
-            devolver:"Itzuli",
-            footer:"2024 Materiala aterapena/itzulpena. Eskubide guztiak gordeta.",
+            alumno: "Ikaslea",
+            material: "Materiala",
+            en_uso: "Erabiltzen",
+            dia_hora: "Egun/ordu aterapena",
+            devolver: "Itzuli",
+            footer: "2024 Materiala aterapena/itzulpena. Eskubide guztiak gordeta.",
         },
         materiala: {
             etiketa: 'Etiketa',
@@ -238,7 +253,22 @@ const translations = {
             footer: '2024 Materiala. Eskubide guztiak erreserbatuta.',
         },
         ordutegiak: {
-
+            /* codigo: 'Codigo', // default */
+            dia: 'Asteko eguna',
+            fecha_inicio: 'Hasiera-data',
+            fecha_fin: 'Amaiera-data',
+            hora_inicio: 'Hasiera-ordua',
+            hora_fin: 'Amaiera-ordua',
+            añadir: 'Gehitu ordutegia',
+            grupo: 'Taldea',
+            dia_semana: 'Asteko eguna',
+            select_dia: 'Aukeratu egun bat',
+            lunes: 'Astelehena',
+            martes: 'Asteartea',
+            miercoles: 'Asteazkena',
+            jueves: 'Osteguna',
+            viernes: 'Ostirala',
+            footer: '2024 Ordutegiak taldeka. Eskubide guztiak erreserbatuta.',
         },
         prod_mug: {
 
