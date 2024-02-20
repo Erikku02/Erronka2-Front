@@ -14,24 +14,24 @@ const translations = {
 
         },
         bezero_fitxak: {
-            apellidos:"Apellidos",
+            apellidos: "Apellidos",
             tlf: "Telefono",
             piel_sensible: "Piel sensible",
             categoria: "Categoria",
             hist_color: "Historial de color",
             fecha: "Fecha",
-            marka:"Marka",
-            producto:"Producto",
-            cantidad:"Cantidad",
-            volumen:"Volumen",
-            notas:"Notas",
-            cerrar:"Cerrar",
-            agr_hist:"Agregar Historial",
-            cas_prod:"Casa del producto",
-            tod_cas:"Todas las casas",
-            guardar:"Guardar",
-            añad_ficha:"Añadir Ficha Cliente",
-            footer:"2024 Fichas de clientes. Todos los derechos reservados.",
+            marka: "Marka",
+            producto: "Producto",
+            cantidad: "Cantidad",
+            volumen: "Volumen",
+            notas: "Notas",
+            cerrar: "Cerrar",
+            agr_hist: "Agregar Historial",
+            cas_prod: "Casa del producto",
+            tod_cas: "Todas las casas",
+            guardar: "Guardar",
+            añad_ficha: "Añadir Ficha Cliente",
+            footer: "2024 Fichas de clientes. Todos los derechos reservados.",
         },
         gaurko_txandak: {
             tareas: 'Tareas',
@@ -88,10 +88,15 @@ const translations = {
             footer: '2024 Asignación de citas. Todos los derechos reservados.',
         },
         kategoriak: {
-            
+
         },
         langileak: {
-
+            todos: 'Todos',
+            /* nombre: 'Nombre', // en default*/
+            apellidos: 'Apellidos',
+            añadir_trab: 'Añadir trabajador',
+            grupo: 'Grupo',
+            footer: '2024 Trabajadores. Todos los derechos reservados.',
         },
         mat_era: {
 
@@ -200,7 +205,12 @@ const translations = {
 
         },
         langileak: {
-
+            todos: 'Guztiak',
+            /* nombre: 'Nombre', // en default*/
+            apellidos: 'Abizenak',
+            añadir_trab: 'Gehitu langilea',
+            grupo: 'Taldea',
+            footer: '2024 Langile. Eskubide guztiak erreserbatuta.',
         },
         mat_era: {
 
@@ -224,25 +234,25 @@ const translations = {
             footer: "2024 Taldeak. Eskubide guztiak erreserbatuta.",
         },
         bezero_fitxak: {
-            apellidos:"Abizenak",
+            apellidos: "Abizenak",
             tlf: "Telefonoa",
             piel_sensible: "Azal sentikorra",
             categoria: "Kategoria",
             hist_color: "Kolore historiala",
             fecha: "Data",
-            marka:"Marka",
-            producto:"Produktua",
-            cantidad:"Kopurua",
-            volumen:"Bolumena",
-            notas:"Oharrak",
-            cerrar:"Itxi",
-            agr_hist:"Historia Gehitu",
-            cas_prod:"Produktuen Etxea",
-            tod_cas:"Etxe guztiak",
-            guardar:"Gorde",
-            añad_ficha:"Bezero Fitxa Gehitu",
-            footer:"2024 Bezero Fitxak. Eskubide guztiak gordeta.",
+            marka: "Marka",
+            producto: "Produktua",
+            cantidad: "Kopurua",
+            volumen: "Bolumena",
+            notas: "Oharrak",
+            cerrar: "Itxi",
+            agr_hist: "Historia Gehitu",
+            cas_prod: "Produktuen Etxea",
+            tod_cas: "Etxe guztiak",
+            guardar: "Gorde",
+            añad_ficha: "Bezero Fitxa Gehitu",
+            footer: "2024 Bezero Fitxak. Eskubide guztiak gordeta.",
         },
-        
+
     }
 }

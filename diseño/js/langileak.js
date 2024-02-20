@@ -11,13 +11,17 @@ new Vue({
         abizenakSortu: "",
         listaTalde: [],
         ordenNombre: 'asc', // para ordenar los datos
-        ordenApellidos: 'asc'
+        ordenApellidos: 'asc',
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        // languageStrings: {},
+        translations: translations,
     },
     methods: {
         // Para cargar los grupos que estan activos
         async cargaTalde() {
             try {
-                const response = await fetch(window.ruta +'taldearuta', {
+                const response = await fetch(window.ruta + 'taldearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -37,14 +41,14 @@ new Vue({
                 this.listaTalde = datuak
 
                     .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
-                console.log(datuak);
+                // console.log(datuak);
             } catch (error) {
                 console.error('Errorea:', error);
             }
         },
         async cargaLangile() {
             try {
-                const response = await fetch(window.ruta +'langilearuta', {
+                const response = await fetch(window.ruta + 'langilearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -59,7 +63,7 @@ new Vue({
                 }
 
                 const datuak = await response.json();
-                console.log(datuak);
+                // console.log(datuak);
                 this.listaLangile = datuak
 
                     .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
@@ -82,7 +86,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta +'langileagorde', {
+                const response = await fetch(window.ruta + 'langileagorde', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileagorde', {
                     method: 'POST',
                     headers: {
@@ -164,7 +168,7 @@ new Vue({
                     "abizenak": abizenak
                 }
 
-                const response = await fetch(window.ruta +'langileaeguneratu/' + id, {
+                const response = await fetch(window.ruta + 'langileaeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
                     method: 'PUT',
                     headers: {
@@ -190,7 +194,7 @@ new Vue({
         async ezabLangile() {
             try {
                 for (var i = 0; i < this.arrayId.length; i++) {
-                    const response = await fetch(window.ruta +'langileaezabatu/' + this.arrayId[i], {
+                    const response = await fetch(window.ruta + 'langileaezabatu/' + this.arrayId[i], {
                         // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
                         method: 'PUT',
                         headers: {
@@ -225,7 +229,7 @@ new Vue({
                     // Si no se selecciona ningún grupo, cargar todos los trabajadores
                     this.cargaLangile();
                 } else {
-                    const response = await fetch(window.ruta +'langilearuta/' + kodea, {
+                    const response = await fetch(window.ruta + 'langilearuta/' + kodea, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
@@ -247,6 +251,10 @@ new Vue({
             } catch (error) {
                 console.error('Error:', error);
             }
+        },
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
         },
     },
     mounted() {
