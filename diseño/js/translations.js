@@ -14,10 +14,13 @@ const translations = {
 
         },
         bezero_fitxak: {
-
         },
         gaurko_txandak: {
-
+            tareas: 'Tareas',
+            alumnos: 'Alumnos',
+            limpieza: 'Limpieza',
+            mostrador: 'Mostrador',
+            footer: '2024 Turnos de hoy. Todos los derechos reservados.',
         },
         hist_mat_era: {
 
@@ -78,11 +81,61 @@ const translations = {
             btn_añadir: "Gehitu",
 
         },
+
+        bezero_fitxak: {
+        },
+        gaurko_txandak: {
+            tareas: 'Tareak',
+            alumnos: 'Ikasleak',
+            limpieza: 'Garbiketa',
+            mostrador: 'Mostradorea',
+            footer: '2024 Gaurko tareak. Eskubide guztiak erreserbatuta.'
+
+        },
+        hist_mat_era: {
+
+        },
+        hist_prod_era: {
+
+        },
+        hitzorduak: {
+
+        },
+        kategoriak: {
+
+        },
+        langileak: {
+
+        },
+        mat_era: {
+
+        },
+        materiala: {
+
+        },
+        ordutegiak: {
+
+        },
+        prod_mug: {
+
+        },
+        produktuak: {
+
+        },
         taldeak: {
             title: "Taldeak",
             añadir: "Gehitu taldea",
             form_nombre: "Nombre del grupo",
             footer: "2024 Taldeak. Eskubide guztiak erreserbatuta.",
+        },
+        ticket: {
+
+        },
+        tratamenduak: {
+
+        },
+        txandak: {
+
         }
     }
 }
