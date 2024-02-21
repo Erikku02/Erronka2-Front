@@ -10,6 +10,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 </head>
 
@@ -130,7 +131,6 @@
         </div>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <main id="app">
         <div class="container">
@@ -141,14 +141,18 @@
                     <i class="bi bi-dash-circle" @click="ezabTratamendu()"></i>
                 </div>
 
+                <!-- CAMBIAR EL IDIOMA (probisional) -->
+                <p @click="changeLanguage('es')">ES</p>
+                <p @click="changeLanguage('eus')">EUS</p>
+
                 <!-- Tabla -->
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Precio casa</th>
-                            <th scope="col">Precio fuera</th>
+                            <th scope="col">{{ translations[selectedLanguage].default.tab_nombre }}</th>
+                            <th scope="col">{{ translations[selectedLanguage].tratamenduak.pre_casa }}</th>
+                            <th scope="col">{{ translations[selectedLanguage].tratamenduak.pre_fuera }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -186,7 +190,7 @@
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
-                <h4 class="text-center pt-5 mx-auto">Añadir tratamiento</h4>
+                <h4 class="text-center pt-5 mx-auto">{{ translations[selectedLanguage].tratamenduak.añad_trat }}</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
@@ -210,20 +214,21 @@
                     <div class="col-1 align-self-center">
                         <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
                         <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
-                            <button @click.prevent="createTratamendu()" class="btn btn-primary">Añadir</button>
+                            <button @click.prevent="createTratamendu()" class="btn btn-primary">{{ translations[selectedLanguage].default.btn_añadir }}</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+        <!-- FOOTER -->
+        <footer class="bg-dark text-light text-center py-3 mt-auto">
+            <div class="container">
+                <p>&copy; {{ translations[selectedLanguage].tratamenduak.footer }}</p>
+            </div>
+        </footer>
+
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-dark text-light text-center py-3 mt-auto">
-        <div class="container">
-            <p>&copy; 2024 Tratamientos. Todos los derechos reservados.</p>
-        </div>
-    </footer>
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -232,6 +237,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+    <script src="../js/translations.js"></script>
     <script src="../js/tratameduak.js"></script>
 
 </body>

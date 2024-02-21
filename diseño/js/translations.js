@@ -151,13 +151,24 @@ const translations = {
             footer: "2024 Grupos. Todos los derechos reservados.",
         },
         ticket: {
-
+            cliente:"Cliente",
+            fecha:"Fecha",
+            precio:"Precio",
+            footer:"2024 Tickets. Todos los derechos reservados."
         },
         tratamenduak: {
-
+            pre_casa:"Precio casa",
+            pre_fuera:"Precio fuera",
+            añad_trat:"Añadir tratamiento",
+            footer:"2024 Tratamientos. Todos los derechos reservados.",
         },
         txandak: {
-
+            limpieza:"Limpieza",
+            mostrador:"Mostrador",
+            añad_turno:"Añadir turno",
+            grupo:"Grupo",
+            tarea:"Tarea",
+            footer:"2024 Turnos. Todos los derechos reservados.",
         }
     },
     eus: {
@@ -314,6 +325,28 @@ const translations = {
             form_nombre: "Nombre del grupo",
             footer: "2024 Taldeak. Eskubide guztiak erreserbatuta.",
         },
+        ticket: {
+            cliente:"Bezeroa",
+            fecha:"Data",
+            precio:"Prezioa",
+            footer:"2024 Ticketak. Eskubide guztiak gordeta."
+        },
+        tratamenduak: {
+            pre_casa:"Etxeko prezioa",
+            pre_fuera:"Kanpoko prezioa",
+            añad_trat:"Tratamendua gehitu",
+            footer:"2024 Tratamenduak. Eskubide guztiak gordeta.",
+        },
+        
+        txandak: {
+            limpieza:"Garbiketa",
+            mostrador:"Mostradorea",
+            añad_turno:"Txanda gehitu",
+            grupo:"Taldea",
+            tarea:"Lana",
+            footer:"2024 Txandak. Eskubide guztiak gordeta.",
+        }
+        
 
     }
 }

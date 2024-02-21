@@ -6,9 +6,16 @@ new Vue({
         kodeaSortu: "",
         izenaSortu: "",
         listaBezero: [], // datos de hitzordua para mostrar en la tabla
-        listaTaldeSinFiltro: []
+        listaTaldeSinFiltro: [],
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        translations: translations,
     },
     methods: {
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
         async cargaHItzordu() {
             try {
                 const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaruta', {

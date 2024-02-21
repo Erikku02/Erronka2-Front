@@ -13,7 +13,10 @@ new Vue({
         listaTalde: [],
         listaLangile: [],
         listaTxanda: [],
-        alumnosPorGrupo: []
+        alumnosPorGrupo: [],
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        translations: translations,
     },
     computed: {
         nombresUnicos() {
@@ -25,6 +28,10 @@ new Vue({
         },
     },
     methods: {
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
         contarTurnosPorAlumno() {
             const alumnos = {};
 
