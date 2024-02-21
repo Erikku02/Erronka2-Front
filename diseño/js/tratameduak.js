@@ -7,9 +7,16 @@ new Vue({
         etxeSortu: "",
         kanpoSortu: "",
         listaTratamendua: [],
-        listaTratamenduSinFiltro: []
+        listaTratamenduSinFiltro: [],
+        /* IDIOMAS */
+        selectedLanguage: 'es',
+        translations: translations,
     },
     methods: {
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
+        },
         async cargaTratamendu() {
             try {
                 const response = await fetch(window.ruta +'tratamenduaruta', {
