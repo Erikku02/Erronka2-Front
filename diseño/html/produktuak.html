@@ -10,135 +10,25 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
     <!-- BARRA DE NAVEGACION -->
-    <nav class="navbar bg-body-tertiary fixed-top">
-        <div class="container d-flex align-items-center">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
-                Productos
-            </a>
-        
-            <!-- Barra de navegacion fija -->
-            <i class="bi bi-box-arrow-right h3"></i>
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-        
-                <!-- Barra de navegacion "oculta" -->
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <!-- Citas -->
-                        <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-calendar3 m-2"></i>
-                                Citas
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="hitzorduak.html">Gestión de citas</a></li>
-                                <li><a class="dropdown-item" href="ticket.html">Tickets</a></li>
-                            </ul>
-                        </li>
-        
-                        <!-- Productos -->
-                        <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-tags-fill m-2"></i>
-                                    Productos
-                                </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="produktu_mugimenduak.html">Extraer productos</a></li>
-                                <li><a class="dropdown-item" href="produktuak.html">Gestionar productos</a></li>
-                                <li><a class="dropdown-item" href="kategoriak.html">Gestionar categorías</a></li>
-                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de extracción de productos</a></li>
-                            </ul>
-                        </li>
 
-                        <!-- Material -->
-                        <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-palette2 m-2"></i>
-                                    Material
-                                </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="materiala.html">Gestionar material</a></li>
-                                <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a></li>
-                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de movimientos de material</a></li>
-                            </ul>
-                        </li>
-
-
-                        <!-- Tratamientos -->
-                        <li class="nav-item dropdown mb-3">
-                            <a class="nav-link link-info fs-5 fw-bold text-light" href="tratamenduak.html" role="button" aria-expanded="false">
-                                <i class="bi bi-scissors m-2"></i>
-                                Tratamientos
-                            </a>
-                        </li>
-
-                        <!-- Turnos -->
-                        <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-calendar-check-fill m-2"></i>
-                                Turnos
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="txandak.html">Asignación de turnos</a></li>
-                                <li><a class="dropdown-item" href="gaurko_txandak.html">Turnos de hoy</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Grupos -->
-                        <li class="nav-item dropdown mb-3">
-                            <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-people-fill m-2"></i>
-                                Grupos
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="taldeak.html">Gestionar grupos</a></li>
-                                <li><a class="dropdown-item" href="ordutegiak.html">Horarios por grupo</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Usuarios -->
-                        <li class="nav-item dropdown mb-3">
-                            <a class="nav-link link-info fs-5 fw-bold text-light" href="langileak.html" role="button" aria-expanded="false">
-                                <i class="bi bi-person-fill m-2"></i>
-                                Usuarios
-                            </a>
-                        </li>
-
-                        <!-- Ficha Clientes -->
-                        <li class="nav-item dropdown mb-3">
-                            <a class="nav-link link-info fs-5 fw-bold text-light" href="bezero_fitxak.html" role="button" aria-expanded="false">
-                                <i class="bi bi-person-vcard m-2"></i>
-                                Ficha-clientes
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <main id="app">
+        <nav-component :changeLanguage="changeLanguage"></nav-component>
         <div class="container">
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
                     <i class="bi bi-check-circle m-2" @click="actuProduktu()"></i>
                     <i class="bi bi-dash-circle" @click="ezabProduktu()"></i>
+
+                    <!-- CAMBIAR EL IDIOMA (probisional) -->
+                    <p @click="changeLanguage('es')">ES</p>
+                    <p @click="changeLanguage('eus')">EUS</p>
                 </div>
 
                 <!-- Tabla -->
@@ -146,15 +36,22 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th @click="ordenarPorNombre" scope="col">Nombre <i class="bi bi-arrow-down-up"></i></th>
-                            <th scope="col">Descripcion</th>
-                            <th @click="ordenarPorCategoria" scope="col">Categoria <i class="bi bi-arrow-down-up"></i>
+                            <th @click="ordenarPorNombre" scope="col">{{
+                                translations[selectedLanguage].default.tab_nombre }} <i class="bi bi-arrow-down-up"></i>
                             </th>
-                            <th @click="ordenarPorMarka" scope="col">Marca <i class="bi bi-arrow-down-up"></i></th>
+                            <th scope="col">Descripcion</th>
+                            <th @click="ordenarPorCategoria" scope="col">{{
+                                translations[selectedLanguage].produktuak.categoria }} <i
+                                    class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th @click="ordenarPorMarka" scope="col">{{ translations[selectedLanguage].produktuak.marca
+                                }} <i class="bi bi-arrow-down-up"></i></th>
 
-                            <th @click="ordenarPorStock" scope="col">Stock <i class="bi bi-arrow-down-up"></i></th>
+                            <th @click="ordenarPorStock" scope="col">{{ translations[selectedLanguage].produktuak.stock
+                                }} <i class="bi bi-arrow-down-up"></i></th>
 
-                            <th @click="ordenarPorStockAlerta" scope="col">Stock de seguridad <i
+                            <th @click="ordenarPorStockAlerta" scope="col">{{
+                                translations[selectedLanguage].produktuak.stock_segu }} <i
                                     class="bi bi-arrow-down-up"></i></th>
                         </tr>
                     </thead>
@@ -184,7 +81,8 @@
                                 </span>
 
                                 <select v-else class="form-select w-100" v-model="kategoriaEgu">
-                                    <option selected hidden :value="produktu.id_kategoria">Categoria</option>
+                                    <option selected hidden :value="produktu.id_kategoria">{{
+                                        translations[selectedLanguage].produktuak.categoria }}</option>
                                     <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{
                                         kategoria.izena }}</option>
                                 </select>
@@ -226,7 +124,7 @@
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
-                <h4 class="text-center pt-5 mx-auto">Añadir producto</h4>
+                <h4 class="text-center pt-5 mx-auto">{{ translations[selectedLanguage].produktuak.añadir }}</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
@@ -242,7 +140,7 @@
 
                     <div class="col-sm-6 col-lg-3">
                         <select class="form-select" id="kategoria" v-model="kategoriaSortu">
-                            <option value="" disabled>Categoría</option>
+                            <option value="" disabled>{{ translations[selectedLanguage].produktuak.categoria }}</option>
                             <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{
                                 kategoria.izena }}</option>
                         </select>
@@ -266,20 +164,24 @@
                     <div class="col-1 align-self-center">
                         <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
                         <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
-                            <button @click.prevent="createProduktu()" class="btn btn-primary">Añadir</button>
+                            <button @click.prevent="createProduktu()" class="btn btn-primary">{{
+                                translations[selectedLanguage].default.btn_añadir }}</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+
+
+        <!-- FOOTER -->
+        <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
+            <div class="container">
+                <p>&copy; {{
+                    translations[selectedLanguage].produktuak.footer }}</p>
+            </div>
+        </footer>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
-        <div class="container">
-            <p>&copy; 2024 Productos. Todos los derechos reservados.</p>
-        </div>
-    </footer>
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -288,6 +190,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+    <script src="../js/translations.js"></script>
     <script src="../js/produktuak.js"></script>
 
 </body>

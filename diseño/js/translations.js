@@ -142,7 +142,14 @@ const translations = {
             footer: '2024 Extracción de productos. Todos los derechos reservados.',
         },
         produktuak: {
-
+            /* nombre: 'Nombre', // default */
+            descripcion: 'Descripción',
+            categoria: 'Categoria',
+            marca: 'Marca',
+            stock: 'Stock',
+            stock_segu: 'Stock de seguridad',
+            añadir: 'Añadir producto',
+            footer: '2024 Productos. Todos los derechos reservados.',
         },
         taldeak: {
             title: "Grupos",
@@ -306,7 +313,14 @@ const translations = {
             footer: '2024 Produktuak erauztea. Eskubide guztiak erreserbatuta.',
         },
         produktuak: {
-
+            /* nombre: 'Nombre', // default */
+            descripcion: 'Deskribapena',
+            categoria: 'Kategoria',
+            marca: 'Marka',
+            stock: 'Stock-a',
+            stock_segu: 'Segurtasun stock-a',
+            añadir: 'Produktua gehitu',
+            footer: '2024 Produktuak. Eskubide guztiak erreserbatuta.',
         },
         taldeak: {
             title: "Taldeak",
