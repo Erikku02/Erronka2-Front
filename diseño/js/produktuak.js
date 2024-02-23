@@ -136,6 +136,7 @@ Vue.component('nav-component', {
         return {
             selectedLanguage: 'es',
             translations: translations,
+            lang: '',
         };
     },
     methods: {
