@@ -36,6 +36,7 @@ new Vue({
                 const datuak = await response.json();
                 // console.log(this.fecha);
                 this.listaBezero = datuak;
+                console.log(this.listaBezero);
 
 
             } catch (error) {

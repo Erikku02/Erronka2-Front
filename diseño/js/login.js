@@ -12,7 +12,7 @@ new Vue({
                 const password = this.password;
                 const arraySortu = {
                     'username': username,
-                    'password': password,
+                    'pasahitza': password,
                 };
 
                 console.log(JSON.stringify(arraySortu));
@@ -31,12 +31,18 @@ new Vue({
                     body: JSON.stringify(arraySortu)
                 });
 
-                if (!response.ok) {
-                    throw new Error('No se pudo iniciar sesion');
+                if (response.ok) {
+                    // console.log("Conectado exitosamente");
+                    // console.log(response);
+                    // console.log(response.status);
+                    window.location.assign('../html/hitzorduak.html')
+                } else {
+                    const responseData = await response.json(); // Obtener los datos del cuerpo de la respuesta
+                    console.error("Error de autenticación:", responseData.error);
+                    // console.log(response);
                 }
-                console.log("conectado");
             } catch (error) {
-
+                console.error('Error: ', error);
             }
 
 
