@@ -123,11 +123,11 @@ Vue.component('nav-component', {
                         <ul class="pt-3">
                             <li v-if="selectedLanguage === 'es'" 
                                 class="d-flex justify-content-center pe-5">
-                                <a @click="changeLanguageAndClose('es')" 
+                                <a @click="changeLanguage('es')" 
                                     class="text-white pe-2" 
                                     style="text-decoration: underline;" >ES </a> 
                                 <p class="text-white"> / </p>
-                                <a @click="changeLanguageAndClose('eus')"
+                                <a @click="changeLanguage('eus')"
                                     class="text-white ps-2"
                                     style="text-decoration: none;">EUS</a>
                             </li>
