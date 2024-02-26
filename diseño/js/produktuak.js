@@ -7,7 +7,7 @@ Vue.component('nav-component', {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
-                    Productos
+                {{ translations[selectedLanguage].nav.productos }}
                 </a>
 
                 <!-- Barra de navegacion fija -->
@@ -27,11 +27,11 @@ Vue.component('nav-component', {
                                 <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-calendar3 m-2"></i>
-                                    Citas
+                                    {{ translations[selectedLanguage].nav.citas }}
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="hitzorduak.html">Gestión de citas</a></li>
-                                    <li><a class="dropdown-item" href="ticket.html">Tickets</a></li>
+                                    <li><a class="dropdown-item" href="hitzorduak.html">{{ translations[selectedLanguage].nav.gestion_citas }}</a></li>
+                                    <li><a class="dropdown-item" href="ticket.html">{{ translations[selectedLanguage].nav.tickets }}</a></li>
                                 </ul>
                             </li>
 
@@ -40,14 +40,13 @@ Vue.component('nav-component', {
                                 <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-tags-fill m-2"></i>
-                                    Productos
+                                    {{ translations[selectedLanguage].nav.productos }}
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="produktu_mugimenduak.html">Extraer productos</a></li>
-                                    <li><a class="dropdown-item" href="produktuak.html">Gestionar productos</a></li>
-                                    <li><a class="dropdown-item" href="kategoriak.html">Gestionar categorías</a></li>
-                                    <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de
-                                            extracción de productos</a></li>
+                                    <li><a class="dropdown-item" href="produktu_mugimenduak.html">{{ translations[selectedLanguage].nav.extraer_produ }}</a></li>
+                                    <li><a class="dropdown-item" href="produktuak.html">{{ translations[selectedLanguage].nav.gestionar_produ }}</a></li>
+                                    <li><a class="dropdown-item" href="kategoriak.html">{{ translations[selectedLanguage].nav.gestionar_categ }}</a></li>
+                                    <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">{{ translations[selectedLanguage].nav.hist_produ }}</a></li>
                                 </ul>
                             </li>
 
@@ -56,14 +55,13 @@ Vue.component('nav-component', {
                                 <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-palette2 m-2"></i>
-                                    Material
+                                    {{ translations[selectedLanguage].nav.material }}
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="materiala.html">Gestionar material</a></li>
-                                    <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a>
+                                    <li><a class="dropdown-item" href="materiala.html">{{ translations[selectedLanguage].nav.gestion_mate }}</a></li>
+                                    <li><a class="dropdown-item" href="materiala_erabili.html">{{ translations[selectedLanguage].nav.ext_dev_mate }}</a>
                                     </li>
-                                    <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de
-                                            movimientos de material</a></li>
+                                    <li><a class="dropdown-item" href="historiala_materiala_erabili.html">{{ translations[selectedLanguage].nav.hist_mate }}</a></li>
                                 </ul>
                             </li>
 
@@ -73,7 +71,7 @@ Vue.component('nav-component', {
                                 <a class="nav-link link-info fs-5 fw-bold text-light" href="tratamenduak.html" role="button"
                                     aria-expanded="false">
                                     <i class="bi bi-scissors m-2"></i>
-                                    Tratamientos
+                                    {{ translations[selectedLanguage].nav.tratamientos }}
                                 </a>
                             </li>
 
@@ -82,11 +80,11 @@ Vue.component('nav-component', {
                                 <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-calendar-check-fill m-2"></i>
-                                    Turnos
+                                    {{ translations[selectedLanguage].nav.turnos }}
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="txandak.html">Asignación de turnos</a></li>
-                                    <li><a class="dropdown-item" href="gaurko_txandak.html">Turnos de hoy</a></li>
+                                    <li><a class="dropdown-item" href="txandak.html">{{ translations[selectedLanguage].nav.asignar_turno }}</a></li>
+                                    <li><a class="dropdown-item" href="gaurko_txandak.html">{{ translations[selectedLanguage].nav.turnos_hoy }}</a></li>
                                 </ul>
                             </li>
 
@@ -95,11 +93,11 @@ Vue.component('nav-component', {
                                 <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-people-fill m-2"></i>
-                                    Grupos
+                                    {{ translations[selectedLanguage].nav.grupos }}
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="taldeak.html">Gestionar grupos</a></li>
-                                    <li><a class="dropdown-item" href="ordutegiak.html">Horarios por grupo</a></li>
+                                    <li><a class="dropdown-item" href="taldeak.html">{{ translations[selectedLanguage].nav.gestion_grupos }}</a></li>
+                                    <li><a class="dropdown-item" href="ordutegiak.html">{{ translations[selectedLanguage].nav.horario_grupos }}</a></li>
                                 </ul>
                             </li>
 
@@ -108,7 +106,7 @@ Vue.component('nav-component', {
                                 <a class="nav-link link-info fs-5 fw-bold text-light" href="langileak.html" role="button"
                                     aria-expanded="false">
                                     <i class="bi bi-person-fill m-2"></i>
-                                    Usuarios
+                                    {{ translations[selectedLanguage].nav.usuarios }}
                                 </a>
                             </li>
 
@@ -117,15 +115,33 @@ Vue.component('nav-component', {
                                 <a class="nav-link link-info fs-5 fw-bold text-light" href="bezero_fitxak.html"
                                     role="button" aria-expanded="false">
                                     <i class="bi bi-person-vcard m-2"></i>
-                                    Ficha-clientes
+                                    {{ translations[selectedLanguage].nav.ficha_cliente }}
                                 </a>
                             </li>
-                            <li>
-                                <!-- CAMBIAR EL IDIOMA (probisional) -->
-                                <p @click="changeLanguageAndClose('es')" class="text-white">ES</p>
-                                <p @click="changeLanguageAndClose('eus')">EUS</p>
-                                <p> {{ translations }}</p>
+                        </ul>
+                        <hr class="border border-white">
+                        <ul class="pt-3">
+                            <li v-if="selectedLanguage === 'es'" 
+                                class="d-flex justify-content-center pe-5">
+                                <a @click="changeLanguageAndClose('es')" 
+                                    class="text-white pe-2" 
+                                    style="text-decoration: underline;" >ES </a> 
+                                <p class="text-white"> / </p>
+                                <a @click="changeLanguageAndClose('eus')"
+                                    class="text-white ps-2"
+                                    style="text-decoration: none;">EUS</a>
                             </li>
+                            <li v-if="selectedLanguage === 'eus'" 
+                                class="d-flex justify-content-center pe-5">
+                                <a @click="changeLanguageAndClose('es')" 
+                                    class="text-white pe-2"  
+                                    style="text-decoration: none;">ES </a> 
+                                <p class="text-white"> / </p>
+                                <a @click="changeLanguageAndClose('eus')"
+                                    class="text-white ps-2"
+                                    style="text-decoration: underline;">EUS</a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </div>

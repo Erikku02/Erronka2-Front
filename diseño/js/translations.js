@@ -1,12 +1,29 @@
 const translations = {
     es: {
         // El nav por ahora no, da fallo
-        /* "nav": {
-            "citas": "Citas",
-            "gestion_citas": "Gestión de citas",
-            "tickets": "Tickets",
-            "productos": "Productos"
-        }, */
+        nav: {
+            citas: "Citas",
+            gestion_citas: "Gestión de citas",
+            tickets: "Tickets",
+            productos: "Productos",
+            extraer_produ: "Extraer productos",
+            gestionar_produ: "Gestionar productos",
+            gestionar_categ: "Gestionar categorías",
+            hist_produ: "Historial de extracción de productos",
+            material: "Material",
+            gestion_mate: "Gestionar material",
+            ext_dev_mate: "Extraer/Devolver material",
+            hist_mate: "Historial de movimientos de material",
+            tratamientos: "Tratamientos",
+            turnos: "Turnos",
+            asignar_turno: "Asignación de turnos",
+            turnos_hoy: "Turnos de hoy",
+            grupos: "Grupos",
+            gestion_grupos: "Gestionar grupos",
+            horario_grupos: "Horarios por grupo",
+            usuarios: "Usuarios",
+            ficha_cliente: "Ficha-clientes"
+        },
         default: {
             tab_codigo: 'Código',
             tab_nombre: "Nombre",
@@ -158,33 +175,50 @@ const translations = {
             footer: "2024 Grupos. Todos los derechos reservados.",
         },
         ticket: {
-            cliente:"Cliente",
-            fecha:"Fecha",
-            precio:"Precio",
-            footer:"2024 Tickets. Todos los derechos reservados."
+            cliente: "Cliente",
+            fecha: "Fecha",
+            precio: "Precio",
+            footer: "2024 Tickets. Todos los derechos reservados."
         },
         tratamenduak: {
-            pre_casa:"Precio casa",
-            pre_fuera:"Precio fuera",
-            añad_trat:"Añadir tratamiento",
-            footer:"2024 Tratamientos. Todos los derechos reservados.",
+            pre_casa: "Precio casa",
+            pre_fuera: "Precio fuera",
+            añad_trat: "Añadir tratamiento",
+            footer: "2024 Tratamientos. Todos los derechos reservados.",
         },
         txandak: {
-            limpieza:"Limpieza",
-            mostrador:"Mostrador",
-            añad_turno:"Añadir turno",
-            grupo:"Grupo",
-            tarea:"Tarea",
-            footer:"2024 Turnos. Todos los derechos reservados.",
+            limpieza: "Limpieza",
+            mostrador: "Mostrador",
+            añad_turno: "Añadir turno",
+            grupo: "Grupo",
+            tarea: "Tarea",
+            footer: "2024 Turnos. Todos los derechos reservados.",
         }
     },
     eus: {
-        /* "nav": {
-            "citas": "Citas",
-            "gestion_citas": "Gestión de citas",
-            "tickets": "Tickets",
-            "productos": "Productos"
-        }, */
+        nav: {
+            citas: "Hitzorduak",
+            gestion_citas: "Hitzorduen kudeaketa",
+            tickets: "Tiketak",
+            productos: "Produktuak",
+            extraer_produ: "Produktuak ateratzea",
+            gestionar_produ: "Produktuak kudeatzea",
+            gestionar_categ: "Kategoriak kudeatzea",
+            hist_produ: "Produktuen erauzketaren historia",
+            material: "Materiala",
+            gestion_mate: "Materiala kudeatzea",
+            ext_dev_mate: "Materiala ateratzea/itzultzea",
+            hist_mate: "Material-mugimenduen historia",
+            tratamientos: "Tratamenduak",
+            turnos: "Txandak",
+            asignar_turno: "Txandak esleitzea",
+            turnos_hoy: "Gaurko txandak",
+            grupos: "Taldeak",
+            gestion_grupos: "Taldeak kudeatzea",
+            horario_grupos: "Ordutegiak taldeka",
+            usuarios: "Erabiltzaileak",
+            ficha_cliente: "Bezero-fitxak"
+        },
         default: {
             tab_codigo: "Kodea",
             tab_nombre: "Izena",
@@ -340,27 +374,27 @@ const translations = {
             footer: "2024 Taldeak. Eskubide guztiak erreserbatuta.",
         },
         ticket: {
-            cliente:"Bezeroa",
-            fecha:"Data",
-            precio:"Prezioa",
-            footer:"2024 Ticketak. Eskubide guztiak gordeta."
+            cliente: "Bezeroa",
+            fecha: "Data",
+            precio: "Prezioa",
+            footer: "2024 Ticketak. Eskubide guztiak gordeta."
         },
         tratamenduak: {
-            pre_casa:"Etxeko prezioa",
-            pre_fuera:"Kanpoko prezioa",
-            añad_trat:"Tratamendua gehitu",
-            footer:"2024 Tratamenduak. Eskubide guztiak gordeta.",
+            pre_casa: "Etxeko prezioa",
+            pre_fuera: "Kanpoko prezioa",
+            añad_trat: "Tratamendua gehitu",
+            footer: "2024 Tratamenduak. Eskubide guztiak gordeta.",
         },
-        
+
         txandak: {
-            limpieza:"Garbiketa",
-            mostrador:"Mostradorea",
-            añad_turno:"Txanda gehitu",
-            grupo:"Taldea",
-            tarea:"Lana",
-            footer:"2024 Txandak. Eskubide guztiak gordeta.",
+            limpieza: "Garbiketa",
+            mostrador: "Mostradorea",
+            añad_turno: "Txanda gehitu",
+            grupo: "Taldea",
+            tarea: "Lana",
+            footer: "2024 Txandak. Eskubide guztiak gordeta.",
         }
-        
+
 
     }
 }
