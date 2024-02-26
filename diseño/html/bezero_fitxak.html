@@ -195,18 +195,18 @@
                             <td>
                                 <span v-if="!arrayId.includes(fitxa.id)">
                                     <span v-if="fitxa.azal_sentikorra == 'E'">
-                                        Ez
+                                        No
                                     </span>
                                     <span v-else="fitxa.azal_sentikorra == 'B'">
-                                        Bai
+                                        Si
                                     </span>
 
                                 </span>
 
                                 <select v-else class="form-select w-100" v-model="fitxa.azal_sentikorra">
                                     <option disabled>{{ translations[selectedLanguage].bezero_fitxak.categoria }}</option>
-                                    <option value="B"> Bai</option>
-                                    <option value="E"> Ez</option>
+                                    <option value="B"> Si</option>
+                                    <option value="E"> No</option>
                                 </select>
                             </td>
                             <td>
@@ -408,8 +408,8 @@
                         <!-- <label for="input2" class="">Nombre</label> -->
                         <select class="form-select w-100" id="dia" required v-model="sentikorraSortu">
                             <option disabled value="">{{ translations[selectedLanguage].bezero_fitxak.piel_sensible }}</option>
-                            <option value="B">Bai</option>
-                            <option value="E">Ez</option>
+                            <option value="B">Si</option>
+                            <option value="E">No</option>
                         </select>
                     </div>
 
