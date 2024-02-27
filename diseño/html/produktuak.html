@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <script src="../js/route.js"></script>
@@ -32,28 +32,36 @@
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th @click="ordenarPorNombre" scope="col">{{
-                                translations[selectedLanguage].default.tab_nombre }} <i class="bi bi-arrow-down-up"></i>
+                            <th @click="ordenarPorNombre" scope="col">
+                                {{ translations[selectedLanguage].default.tab_nombre }}
+                                <i class="bi bi-arrow-down-up"></i>
                             </th>
-                            <th scope="col">Descripcion</th>
-                            <th @click="ordenarPorCategoria" scope="col">{{
-                                translations[selectedLanguage].produktuak.categoria }} <i
-                                    class="bi bi-arrow-down-up"></i>
+                            <th scope="col">
+                                {{ translations[selectedLanguage].produktuak.descripcion }}
                             </th>
-                            <th @click="ordenarPorMarka" scope="col">{{ translations[selectedLanguage].produktuak.marca
-                                }} <i class="bi bi-arrow-down-up"></i></th>
-
-                            <th @click="ordenarPorStock" scope="col">{{ translations[selectedLanguage].produktuak.stock
-                                }} <i class="bi bi-arrow-down-up"></i></th>
-
-                            <th @click="ordenarPorStockAlerta" scope="col">{{
-                                translations[selectedLanguage].produktuak.stock_segu }} <i
-                                    class="bi bi-arrow-down-up"></i></th>
+                            <th @click="ordenarPorCategoria" scope="col">
+                                {{ translations[selectedLanguage].produktuak.categoria }}
+                                <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th @click="ordenarPorMarka" scope="col">
+                                {{ translations[selectedLanguage].produktuak.marca }}
+                                <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th @click="ordenarPorStock" scope="col">
+                                {{ translations[selectedLanguage].produktuak.stock }}
+                                <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th @click="ordenarPorStockAlerta" scope="col">
+                                {{ translations[selectedLanguage].produktuak.stock_segu }}
+                                <i class="bi bi-arrow-down-up"></i>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(produktu) in listaProduktu">
-                            <td><input type="checkbox" :value="produktu.id" v-model="arrayId" /></td>
+                            <td>
+                                <input type="checkbox" :value="produktu.id" v-model="arrayId" />
+                            </td>
                             <td>
                                 <span v-if="!arrayId.includes(produktu.id)">
                                     {{ produktu.izena }}
@@ -82,7 +90,6 @@
                                     <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{
                                         kategoria.izena }}</option>
                                 </select>
-
                             </td>
 
                             <td>

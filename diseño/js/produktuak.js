@@ -123,21 +123,21 @@ Vue.component('nav-component', {
                         <ul class="pt-3">
                             <li v-if="selectedLanguage === 'es'" 
                                 class="d-flex justify-content-center pe-5">
-                                <a @click="changeLanguage('es')" 
+                                <a @click="changeLanguageAndClose('es')" 
                                     class="text-white pe-2" 
                                     style="text-decoration: underline;" >ES </a> 
                                 <p class="text-white"> / </p>
-                                <a @click="changeLanguage('eus')"
+                                <a @click="changeLanguageAndClose('eus')"
                                     class="text-white ps-2"
                                     style="text-decoration: none;">EUS</a>
                             </li>
                             <li v-if="selectedLanguage === 'eus'" 
                                 class="d-flex justify-content-center pe-5">
-                                <a @click="changeLanguage('es')" 
+                                <a @click="changeLanguageAndClose('es')" 
                                     class="text-white pe-2"  
                                     style="text-decoration: none;">ES </a> 
                                 <p class="text-white"> / </p>
-                                <a @click="changeLanguage('eus')"
+                                <a @click="changeLanguageAndClose('eus')"
                                     class="text-white ps-2"
                                     style="text-decoration: underline;">EUS</a>
                             </li>
@@ -161,7 +161,7 @@ Vue.component('nav-component', {
             console.log(this.selectedLanguage);
             console.log(this.translations);
         },
-        /* changeLanguageAndClose(lang) {
+        changeLanguageAndClose(lang) {
             // Cerrar la barra de navegación lateral
             const offcanvasNavbar = document.getElementById('offcanvasNavbar');
             const offcanvasInstance = new bootstrap.Offcanvas(offcanvasNavbar);
@@ -172,7 +172,7 @@ Vue.component('nav-component', {
 
             // Enviar la variable al método changeLanguage de la instancia de Vue
             this.$root.changeLanguage(lang);
-        }, */
+        },
         getTranslation(key) {
             return this.translations[this.selectedLanguage][key] || '';
         }
