@@ -11,6 +11,17 @@
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- Dentro de tu etiqueta <style> en el head del documento -->
+    <style>
+        .nav-tabs .nav-link {
+            color: black; /* Cambia el color del texto de los titulos del filtro a negro */
+        }
+    
+        .selected {
+            color: blue !important; /* Cambia el color del texto del grupo seleccionado a azul */
+        }
+    </style>
+    
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -151,11 +162,15 @@
 
                 <ul class="nav nav-tabs mt-5">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#" @click="cargaLangile()">{{
-                            translations[selectedLanguage].langileak.todos }}</a>
+                        <a :class="{ 'nav-link': true, 'selected': selectedTalde === null }" aria-current="page" href="#"
+                            @click="cargaLangile()">
+                            {{ translations[selectedLanguage].langileak.todos }}
+                        </a>
                     </li>
-                    <li class="nav-item" v-for="(talde,index) in listaTalde" :key="index">
-                        <a href="#" class="nav-link active" aria-current="page" @click="filterTaldea(talde.kodea)">
+                    <!-- Dentro de tu bucle v-for para generar las pestañas de grupos -->
+                    <li class="nav-item" v-for="(talde, index) in listaTalde" :key="index">
+                        <a :class="{ 'nav-link': true, 'selected': selectedTalde === talde.kodea }" @click="filterTaldea(talde.kodea)"
+                            href="#">
                             {{ talde.kodea }}
                         </a>
                     </li>

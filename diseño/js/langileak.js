@@ -72,6 +72,8 @@ new Vue({
             } catch (error) {
                 console.error('Errorea: ', error);
             }
+            this.selectedTalde = null;
+
         },
         async createLangile() {
             try {
@@ -220,14 +222,15 @@ new Vue({
         },
 
         async filterTaldea(talde) {
-            this.selectedTalde = talde;
             try {
+                // Aplica la clase 'selected' solo al grupo seleccionado
+                this.selectedTalde = talde;
+        
                 const kodea = this.selectedTalde;
-                console.log(kodea);
-
+        
                 if (!kodea) {
                     // Si no se selecciona ningún grupo, cargar todos los trabajadores
-                    this.cargaLangile();
+                    window.location.reload(); // Recargar la página
                 } else {
                     const response = await fetch(window.ruta + 'langilearuta/' + kodea, {
                         method: 'GET',
@@ -236,12 +239,12 @@ new Vue({
                             'Access-Control-Allow-Origin': '*'
                         },
                     });
-
+        
                     if (!response.ok) {
                         console.log('Error al solicitar trabajadores por grupo');
                         throw new Error('Error al realizar la solicitud');
                     }
-
+        
                     const datuak = await response.json();
                     console.log(datuak);
                     this.listaLangile = datuak
@@ -252,6 +255,8 @@ new Vue({
                 console.error('Error:', error);
             }
         },
+        
+          
         changeLanguage(lang) {
             this.selectedLanguage = lang;
             console.log(this.selectedLanguage);
