@@ -173,7 +173,8 @@
                         <!-- TODO: mostrar los datos del fetch -->
                         <tr v-for="(ordutegia) in listaOrdutegia">
                             <td>
-                                <input type="checkbox" :value="ordutegia.id" v-model="arrayId" />
+                                <input type="checkbox" class="form-check-input" :value="ordutegia.id"
+                                    v-model="arrayId" />
                             </td>
                             <td>
                                 {{ ordutegia.kodea }}

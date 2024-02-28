@@ -65,3 +65,18 @@ form button {
     background-color: #ffffff;
     /* Cambia el color según tus preferencias */
 }
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+/* @keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0
+    }
+} */

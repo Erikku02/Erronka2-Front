@@ -60,7 +60,8 @@
                     <tbody>
                         <tr v-for="(produktu) in listaProduktu">
                             <td>
-                                <input type="checkbox" :value="produktu.id" v-model="arrayId" />
+                                <input type="checkbox" class="form-check-input" :value="produktu.id"
+                                    v-model="arrayId" />
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(produktu.id)">

@@ -180,7 +180,8 @@
                     </thead>
                     <tbody>
                         <tr v-for="(talde) in listaTalde">
-                            <td><input type="checkbox" :value="talde.kodea" v-model="arrayKodea" /></td>
+                            <td><input type="checkbox" class="form-check-input" :value="talde.kodea"
+                                    v-model="arrayKodea" /></td>
                             <td>{{talde.kodea}}</td>
                             <td>
                                 <span v-if="!arrayKodea.includes(talde.kodea)">

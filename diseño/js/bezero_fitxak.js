@@ -29,9 +29,24 @@ new Vue({
         selectedLanguage: 'es',
         // languageStrings: {},
         translations: translations,
-
+        errorMessage: '',
+        statusMessage: '',
     },
     methods: {
+        // para mostrar los mensajes de estado
+        showMessage(messageType, message) {
+            if (messageType === 'error') {
+                this.errorMessage = message;
+                setTimeout(() => {
+                    this.errorMessage = '';
+                }, 10000); // 15 segundos
+            } else if (messageType === 'status') {
+                this.statusMessage = message;
+                setTimeout(() => {
+                    this.statusMessage = '';
+                }, 10000); // 15 segundos
+            }
+        },
         changeLanguage(lang) {
             this.selectedLanguage = lang;
             console.log(this.selectedLanguage);
@@ -46,7 +61,7 @@ new Vue({
                 // se vacía arrayId
                 this.arrayId = [];
             }
-        
+
             // Marcar o desmarcar todos los checkboxes de la tabla
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             checkboxes.forEach(checkbox => {
@@ -63,7 +78,7 @@ new Vue({
                 // se vacía arrayId
                 this.historialId = [];
             }
-        
+
             // Marcar o desmarcar todos los checkboxes de la tabla
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             checkboxes.forEach(checkbox => {
@@ -83,8 +98,8 @@ new Vue({
                 });
 
                 if (!response.ok) {
-                    console.log('Errorea eskera egiterakoan');
-                    throw new Error('Errorea eskaera egiterakoan');
+                    // console.log('Errorea eskera egiterakoan');
+                    // throw new Error('Errorea eskaera egiterakoan');
                 }
 
                 const datuak = await response.json();
@@ -95,7 +110,7 @@ new Vue({
                 console.log(datuak);
 
             } catch (error) {
-                console.error('Errorea:', error);
+                console.error("Errorea: ", error);
             }
         },
         async createFitxa() {
@@ -113,7 +128,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta +'bezero_fixagorde', {
+                const response = await fetch(window.ruta + 'bezero_fixagorde', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
                     headers: {
@@ -124,13 +139,24 @@ new Vue({
                 });
 
                 if (!response.ok) {
-                    console.log('Errorea sortzerakoan');
-                    throw new Error('Errorea sortzerakoan');
+                    // console.log('Errorea sortzerakoan');
+                    this.showMessage('error', 'Error al crear la ficha');
+                    // throw new Error('Errorea sortzerakoan');
                 }
 
-                console.log('Sortu da');
-                await this.cargaFitxa();
-                location.reload();
+                // console.log('Sortu da');
+                // para que el mensaje cambie al pasar 10seg
+                this.showMessage('status', 'Ficha creada correctamente');
+                this.cargaFitxa(); //para cargar los datos nuevos
+
+                // Vaciar los input
+                this.izenaSortu = '';
+                this.abizenaSortu = '';
+                this.telefonoaSortu = '';
+                this.sentikorraSortu = '';
+
+                // await this.cargaFitxa();
+                // location.reload();
             } catch (error) {
                 console.log('Errorea: ', error);
             }
@@ -151,7 +177,7 @@ new Vue({
                     "azal_sentikorra": azal_sentikorra,
                 };
 
-                const response = await fetch(window.ruta +'bezero_fixaeguneratu/' + id, {
+                const response = await fetch(window.ruta + 'bezero_fixaeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
                     method: 'PUT',
                     headers: {
@@ -176,7 +202,7 @@ new Vue({
         async ezabFitxa() {
             try {
                 for (var i = 0; i < this.arrayId.length; i++) {
-                    const response = await fetch(window.ruta +'bezero_fixaezabatu/' + this.arrayId[i], {
+                    const response = await fetch(window.ruta + 'bezero_fixaezabatu/' + this.arrayId[i], {
                         // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayId[i], {
                         method: 'PUT',
                         headers: {
@@ -201,7 +227,7 @@ new Vue({
         },
         async cargaProduktu() {
             try {
-                const response = await fetch(window.ruta +'produktuaruta', {
+                const response = await fetch(window.ruta + 'produktuaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -231,7 +257,7 @@ new Vue({
         async cargaHistorial(id) {
             try {
                 this.asd = id;
-                const response = await fetch(window.ruta +'kolore_histruta', {
+                const response = await fetch(window.ruta + 'kolore_histruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -273,7 +299,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta +'kolore_histgorde', {
+                const response = await fetch(window.ruta + 'kolore_histgorde', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
                     headers: {
@@ -318,7 +344,7 @@ new Vue({
                     "oharrak": oharrak
                 };
                 console.log(arrayActu)
-                const response = await fetch(window.ruta +'kolore_histeguneratu/' + id, {
+                const response = await fetch(window.ruta + 'kolore_histeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
                     method: 'PUT',
                     headers: {
@@ -342,7 +368,7 @@ new Vue({
         async ezabHistorial() {
             try {
                 for (var i = 0; i < this.historialId.length; i++) {
-                    const response = await fetch(window.ruta +'kolore_histezabatu/' + this.historialId[i], {
+                    const response = await fetch(window.ruta + 'kolore_histezabatu/' + this.historialId[i], {
                         // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
                         method: 'PUT',
                         headers: {
@@ -358,7 +384,7 @@ new Vue({
                 //   throw new Error('Errorea eguneratzerakoan');
                 // }
 
-                console.log();('Ondo ezabatuta');
+                console.log(); ('Ondo ezabatuta');
                 console.log(this.historialId);
             } catch (error) {
                 console.log('Errorea: ', error);
@@ -386,16 +412,16 @@ new Vue({
             }
         },
         arrayId() {
-            if (this.arrayId.length > 1){
+            if (this.arrayId.length > 1) {
                 this.visibleFitxa = false;
-            }else{
+            } else {
                 this.visibleFitxa = true;
             }
         },
         historialId() {
-            if (this.historialId.length > 1){
+            if (this.historialId.length > 1) {
                 this.visibleHist = false;
-            }else{
+            } else {
                 this.visibleHist = true;
             }
         }

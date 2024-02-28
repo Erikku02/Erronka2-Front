@@ -184,7 +184,9 @@
                     </thead>
                     <tbody>
                         <tr v-for="(materiala) in listaMateriala">
-                            <td><input type="checkbox" :value="materiala.id" v-model="arrayId"></td>
+                            <td>
+                                <input type="checkbox" class="form-check-input" :value="materiala.id" v-model="arrayId">
+                            </td>
                             <td>
                                 <span v-if="!arrayId.includes(materiala.id)">
                                     {{ materiala.etiketa }}
