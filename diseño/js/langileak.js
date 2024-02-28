@@ -101,7 +101,7 @@ new Vue({
                     throw new Error('Errorea sortzerakoan');
                 }
 
-                alert('Sortu da');
+                console.log('Sortu da');
                 await this.cargaLangile();
                 location.reload();
 
@@ -183,7 +183,7 @@ new Vue({
                     throw new Error('Errorea eguneratzerakoan');
                 }
 
-                alert('Ondo eguneratuta');
+                console.log('Ondo eguneratuta');
                 await this.cargaLangile();
                 location.reload();
 
@@ -211,7 +211,7 @@ new Vue({
                 //   throw new Error('Errorea eguneratzerakoan');
                 // }
 
-                alert('Ondo ezabatuta');
+                console.log('Ondo ezabatuta');
                 await this.cargaLangile();
                 location.reload();
             } catch (error) {

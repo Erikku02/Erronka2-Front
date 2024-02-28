@@ -19,7 +19,7 @@ new Vue({
 
         async cargaKategoria() {
             try {
-                const response = await fetch(window.ruta +'kategoriaruta', {
+                const response = await fetch(window.ruta + 'kategoriaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -54,7 +54,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta +'kategoriagorde', {
+                const response = await fetch(window.ruta + 'kategoriagorde', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
                     headers: {
@@ -69,7 +69,7 @@ new Vue({
                     throw new Error('Errorea sortzerakoan');
                 }
 
-                alert('Sortu da');
+                console.log('Sortu da');
                 await this.cargaKategoria();
                 location.reload();
             } catch (error) {
@@ -85,7 +85,7 @@ new Vue({
                     "izena": izena
                 };
 
-                const response = await fetch(window.ruta +'kategoriaeguneratu/' + id, {
+                const response = await fetch(window.ruta + 'kategoriaeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
                     method: 'PUT',
                     headers: {
@@ -100,7 +100,7 @@ new Vue({
                     throw new Error('Errorea eguneratzerakoan');
                 }
 
-                alert('Ondo eguneratuta');
+                console.log('Ondo eguneratuta');
                 await this.cargaKategoria();
                 location.reload();
             } catch (error) {
@@ -110,7 +110,7 @@ new Vue({
         async ezabKategoria() {
             try {
                 for (var i = 0; i < this.arrayId.length; i++) {
-                    const response = await fetch(window.ruta +'kategoriaezabatu/' + this.arrayId[i], {
+                    const response = await fetch(window.ruta + 'kategoriaezabatu/' + this.arrayId[i], {
                         // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
                         method: 'PUT',
                         headers: {
@@ -126,7 +126,7 @@ new Vue({
                 //   throw new Error('Errorea eguneratzerakoan');
                 // }
 
-                alert('Ondo ezabatuta');
+                console.log('Ondo ezabatuta');
                 await this.cargaKategoria();
                 location.reload();
             } catch (error) {

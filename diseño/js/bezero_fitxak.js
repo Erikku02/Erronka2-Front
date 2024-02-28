@@ -91,7 +91,7 @@ new Vue({
                     throw new Error('Errorea sortzerakoan');
                 }
 
-                alert('Sortu da');
+                console.log('Sortu da');
                 await this.cargaFitxa();
                 location.reload();
             } catch (error) {
@@ -129,7 +129,7 @@ new Vue({
                     throw new Error('Errorea eguneratzerakoan');
                 }
 
-                alert('Ondo eguneratuta');
+                console.log('Ondo eguneratuta');
                 await this.cargaFitxa();
                 location.reload();
             } catch (error) {
@@ -155,7 +155,7 @@ new Vue({
                 //   throw new Error('Errorea eguneratzerakoan');
                 // }
 
-                alert('Ondo ezabatuta');
+                console.log('Ondo ezabatuta');
                 await this.cargaFitxa();
                 location.reload();
             } catch (error) {
@@ -251,7 +251,7 @@ new Vue({
                     throw new Error('Errorea sortzerakoan');
                 }
 
-                alert('Sortu da');
+                console.log('Sortu da');
                 this.cargaHistorial(id);
             } catch (error) {
                 console.log('Errorea: ', error);
@@ -297,7 +297,7 @@ new Vue({
                 //   throw new Error('Errorea eguneratzerakoan');
                 // }
 
-                alert('Ondo Updated');
+                console.log('Ondo Updated');
             } catch (error) {
                 console.log('Errorea: ', error);
             }
@@ -321,7 +321,7 @@ new Vue({
                 //   throw new Error('Errorea eguneratzerakoan');
                 // }
 
-                alert('Ondo ezabatuta');
+                console.log();('Ondo ezabatuta');
                 console.log(this.historialId);
             } catch (error) {
                 console.log('Errorea: ', error);

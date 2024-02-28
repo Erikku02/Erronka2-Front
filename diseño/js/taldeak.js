@@ -57,7 +57,7 @@ new Vue({
                     await this.reactivarTalde(grupoExistente.kodea); // Laravel no lo permite, hay que cambiar la db y añadir una PK autoincremental
                 } else if (this.listaTalde.some(talde => talde.kodea === kodea)) {
                     // Mostrar mensaje de error si el grupo ya existe y no está eliminado lógicamente
-                    alert('El grupo ya existe. Por favor, introduce un código diferente');
+                    console.log('El grupo ya existe. Por favor, introduce un código diferente');
                     return;
                 }
                 const arraySortu = {
@@ -82,7 +82,7 @@ new Vue({
                     throw new Error('Errorea sortzerakoan');
                 }
 
-                alert('Sortu da');
+                console.log('Sortu da');
                 await this.cargaTalde();
                 location.reload();
 
@@ -130,11 +130,11 @@ new Vue({
                         throw new Error('Errorea taldea berrezartzeko');
                     }
 
-                    alert('Grupo reactivado/reactivado');
+                    console.log('Grupo reactivado/reactivado');
                     await this.cargaTalde();
                     location.reload();
                 } else {
-                    alert('No se puede reactivar el grupo, ya que no existe o no está eliminado lógicamente.');
+                    console.log('No se puede reactivar el grupo, ya que no existe o no está eliminado lógicamente.');
                 }
             } catch (error) {
                 console.log('Errorea: ', error);
@@ -165,7 +165,7 @@ new Vue({
                     throw new Error('Errorea eguneratzerakoan');
                 }
 
-                alert('Ondo eguneratuta');
+                console.log('Ondo eguneratuta');
                 await this.cargaTalde();
                 location.reload();
             } catch (error) {
@@ -191,7 +191,7 @@ new Vue({
                 //   throw new Error('Errorea eguneratzerakoan');
                 // }
 
-                alert('Ondo ezabatuta');
+                console.log('Ondo ezabatuta');
                 await this.cargaTalde();
                 location.reload();
             } catch (error) {

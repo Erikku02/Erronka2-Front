@@ -19,7 +19,7 @@ new Vue({
         },
         async cargaTratamendu() {
             try {
-                const response = await fetch(window.ruta +'tratamenduaruta', {
+                const response = await fetch(window.ruta + 'tratamenduaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -68,7 +68,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta +'tratamenduagorde', {
+                const response = await fetch(window.ruta + 'tratamenduagorde', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
                     headers: {
@@ -83,7 +83,7 @@ new Vue({
                     throw new Error('Errorea sortzerakoan');
                 }
 
-                alert('Sortu da');
+                console.log('Sortu da');
                 await this.cargaTratamendu();
                 location.reload();
             } catch (error) {
@@ -104,7 +104,7 @@ new Vue({
                     "kanpoko_prezioa": kanpoko_prezioa
                 };
 
-                const response = await fetch(window.ruta +'tratamenduaeguneratu/' + id, {
+                const response = await fetch(window.ruta + 'tratamenduaeguneratu/' + id, {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaeguneratu/' + kodea, {
                     method: 'PUT',
                     headers: {
@@ -119,7 +119,7 @@ new Vue({
                     throw new Error('Errorea eguneratzerakoan');
                 }
 
-                alert('Ondo eguneratuta');
+                console.log('Ondo eguneratuta');
                 await this.cargaTratamendu();
                 location.reload();
             } catch (error) {
@@ -129,7 +129,7 @@ new Vue({
         async ezabTratamendu() {
             try {
                 for (var i = 0; i < this.arrayId.length; i++) {
-                    const response = await fetch(window.ruta +'tratamenduaezabatu/' + this.arrayId[i], {
+                    const response = await fetch(window.ruta + 'tratamenduaezabatu/' + this.arrayId[i], {
                         // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayId[i], {
                         method: 'PUT',
                         headers: {
@@ -145,7 +145,7 @@ new Vue({
                 //   throw new Error('Errorea eguneratzerakoan');
                 // }
 
-                alert('Ondo ezabatuta');
+                console.log('Ondo ezabatuta');
                 await this.cargaTratamendu();
                 location.reload();
             } catch (error) {

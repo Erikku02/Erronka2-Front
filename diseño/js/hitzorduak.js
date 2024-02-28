@@ -554,7 +554,7 @@ new Vue({
                     throw new Error('Errorea sortzerakoan');
                 }
 
-                alert('Sortu da');
+                console.log('Sortu da');
                 // this.modalVisible = false;
                 this.$emit('close')
                 this.cargaHitzordu();
@@ -601,7 +601,7 @@ new Vue({
                     body: JSON.stringify(id),
                 });
 
-                alert('Ondo ezabatuta');
+                console.log('Ondo ezabatuta');
                 console.log(this.hitzorduId);
             } catch (error) {
 
@@ -659,7 +659,7 @@ new Vue({
                     body: JSON.stringify(arrayActu),
                 });
 
-                alert('Ondo Updated');
+                console.log('Ondo Updated');
 
                 this.createTicketLerroa();
             } catch (error) {
