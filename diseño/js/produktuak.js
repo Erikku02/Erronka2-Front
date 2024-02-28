@@ -150,7 +150,7 @@ Vue.component('nav-component', {
     `,
     data() {
         return {
-            selectedLanguage: 'es',
+            selectedLanguage: window.selectedLanguage || 'es', // si window. esta definido se usa ese, sino el valor por defecto
             translations: translations,
             lang: '',
         };
@@ -158,8 +158,9 @@ Vue.component('nav-component', {
     methods: {
         changeLanguage(lang) {
             this.selectedLanguage = lang;
-            console.log(this.selectedLanguage);
-            console.log(this.translations);
+            window.selectedLanguage = lang;
+            // console.log(this.selectedLanguage);
+            // console.log(this.translations);
         },
         changeLanguageAndClose(lang) {
             // Cerrar la barra de navegación lateral
@@ -173,6 +174,9 @@ Vue.component('nav-component', {
             // Enviar la variable al método changeLanguage de la instancia de Vue
             this.$root.changeLanguage(lang);
         },
+
+
+        /* creo que no se usa */
         getTranslation(key) {
             return this.translations[this.selectedLanguage][key] || '';
         }

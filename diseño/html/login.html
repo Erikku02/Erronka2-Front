@@ -6,10 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <!-- PARA CAMBIAR EL TIPO DE LETRA -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+
     <title>Iniciar sesión</title>
     <style>
+        /* PARA CAMBIAR EL TIPO DE LETRA */
+        @font-face {
+            font-family: "mi fuente";
+            src: url(../font/Quicksand-VariableFont_wght.ttf);
+        }
+
         body {
-            background: url('../img/pelu_login.jpg') center/cover no-repeat fixed; 
+            background: url('../img/pelu_login.jpg') center/cover no-repeat fixed;
             height: 100vh;
             margin: 0;
             display: flex;
@@ -24,28 +37,30 @@
         }
 
         input.form-control {
-    height: 30px !important;
-    padding: 5px 8px !important;
-    font-size: 14px !important;
-}
+            height: 30px !important;
+            padding: 5px 8px !important;
+            font-size: 14px !important;
+        }
+
         form.container {
-            width: 80%; 
+            width: 80%;
             margin-left: auto;
             margin-right: auto;
         }
 
         h1.text-center {
-            margin-bottom: 20px; 
+            margin-bottom: 20px;
+            font-family: 'mi fuente';
         }
 
         .d-flex.justify-content-center.pb-5 {
-            margin-top:50px; 
+            margin-top: 50px;
         }
 
         button.btn-primary {
-            width: 170px; 
-            height: 50px; 
-            font-size: 16px; 
+            width: 170px;
+            height: 50px;
+            font-size: 16px;
             display: flex;
             justify-content: center;
             align-items: center;
