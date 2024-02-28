@@ -197,7 +197,7 @@ new Vue({
             if (!this.produktuIzenaSortu || this.kantitateaSortu <= 0) {
 
                 // Mostrar un mensaje de error (puedes reemplazar esto con tu lógica de pop-up)
-                alert("Por favor, completa los campos obligatorios: Producto y Cantidad");
+                console.log("Por favor, completa los campos obligatorios: Producto y Cantidad");
                 return; // No continuar con la función si hay campos obligatorios vacíos
             }
 
@@ -209,7 +209,7 @@ new Vue({
 
             if (this.kantitateaSortu <= stockTotalProducto) {
                 if ((stockTotalProducto - this.kantitateaSortu) <= stockSeguridadProducto) {
-                    alert("¡¡¡Stock de alerta superado!!!, ahora quedan " + (stockTotalProducto - this.kantitateaSortu) + " unidades.")
+                    console.log("¡¡¡Stock de alerta superado!!!, ahora quedan " + (stockTotalProducto - this.kantitateaSortu) + " unidades.")
                 }
                 const nuevaFila = {
                     "kategoria": this.kategoriaIzenaSortu ? this.listaKategoria.find(kategoria => kategoria.id == this.kategoriaIzenaSortu).izena : "",
@@ -228,7 +228,7 @@ new Vue({
                 this.produktuIzenaSortu = "";
                 this.kantitateaSortu = 0;
             } else {
-                alert("No puede añadir esa cantidad porque el stock actual de este producto es de " + stockTotalProducto);
+                console.log("No puede añadir esa cantidad porque el stock actual de este producto es de " + stockTotalProducto);
             }
         },
         eliminarFila(index) {
@@ -272,7 +272,7 @@ new Vue({
         async createProduktu() {
             try {
                 if (this.registros.length === 0) {
-                    alert('Añade al menos una fila antes de extraer.');
+                    console.log('Añade al menos una fila antes de extraer.');
                     return;
                 }
 
@@ -302,7 +302,7 @@ new Vue({
                     throw new Error('Errorea sortzerakoan');
                 }
 
-                alert('Sortu da');
+                console.log('Sortu da');
                 // Limpiar la lista de registros después de la extracción
                 this.registros = [];
             } catch (error) {

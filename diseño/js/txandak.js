@@ -59,7 +59,7 @@ new Vue({
         // Para cargar los grupos que están activos
         async cargaTalde() {
             try {
-                const response = await fetch(window.ruta +'taldearuta', {
+                const response = await fetch(window.ruta + 'taldearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/taldearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -83,7 +83,7 @@ new Vue({
         },
         async cargaTxanda() {
             try {
-                const response = await fetch(window.ruta +'txandaruta', {
+                const response = await fetch(window.ruta + 'txandaruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -123,7 +123,7 @@ new Vue({
 
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta +'txandagorde', {
+                const response = await fetch(window.ruta + 'txandagorde', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ new Vue({
                     throw new Error('Errorea sortzerakoan');
                 }
 
-                alert('Sortu da');
+                console.log('Sortu da');
 
                 // Cargar la lista de turnos después de insertar uno nuevo
                 await this.cargaTxanda();
@@ -152,7 +152,7 @@ new Vue({
         },
         async cargaLangile() {
             try {
-                const response = await fetch(window.ruta +'langilearuta', {
+                const response = await fetch(window.ruta + 'langilearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -185,7 +185,7 @@ new Vue({
                     // Si no se selecciona ningún grupo, cargar todos los trabajadores
                     this.cargaLangile();
                 } else {
-                    const response = await fetch(window.ruta +'txandaruta/' + kodea, {
+                    const response = await fetch(window.ruta + 'txandaruta/' + kodea, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',

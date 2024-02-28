@@ -315,6 +315,9 @@ const translations = {
             grupo: 'Taldea',
             footer: '2024 Langile. Eskubide guztiak erreserbatuta.',
         },
+        login: {
+            error: 'Por favor, complete ambos campos.',
+        },
         mat_era: {
             alumno: "Ikaslea",
             material: "Materiala",

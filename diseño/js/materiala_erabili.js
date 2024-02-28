@@ -45,7 +45,7 @@ new Vue({
             const numeroDiaSemana = fechaActual.getDay();
 
             try {
-                const response = await fetch(window.ruta +'ordutegiaruta', {
+                const response = await fetch(window.ruta + 'ordutegiaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ new Vue({
 
                 const datuak = await response.json();
                 this.listaOrdutegia = datuak;
-                
+
                 // Verificar si se encontró un grupo antes de acceder a 'kodea'
                 const grupoEncontrado = this.listaOrdutegia.find(ordutegia => ordutegia.eguna === numeroDiaSemana && ordutegia.deleted_at === null);
 
@@ -70,7 +70,7 @@ new Vue({
                     // Manejar el caso cuando no se encuentra un grupo
                     console.error('No se encontró un grupo para el día actual.');
                 }
-                
+
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -84,7 +84,7 @@ new Vue({
         },
         async actualizarMaterialesDisponibles() {
             try {
-                const response = await fetch(window.ruta +'materialaruta', {
+                const response = await fetch(window.ruta + 'materialaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -109,10 +109,10 @@ new Vue({
                 console.error('Errorea: ', error);
             }
         },
-        async cargaMateriala() {    
-            
+        async cargaMateriala() {
+
             try {
-                const response = await fetch(window.ruta +'materialaruta', {
+                const response = await fetch(window.ruta + 'materialaruta', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ new Vue({
         async cargaMaterialaErabili() {
             this.actualizarMaterialesDisponibles();
             try {
-                const response = await fetch(window.ruta +'materialaerabiliruta', {
+                const response = await fetch(window.ruta + 'materialaerabiliruta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -160,26 +160,26 @@ new Vue({
                 this.listaMaterialaErabili = datuak.filter(materiala_erabili => materiala_erabili.amaiera_data === null || materiala_erabili.amaiera_data === "0000-00-00 00:00:00");
 
                 // Actualizar la lista de materiales en uso
-                this.materialesEnUso = this.listaMaterialaErabili.map(item => item.materiala.id);  
+                this.materialesEnUso = this.listaMaterialaErabili.map(item => item.materiala.id);
 
             } catch (error) {
                 console.error('Errorea: ', error);
             }
         },
-        
+
         // // Nuevo método para filtrar la lista de materiales disponibles
         // materialesDisponibles() {
         //     return this.listaMateriala.filter(materiala => !this.materialesEnUso.includes(materiala.id));
         // },
-        
+
         async createMaterialErabili() {
             try {
                 const langile = this.izenaSortu;
                 const materiala = this.materialaSortu;
-                
+
                 // Verificar si el material ya está en uso
                 if (this.materialesEnUso.includes(materiala)) {
-                    alert('¡El material ya está en uso!');
+                    console.log('¡El material ya está en uso!');
                     return; // Detener la ejecución si el material ya está en uso
                 }
 
@@ -187,10 +187,10 @@ new Vue({
                     "id_langilea": langile,
                     "id_materiala": materiala
                 };
-                
+
                 console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta +'materialaerabiligorde', {
+                const response = await fetch(window.ruta + 'materialaerabiligorde', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
                     headers: {
@@ -212,11 +212,11 @@ new Vue({
             }
         },
 
-        async materialaItzuli(id){
+        async materialaItzuli(id) {
 
             try {
 
-                const response = await fetch(window.ruta +`materialaerabiliezabatu/` + id, {
+                const response = await fetch(window.ruta + `materialaerabiliezabatu/` + id, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -238,7 +238,7 @@ new Vue({
 
         async cargaLangile() {
             try {
-                const response = await fetch(window.ruta +'langilearuta', {
+                const response = await fetch(window.ruta + 'langilearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -257,14 +257,14 @@ new Vue({
                 //      .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
                 this.listaLangile = datuak
                     .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
-                    //  console.log(this.listaLangile)
+                //  console.log(this.listaLangile)
             } catch (error) {
                 console.error('Errorea: ', error);
             }
             this.filtrarAlumnosPorGrupo();
         },
     },
-    
+
     mounted() {
         // Llama a tu función cargarPagina cuando el componente se monta
         this.cargaMaterialaErabili();

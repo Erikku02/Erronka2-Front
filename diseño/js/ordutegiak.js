@@ -100,7 +100,7 @@ new Vue({
                     throw new Error('Errorea sortzerakoan');
                 }
 
-                alert('Sortu da');
+                console.log('Sortu da');
                 await this.cargaOrdutegia();
                 location.reload();
             } catch (error) {
@@ -144,7 +144,7 @@ new Vue({
                     throw new Error('Errorea eguneratzerakoan');
                 }
 
-                alert('Ondo eguneratuta');
+                console.log('Ondo eguneratuta');
                 await this.cargaOrdutegia();
                 location.reload();
 
@@ -166,7 +166,8 @@ new Vue({
                         body: JSON.stringify(this.arrayId[i]),
                     });
                 }
-                alert('Ondo ezabatuta');
+
+                console.log('Ondo ezabatuta');
                 await this.cargaOrdutegia();
                 location.reload();
             } catch (error) {
