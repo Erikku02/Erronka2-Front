@@ -21,6 +21,10 @@ new Vue({
         listaProduktuFilter: [],
         histMarkaUpdate: "",
         histProduktuUpdate: "",
+        selectAllFitxa: false,
+        selectAllHist: false,
+        visibleFitxa: true,
+        visibleHist: true,
         /* IDIOMAS */
         selectedLanguage: 'es',
         // languageStrings: {},
@@ -32,7 +36,40 @@ new Vue({
             this.selectedLanguage = lang;
             console.log(this.selectedLanguage);
         },
-
+        selectAllFitxaId() {
+            if (this.selectAllFitxa) {
+                // Si el checkbox de seleccionar todo está marcado,
+                // se añaden todos los IDs a arrayId
+                this.arrayId = this.listaFitxa.map(fitxa => fitxa.id);
+            } else {
+                // Si el checkbox de seleccionar todo está desmarcado,
+                // se vacía arrayId
+                this.arrayId = [];
+            }
+        
+            // Marcar o desmarcar todos los checkboxes de la tabla
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.selectAllFitxa;
+            });
+        },
+        selectAllHistId() {
+            if (this.selectAllHist) {
+                // Si el checkbox de seleccionar todo está marcado,
+                // se añaden todos los IDs a arrayId
+                this.historialId = this.listaHistorial.map(historial => historial.id);
+            } else {
+                // Si el checkbox de seleccionar todo está desmarcado,
+                // se vacía arrayId
+                this.historialId = [];
+            }
+        
+            // Marcar o desmarcar todos los checkboxes de la tabla
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.selectAllHist;
+            });
+        },
         async cargaFitxa() {
             try {
                 const response = await fetch(window.ruta + 'bezero_fixaruta', {
@@ -346,6 +383,20 @@ new Vue({
                 this.listaProduktuFilter = this.listaProduktu.filter(produktu => produktu.marka === this.histMarkaUpdate);
             } else {
                 this.listaProduktuFilter = this.listaProduktu
+            }
+        },
+        arrayId() {
+            if (this.arrayId.length > 1){
+                this.visibleFitxa = false;
+            }else{
+                this.visibleFitxa = true;
+            }
+        },
+        historialId() {
+            if (this.historialId.length > 1){
+                this.visibleHist = false;
+            }else{
+                this.visibleHist = true;
             }
         }
     }

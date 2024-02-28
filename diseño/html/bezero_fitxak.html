@@ -148,7 +148,7 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i class="bi bi-check-circle m-2" @click="actuFitxa()"></i>
+                    <i v-if="visibleFitxa" class="bi bi-check-circle m-2" @click="actuFitxa()"></i>
                     <i class="bi bi-dash-circle" @click="ezabFitxa()"></i>
 
                     <!-- CAMBIAR EL IDIOMA (probisional) -->
@@ -160,7 +160,8 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
+                            <th scope="col"><input type="checkbox"
+                                v-model="selectAllFitxa" @change="selectAllFitxaId"/></th>
                             <th scope="col">{{ translations[selectedLanguage].default.tab_nombre }}</th>
                             <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.apellidos }}</th>
                             <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.tlf }}</th>
@@ -229,13 +230,14 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="icons h4 text-end mt-4">
-                                                    <i class="bi bi-check-circle m-2" @click="updateHistorial()"></i>
+                                                    <i v-if="visibleHist" class="bi bi-check-circle m-2" @click="updateHistorial()"></i>
                                                     <i class="bi bi-dash-circle" @click="ezabHistorial()"></i>
                                                 </div>
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col"></th>
+                                                            <th scope="col"><input type="checkbox"
+                                                                v-model="selectAllHist" @change="selectAllHistId"/></th>
                                                             <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.fecha }}</th>
                                                             <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.marka }}</th>
                                                             <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.producto }}</th>
