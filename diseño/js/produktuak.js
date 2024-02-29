@@ -189,6 +189,7 @@ new Vue({
     data: {
         selectedCheckbox: null, // Esta variable almacenará la ID del checkbox seleccionado
         arrayId: [],
+        buscadorProduktu: "",
         izenaEgu: "",
         kategoriaEgu: "",
         izenaSortu: "",
@@ -197,6 +198,7 @@ new Vue({
         markaSortu: "",
         stockSortu: "",
         stock_alertaSortu: "",
+        listaProduktuBusc: [],
         listaProduktu: [],
         listaKategoria: [],
         ordenNombre: 'asc', // Para ordenar los datos de la tabla
@@ -225,7 +227,8 @@ new Vue({
                 }
 
                 const datuak = await response.json();
-                this.listaProduktu = datuak
+                this.listaProduktu = datuak;
+                this.listaProduktuBusc = datuak;
                 // FALTA AÑADIR EL FIlTER !!!!!!!
                 //.filter(produktu => produktu.deleted_at === null || produktu.deleted_at === "0000-00-00 00:00:00");
                 // console.log(datuak);
@@ -275,6 +278,23 @@ new Vue({
                 location.reload();
             } catch (error) {
                 console.log('Errorea: ', error);
+            }
+        },
+        buscadorProduktua() {
+            try{
+                if(this.buscadorProduktu != ""){
+                    this.listaProduktuBusc = this.listaProduktu
+                    // .filter(produktu => produktu.deleted_at === null || produktu.deleted_at === "0000-00-00 00:00:00")
+                    .filter(produktu => produktu.izena === this.buscadorProduktu);
+                }else {
+                    this.listaProduktuBusc = this.listaProduktu
+                    // .filter(produktu => produktu.deleted_at === null || produktu.deleted_at === "0000-00-00 00:00:00");
+                }
+                
+                this.ordenarPorNombre();
+                
+            }catch (error){
+                console.log("Errorea: ", error);
             }
         },
         async actuProduktu() {

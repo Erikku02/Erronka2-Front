@@ -26,7 +26,10 @@
                     <i class="bi bi-check-circle m-2" @click="actuProduktu()"></i>
                     <i class="bi bi-dash-circle" @click="ezabProduktu()"></i>
                 </div>
-
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Nombre del producto" aria-label="Nombre del producto" aria-describedby="button-addon2" v-model="buscadorProduktu">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="buscadorProduktua"><i class="bi bi-search"></i></button>
+                </div>
                 <!-- Tabla -->
                 <table class="table table-hover">
                     <thead>
@@ -58,7 +61,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(produktu) in listaProduktu">
+                        <tr v-for="(produktu) in listaProduktuBusc">
                             <td>
                                 <input type="checkbox" class="form-check-input" :value="produktu.id"
                                     v-model="arrayId" />
