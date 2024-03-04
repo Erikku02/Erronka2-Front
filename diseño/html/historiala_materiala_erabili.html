@@ -161,6 +161,12 @@
                                 materiala_erabili.etiketa }}</option>
                         </select>
                     </div>
+                    <div class="col-md-3">
+                        <select class="form-select form-select-sm" id="selectAlumno" required v-model="izenaSortu">
+                            <option disabled value="">{{ translations[selectedLanguage].mat_era.alumno }}</option>
+                            <option v-for="(langile) in alumnosPorGrupo" :key="langile.id" :value="langile.id">{{langile.izena}}</option>
+                        </select>
+                    </div>
                 </div>
             </template>
             <table class="table table-hover mt-5 mb-5">

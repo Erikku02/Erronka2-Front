@@ -172,11 +172,46 @@ new Vue({
                 console.log('Errorea: ', error);
             }
         },
+        // async ezabTalde() {
+        //     try {
+        //         for (var i = 0; i < this.arrayKodea.length; i++) {
+        //             const response = await fetch(window.ruta + 'taldeaezabatu/' + this.arrayKodea[i], {
+        //                 // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
+        //                 method: 'PUT',
+        //                 headers: {
+        //                     'Content-Type': 'application/json',
+        //                     'Access-Control-Allow-Origin': '*'
+        //                 },
+        //                 body: JSON.stringify(this.arrayKodea[i]),
+        //             });
+        //         }
+
+        //         // if(!response.ok){
+        //         //   console.log('Errorea eguneratzerakoan');
+        //         //   throw new Error('Errorea eguneratzerakoan');
+        //         // }
+
+        //         console.log('Ondo ezabatuta');
+        //         await this.cargaTalde();
+        //         location.reload();
+        //     } catch (error) {
+        //         console.log('Errorea: ', error);
+        //     }
+        // }, 
+        
+        
         async ezabTalde() {
             try {
                 for (var i = 0; i < this.arrayKodea.length; i++) {
-                    const response = await fetch(window.ruta + 'taldeaezabatu/' + this.arrayKodea[i], {
-                        // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
+                    const responseComprobar = await fetch(window.ruta + 'taldeaComprobarLangileak/' + this.arrayKodea[i]);
+                    const dataComprobar = await responseComprobar.json();
+        
+                    if (dataComprobar.message === 'Este grupo tiene langileak activos') {
+                        const confirmacion = confirm(dataComprobar.message + '. ¿Seguro que quieres eliminarlo?');
+                        if (!confirmacion) continue; // Si el usuario cancela, continuar con la siguiente iteración del bucle
+                    }
+        
+                    const responseEliminar = await fetch(window.ruta + 'taldeaezabatu/' + this.arrayKodea[i], {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -184,21 +219,19 @@ new Vue({
                         },
                         body: JSON.stringify(this.arrayKodea[i]),
                     });
+        
+                    const dataEliminar = await responseEliminar.json();
+                    console.log(dataEliminar.message);
                 }
-
-                // if(!response.ok){
-                //   console.log('Errorea eguneratzerakoan');
-                //   throw new Error('Errorea eguneratzerakoan');
-                // }
-
+        
                 console.log('Ondo ezabatuta');
                 await this.cargaTalde();
                 location.reload();
             } catch (error) {
-                console.log('Errorea: ', error);
+                console.error('Errorea:', error);
             }
         },
-        // Para ordenar los datos de la tabla
+        
         alphanumCompare(a, b) {
             const chunkRegExp = /(\D+|\d+)/g;
 

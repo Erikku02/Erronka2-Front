@@ -206,6 +206,9 @@ new Vue({
                 }
                 await this.cargaMaterialaErabili();
                 await this.actualizarMaterialesDisponibles(); // Llamada a la nueva función
+                
+                // Reiniciar la variable izenaSortu
+                this.izenaSortu = '';
 
             } catch (error) {
                 console.log('Errorea: ', error);

@@ -3,9 +3,13 @@ new Vue({
     data: {
         selectedTalde: "",
         materialaIzenaSortu: "",
+        izenaSortu: "",
         dataSortu: "",
         arrayKodea: [],
         fechaFormateada: '',
+        listaOrdutegia: [],
+        grupoPorDia: '',
+        alumnosPorGrupo: [],
         listaOrdutegia: [],
         listaMateriala: [],
         listaMaterialaErabili: [],
@@ -22,7 +26,57 @@ new Vue({
         translations: translations,
     },
     methods: {
+        obtenerFechaActual() {
+            const fechaActual = new Date();
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const numeroDiaSemana = fechaActual.getDay();
+            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            this.fechaFormateada = `${fechaActual.toLocaleDateString('es-ES', options)}`;
+        },
+        // Para cargar los grupos que están activos
+        async cargaHorariosPorGrupo() {
+            const fechaActual = new Date();
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const numeroDiaSemana = fechaActual.getDay();
 
+            try {
+                const response = await fetch(window.ruta + 'ordutegiaruta', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+
+                if (!response.ok) {
+                    console.log('Error al solicitar trabajadores por grupo');
+                    throw new Error('Error al realizar la solicitud');
+                }
+
+                const datuak = await response.json();
+                this.listaOrdutegia = datuak;
+
+                // Verificar si se encontró un grupo antes de acceder a 'kodea'
+                const grupoEncontrado = this.listaOrdutegia.find(ordutegia => ordutegia.eguna === numeroDiaSemana && ordutegia.deleted_at === null);
+
+                if (grupoEncontrado) {
+                    this.grupoPorDia = grupoEncontrado.kodea;
+                } else {
+                    // Manejar el caso cuando no se encuentra un grupo
+                    console.error('No se encontró un grupo para el día actual.');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+            this.cargaLangile();
+        },
+
+        filtrarAlumnosPorGrupo() {
+            const grupoSeleccionado = this.grupoPorDia;
+            // Filtrar la lista de alumnos por el grupo seleccionado
+            this.alumnosPorGrupo = this.listaLangile.filter(langile => langile.kodea === this.grupoPorDia);
+        },
         async cargaMateriala() {
 
             try {
@@ -74,30 +128,81 @@ new Vue({
             }
         },
         actualizarListaFiltrada() {
-            if (!this.materialaIzenaSortu) {
-                this.listaFiltrada = this.listaMaterialaErabili
-                    .sort((a, b) => new Date(b.hasiera_data) - new Date(a.hasiera_data));
-            } else {
-                this.listaFiltrada = this.listaMaterialaErabili
-                    .sort((a, b) => new Date(b.hasiera_data) - new Date(a.hasiera_data))
-                    .filter(registro =>
-                        (!this.materialaIzenaSortu || (registro.materiala && registro.materiala.id == this.materialaIzenaSortu))
-                    );
-            }
+            // Obtener el ID del material seleccionado
+            const idMaterialSeleccionado = this.materialaIzenaSortu;
+    
+            // Obtener el ID del alumno seleccionado
+            const idAlumnoSeleccionado = this.izenaSortu;
+    
+            // Filtrar la lista de registros por material y alumno seleccionados
+            this.listaFiltrada = this.listaMaterialaErabili
+                .filter(registro =>
+                    (!idMaterialSeleccionado || registro.materiala.id == idMaterialSeleccionado) && // Filtrar por material si está seleccionado
+                    (!idAlumnoSeleccionado || registro.langilea.id == idAlumnoSeleccionado) // Filtrar por alumno si está seleccionado
+                )
+                .sort((a, b) => new Date(b.hasiera_data) - new Date(a.hasiera_data)); // Ordenar los registros por fecha
         },
         changeLanguage(lang) {
             this.selectedLanguage = lang;
             console.log(this.selectedLanguage);
         },
+
+        filtrarPorAlumno() {
+            // Obtener el ID del alumno seleccionado
+            const idAlumnoSeleccionado = this.izenaSortu;
+    
+            // Actualizar la lista filtrada solo con los registros del alumno seleccionado
+            if (!idAlumnoSeleccionado) {
+                // Si no se selecciona ningún alumno, mostrar todos los registros
+                this.listaFiltrada = this.listaMaterialaErabili
+                    .sort((a, b) => new Date(b.hasiera_data) - new Date(a.hasiera_data));
+            } else {
+                this.listaFiltrada = this.listaMaterialaErabili
+                    .filter(registro => registro.langilea.id === idAlumnoSeleccionado)
+                    .sort((a, b) => new Date(b.hasiera_data) - new Date(a.hasiera_data));
+            }
+        },
+        async cargaLangile() {
+            try {
+                const response = await fetch(window.ruta + 'langilearuta', {
+                    // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
+                    method: 'GET',
+                    // mode: "no-cors",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+                if (!response.ok) {
+                    console.log('Errorea eskera eskaera egiterakoan');
+                    throw new Error('Errorea eskaera egiterakoan');
+                }
+
+                const datuak = await response.json();
+                // this.listaTalde = datuak
+                //      .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
+                this.listaLangile = datuak
+                    .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
+                //  console.log(this.listaLangile)
+            } catch (error) {
+                console.error('Errorea: ', error);
+            }
+            this.filtrarAlumnosPorGrupo();
+        },
     },
     watch: {
         materialaIzenaSortu: function () {
             this.actualizarListaFiltrada();
-        }
+        },
+        izenaSortu: function () {
+            this.actualizarListaFiltrada();
+        },
     },
 
     mounted() {
         this.cargaMateriala();
+        this.obtenerFechaActual();
+        this.cargaHorariosPorGrupo();
         this.cargaMaterialaErabili();
     }
 });
