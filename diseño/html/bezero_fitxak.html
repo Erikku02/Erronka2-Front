@@ -174,10 +174,12 @@
                             <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.apellidos }}</th>
                             <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.tlf }}</th>
                             <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.piel_sensible }}</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(fitxa) in listaFitxa">
+                        <tr v-for="fitxa in itemsPaginados">
+                            <!-- <tr v-for="(fitxa) in listaFitxa"> -->
                             <td>
                                 <input type="checkbox" class="form-check-input" :value="fitxa.id" v-model="arrayId" />
                             </td>
@@ -201,7 +203,7 @@
                                     {{fitxa.telefonoa}}
                                 </span>
 
-                                <input v-else type="text" v-model="fitxa.telefonoa" :placeholder="fitxa.telefonoa" />
+                                <input v-else type="tel" v-model="fitxa.telefonoa" :placeholder="fitxa.telefonoa" />
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(fitxa.id)">
@@ -251,23 +253,23 @@
                                                             <th scope="col"><input type="checkbox"
                                                                     v-model="selectAllHist" @change="selectAllHistId" />
                                                             </th>
-                                                            <th scope="col">{{
-                                                                translations[selectedLanguage].bezero_fitxak.fecha }}
+                                                            <th scope="col">
+                                                                {{translations[selectedLanguage].bezero_fitxak.fecha }}
                                                             </th>
-                                                            <th scope="col">{{
-                                                                translations[selectedLanguage].bezero_fitxak.marka }}
+                                                            <th scope="col">
+                                                                {{ translations[selectedLanguage].bezero_fitxak.marka }}
                                                             </th>
-                                                            <th scope="col">{{
-                                                                translations[selectedLanguage].bezero_fitxak.producto }}
+                                                            <th scope="col">
+                                                                {{translations[selectedLanguage].bezero_fitxak.producto}}
                                                             </th>
-                                                            <th scope="col">{{
-                                                                translations[selectedLanguage].bezero_fitxak.cantidad }}
+                                                            <th scope="col">
+                                                                {{translations[selectedLanguage].bezero_fitxak.cantidads}}
                                                             </th>
-                                                            <th scope="col">{{
-                                                                translations[selectedLanguage].bezero_fitxak.volumen }}
+                                                            <th scope="col">
+                                                                {{translations[selectedLanguage].bezero_fitxak.volumen}}
                                                             </th>
-                                                            <th scope="col">{{
-                                                                translations[selectedLanguage].bezero_fitxak.notas }}
+                                                            <th scope="col">
+                                                                {{ translations[selectedLanguage].bezero_fitxak.notas }}
                                                             </th>
                                                         </tr>
                                                     </thead>
@@ -301,7 +303,7 @@
                                                                 <span v-if="!historialId.includes(historial.id)">
                                                                     {{ historial.izena }}
                                                                 </span>
-                                                                <select v-else id="disabledSelect" class="form-select"
+                                                                <select v-else id="disabledSelect1" class="form-select"
                                                                     v-model="histProduktuUpdate">
                                                                     <option v-for="(produktu) in listaProduktuFilter"
                                                                         :value="produktu.id">{{produktu.izena}}</option>
@@ -368,7 +370,7 @@
                                                             <label class="form-label">{{
                                                                 translations[selectedLanguage].bezero_fitxak.cas_prod
                                                                 }}</label>
-                                                            <select id="disabledSelect" class="form-select"
+                                                            <select id="disabledSelect2" class="form-select"
                                                                 v-model="histMarkaSortu">
                                                                 <option :value="null" selected>{{
                                                                     translations[selectedLanguage].bezero_fitxak.tod_cas
@@ -381,7 +383,7 @@
                                                             <label class="form-label">{{
                                                                 translations[selectedLanguage].bezero_fitxak.producto
                                                                 }}</label>
-                                                            <select id="disabledSelect" class="form-select"
+                                                            <select id="disabledSelect3" class="form-select"
                                                                 v-model="histProduktuSortu">
                                                                 <option v-for="(produktu) in listaProduktuFilter"
                                                                     :value="produktu.id">{{produktu.izena}}</option>
@@ -426,6 +428,21 @@
                         </tr>
                     </tbody>
                 </table>
+                <div id="paginacion" class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous" @click="paginaAnterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#"><span>{{paginaActual}} / {{cantidadPorPaginas}}</span></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next" @click="paginaSiguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </div>
             </div>
 
             <!-- FORMULARIO AÑADIR GRUPO -->
@@ -446,7 +463,7 @@
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input2" class="">Nombre</label> -->
-                        <input type="text" class="form-control" id="input2" v-model="telefonoaSortu"
+                        <input type="text" class="form-control" id="input3" v-model="telefonoaSortu"
                             placeholder="Teléfono" />
                     </div>
                     <div class="col-sm-6 col-lg-3">
