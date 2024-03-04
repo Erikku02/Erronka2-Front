@@ -152,16 +152,16 @@
                     <i class="bi bi-dash-circle" @click="ezabFitxa()"></i>
 
                     <!-- CAMBIAR EL IDIOMA (probisional) -->
-                    <p @click="changeLanguage('es')">ES</p>
-                    <p @click="changeLanguage('eus')">EUS</p>
+                    <!-- <p @click="changeLanguage('es')">ES</p>
+                    <p @click="changeLanguage('eus')">EUS</p> -->
                 </div>
-                <div id="error-message" class="alert alert-danger justify-content-between" v-if="errorMessage"
-                    :class="{ 'fade-out': !errorMessage }">
-                    {{ errorMessage }}
+                <div id="error-message" class="alert alert-danger justify-content-between" v-if="errorMessageTop"
+                    :class="{ 'fade-out': !errorMessageTop }">
+                    {{ errorMessageTop }}
                 </div>
-                <div id="status-message" class="alert alert-success justify-content-between" v-if="statusMessage"
-                    :class="{ 'fade-out': !statusMessage }">
-                    {{ statusMessage }}
+                <div id="status-message" class="alert alert-success justify-content-between" v-if="statusMessageTop"
+                    :class="{ 'fade-out': !statusMessageTop }">
+                    {{ statusMessageTop }}
                 </div>
 
                 <!-- Tabla -->
@@ -225,7 +225,7 @@
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModalToggle" @click="cargaHistorial(fitxa.id)">
-                                    {{ translations[selectedLanguage].bezero_fitxak.categoria }}</button>
+                                    {{ translations[selectedLanguage].bezero_fitxak.hist_color }}</button>
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static"
@@ -290,7 +290,8 @@
                                                                 </span>
                                                                 <select v-else id="disabledSelect" class="form-select"
                                                                     v-model="histMarkaUpdate">
-                                                                    <option :value="null" selected>Todas las casas
+                                                                    <option :value="null" selected>
+                                                                        Todas las casas
                                                                     </option>
                                                                     <option v-for="(produktu) in listaProduktu">
                                                                         {{produktu.marka}}</option>
@@ -427,7 +428,6 @@
                 </table>
             </div>
 
-
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
@@ -467,6 +467,14 @@
                             <button @click.prevent="createFitxa()" class="btn btn-primary">{{
                                 translations[selectedLanguage].default.btn_añadir }}</button>
                         </div>
+                    </div>
+                    <div id="error-message" class="col-sm-6 col-lg-3 alert alert-danger justify-content-between"
+                        v-if="errorMessageBotton" :class="{ 'fade-out': !errorMessageBotton }">
+                        {{ errorMessageBotton }}
+                    </div>
+                    <div id="status-message" class="alert alert-success justify-content-between"
+                        v-if="statusMessageBotton" :class="{ 'fade-out': !statusMessageBotton }">
+                        {{ statusMessageBotton }}
                     </div>
                 </form>
             </div>
