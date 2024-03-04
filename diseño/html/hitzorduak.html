@@ -528,10 +528,12 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label class="form-label h6">{{
+                                                                        <label class="form-label h6">
+                                                                            {{
                                                                             translations[selectedLanguage].hitzorduak.precio_total
-                                                                            }}</label>
-                                                                        <p>{{ precioTotal }}€</p>
+                                                                            }}
+                                                                        </label>
+                                                                        <p v-if="precioTotal">{{ precioTotal }}€</p>
                                                                     </div>
                                                                 </div>
                                                             </div>

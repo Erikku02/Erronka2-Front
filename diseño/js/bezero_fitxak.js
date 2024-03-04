@@ -29,23 +29,40 @@ new Vue({
         selectedLanguage: 'es',
         // languageStrings: {},
         translations: translations,
-        errorMessage: '',
-        statusMessage: '',
+        errorMessageTop: '',
+        statusMessageTop: '',
+        errorMessageBotton: '',
+        statusMessageBotton: '',
     },
     methods: {
         // para mostrar los mensajes de estado
-        showMessage(messageType, message) {
-            if (messageType === 'error') {
-                this.errorMessage = message;
-                setTimeout(() => {
-                    this.errorMessage = '';
-                }, 10000); // 15 segundos
-            } else if (messageType === 'status') {
-                this.statusMessage = message;
-                setTimeout(() => {
-                    this.statusMessage = '';
-                }, 10000); // 15 segundos
+        showMessage(messageType, message, place) {
+            if (place === 'top') {
+                if (messageType === 'error') {
+                    this.errorMessageTop = message;
+                    setTimeout(() => {
+                        this.errorMessageTop = '';
+                    }, 10000); // 15 segundos
+                } else if (messageType === 'status') {
+                    this.statusMessageTop = message;
+                    setTimeout(() => {
+                        this.statusMessageTop = '';
+                    }, 10000); // 15 segundos
+                }
+            } else if (place === 'botton') {
+                if (messageType === 'error') {
+                    this.errorMessageBotton = message;
+                    setTimeout(() => {
+                        this.errorMessageBotton = '';
+                    }, 10000); // 15 segundos
+                } else if (messageType === 'status') {
+                    this.statusMessageBotton = message;
+                    setTimeout(() => {
+                        this.statusMessageBotton = '';
+                    }, 10000); // 15 segundos
+                }
             }
+
         },
         changeLanguage(lang) {
             this.selectedLanguage = lang;
@@ -115,48 +132,54 @@ new Vue({
         },
         async createFitxa() {
             try {
-                const izena = this.izenaSortu;
-                const abizena = this.abizenaSortu;
-                const telefonoa = this.telefonoaSortu;
-                const azal_sentikorra = this.sentikorraSortu;
-                const arraySortu = {
-                    "izena": izena,
-                    "abizena": abizena,
-                    "telefonoa": telefonoa,
-                    "azal_sentikorra": azal_sentikorra,
-                };
+                if (this.izenaSortu && this.abizenaSortu && this.telefonoaSortu) {
 
-                console.log(JSON.stringify(arraySortu));
 
-                const response = await fetch(window.ruta + 'bezero_fixagorde', {
-                    // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
-                });
+                    const izena = this.izenaSortu;
+                    const abizena = this.abizenaSortu;
+                    const telefonoa = this.telefonoaSortu;
+                    const azal_sentikorra = this.sentikorraSortu;
+                    const arraySortu = {
+                        "izena": izena,
+                        "abizena": abizena,
+                        "telefonoa": telefonoa,
+                        "azal_sentikorra": azal_sentikorra || 'E', // Por defecto -> piel sensible = no
+                    };
 
-                if (!response.ok) {
-                    // console.log('Errorea sortzerakoan');
-                    this.showMessage('error', 'Error al crear la ficha');
-                    // throw new Error('Errorea sortzerakoan');
+                    console.log(JSON.stringify(arraySortu));
+
+                    const response = await fetch(window.ruta + 'bezero_fixagorde', {
+                        // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
+                    });
+
+                    if (!response.ok) {
+                        // console.log('Errorea sortzerakoan');
+                        this.showMessage('error', 'Error al crear la ficha', 'top');
+                        // throw new Error('Errorea sortzerakoan');
+                    }
+
+                    // console.log('Sortu da');
+                    // para que el mensaje cambie al pasar 10seg
+                    this.showMessage('status', 'Ficha creada correctamente', 'top');
+                    this.cargaFitxa(); //para cargar los datos nuevos
+
+                    // Vaciar los input
+                    this.izenaSortu = '';
+                    this.abizenaSortu = '';
+                    this.telefonoaSortu = '';
+                    this.sentikorraSortu = '';
+
+                    // await this.cargaFitxa();
+                    // location.reload();
+                } else {
+                    this.showMessage('error', 'Rellene todos los campos', 'botton');
                 }
-
-                // console.log('Sortu da');
-                // para que el mensaje cambie al pasar 10seg
-                this.showMessage('status', 'Ficha creada correctamente');
-                this.cargaFitxa(); //para cargar los datos nuevos
-
-                // Vaciar los input
-                this.izenaSortu = '';
-                this.abizenaSortu = '';
-                this.telefonoaSortu = '';
-                this.sentikorraSortu = '';
-
-                // await this.cargaFitxa();
-                // location.reload();
             } catch (error) {
                 console.log('Errorea: ', error);
             }
