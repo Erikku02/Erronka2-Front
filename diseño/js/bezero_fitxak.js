@@ -462,7 +462,7 @@ new Vue({
         // Llama a tu función cargarPagina cuando el componente se monta
         this.cargaFitxa();
         this.cargaProduktu();
-        this.itemsPaginados();
+        this.itemsPaginados;
     },
     watch: {
         // paginaActual() {
