@@ -187,7 +187,7 @@
                     <tr v-for="(fila, index) in listaMaterialaErabili" :key="index">
                         <td>{{fila.langilea.izena}}</td>
                         <td>{{fila.materiala.etiketa}}</td>
-                        <td>{{fila.hasiera_data}}</td>
+                        <td>{{ formatDate(fila.hasiera_data) }}</td>
                         <td>
                             <button class="btn btn-primary" @click="materialaItzuli(fila.id)">{{ translations[selectedLanguage].mat_era.devolver }}</button>
                         </td>
