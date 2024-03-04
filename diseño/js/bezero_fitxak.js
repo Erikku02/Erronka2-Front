@@ -33,8 +33,40 @@ new Vue({
         statusMessageTop: '',
         errorMessageBotton: '',
         statusMessageBotton: '',
+
+        // Paginar
+        itemsPorPagina: 10,
+        paginaActual: 1,
+    },
+    computed: {
+        // Paginar
+        cantidadPorPaginas() {
+            return Math.ceil(this.listaFitxa.length / this.itemsPorPagina)
+        },
+        itemsPaginados() {
+            const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+            const fin = inicio + this.itemsPorPagina;
+            console.log(this.listaFitxa.slice(inicio, fin));
+            return this.listaFitxa.slice(inicio, fin);
+        }
     },
     methods: {
+        paginaAnterior() {
+            if (this.paginaActual > 1) {
+                this.paginaActual--;
+            }
+        },
+        paginaSiguiente() {
+            if (this.paginaActual < this.cantidadPorPaginas) {
+                this.paginaActual++;
+            }
+        },
+        clearMessage() {
+            this.errorMessageTop = '';
+            this.errorMessageBotton = '';
+            this.statusMessageTop = '';
+            this.statusMessageBotton = '';
+        },
         // para mostrar los mensajes de estado
         showMessage(messageType, message, place) {
             if (place === 'top') {
@@ -132,51 +164,63 @@ new Vue({
         },
         async createFitxa() {
             try {
+                // Eliminar el mensaje de error si existe
+                this.clearMessage();
+
                 if (this.izenaSortu && this.abizenaSortu && this.telefonoaSortu) {
-
-
                     const izena = this.izenaSortu;
                     const abizena = this.abizenaSortu;
                     const telefonoa = this.telefonoaSortu;
                     const azal_sentikorra = this.sentikorraSortu;
-                    const arraySortu = {
-                        "izena": izena,
-                        "abizena": abizena,
-                        "telefonoa": telefonoa,
-                        "azal_sentikorra": azal_sentikorra || 'E', // Por defecto -> piel sensible = no
-                    };
 
-                    console.log(JSON.stringify(arraySortu));
+                    // para validar el numero de telefono
+                    const telefonoRegex = /^\d{9}$/;
+                    if (!telefonoRegex.test(telefonoa)) {
+                        this.showMessage('error', 'Número de telefono no valido', 'botton');
+                        return;
+                    } else {
+                        const arraySortu = {
+                            "izena": izena,
+                            "abizena": abizena,
+                            "telefonoa": telefonoa,
+                            "azal_sentikorra": azal_sentikorra || 'E', // Por defecto -> piel sensible = no
+                        };
 
-                    const response = await fetch(window.ruta + 'bezero_fixagorde', {
-                        // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
-                            'Access-Control-Allow-Origin': '*'
-                        },
-                        body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
-                    });
 
-                    if (!response.ok) {
-                        // console.log('Errorea sortzerakoan');
-                        this.showMessage('error', 'Error al crear la ficha', 'top');
-                        // throw new Error('Errorea sortzerakoan');
+
+                        console.log(JSON.stringify(arraySortu));
+
+                        const response = await fetch(window.ruta + 'bezero_fixagorde', {
+                            // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
+                                'Access-Control-Allow-Origin': '*'
+                            },
+                            body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
+                        });
+
+                        if (!response.ok) {
+                            // console.log('Errorea sortzerakoan');
+                            this.showMessage('error', 'Error al crear la ficha', 'top');
+                            // throw new Error('Errorea sortzerakoan');
+                        } else {
+
+                            // console.log('Sortu da');
+                            // para que el mensaje cambie al pasar 10seg
+                            this.showMessage('status', 'Ficha creada correctamente', 'top');
+                            this.cargaFitxa(); //para cargar los datos nuevos
+
+                            // Vaciar los input
+                            this.izenaSortu = '';
+                            this.abizenaSortu = '';
+                            this.telefonoaSortu = '';
+                            this.sentikorraSortu = '';
+
+                            // await this.cargaFitxa();
+                            // location.reload();
+                        }
                     }
-
-                    // console.log('Sortu da');
-                    // para que el mensaje cambie al pasar 10seg
-                    this.showMessage('status', 'Ficha creada correctamente', 'top');
-                    this.cargaFitxa(); //para cargar los datos nuevos
-
-                    // Vaciar los input
-                    this.izenaSortu = '';
-                    this.abizenaSortu = '';
-                    this.telefonoaSortu = '';
-                    this.sentikorraSortu = '';
-
-                    // await this.cargaFitxa();
-                    // location.reload();
                 } else {
                     this.showMessage('error', 'Rellene todos los campos', 'botton');
                 }
@@ -418,8 +462,12 @@ new Vue({
         // Llama a tu función cargarPagina cuando el componente se monta
         this.cargaFitxa();
         this.cargaProduktu();
+        this.itemsPaginados();
     },
     watch: {
+        // paginaActual() {
+        //     this.itemsPaginados();
+        // },
         histMarkaSortu() {
             if (this.histMarkaSortu != null) {
                 this.listaProduktuFilter = this.listaProduktu.filter(produktu => produktu.marka === this.histMarkaSortu);
