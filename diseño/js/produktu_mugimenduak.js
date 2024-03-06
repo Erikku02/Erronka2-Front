@@ -27,6 +27,7 @@ new Vue({
         listaMarkaFiltrada: [],
         uniqueMarcas: [0],
         stockTotala: 0,
+        stockTotalProducto: 0, 
         /* IDIOMAS */
         selectedLanguage: 'es',
         // languageStrings: {},
@@ -195,22 +196,26 @@ new Vue({
 
             // Validar que los campos obligatorios no estén vacíos
             if (!this.produktuIzenaSortu || this.kantitateaSortu <= 0) {
-
                 // Mostrar un mensaje de error (puedes reemplazar esto con tu lógica de pop-up)
-                console.log("Por favor, completa los campos obligatorios: Producto y Cantidad");
+                alert("Por favor, completa los campos obligatorios: Producto y Cantidad");
                 return; // No continuar con la función si hay campos obligatorios vacíos
             }
 
             const arrProduktuarenStock = await this.cargaProduktuaById(this.produktuIzenaSortu);
-            const stockTotalProducto = arrProduktuarenStock[0];
+            var stockTotalProducto = arrProduktuarenStock[0];
             const stockSeguridadProducto = arrProduktuarenStock[1];
 
             console.log(stockSeguridadProducto);
 
             if (this.kantitateaSortu <= stockTotalProducto) {
                 if ((stockTotalProducto - this.kantitateaSortu) <= stockSeguridadProducto) {
-                    console.log("¡¡¡Stock de alerta superado!!!, ahora quedan " + (stockTotalProducto - this.kantitateaSortu) + " unidades.")
+                    console.log(stockTotalProducto - this.kantitateaSortu)
+                    // Abre el pop-up modal
+                    const modalId = 'stockAlertModal';
+                    const modal = new bootstrap.Modal(document.getElementById(modalId));
+                    modal.show();
                 }
+                
                 const nuevaFila = {
                     "kategoria": this.kategoriaIzenaSortu ? this.listaKategoria.find(kategoria => kategoria.id == this.kategoriaIzenaSortu).izena : "",
                     "marka": this.casaSortu,
@@ -227,8 +232,13 @@ new Vue({
                 this.casaSortu = "";
                 this.produktuIzenaSortu = "";
                 this.kantitateaSortu = 0;
+        
             } else {
-                console.log("No puede añadir esa cantidad porque el stock actual de este producto es de " + stockTotalProducto);
+                if ((stockTotalProducto - this.kantitateaSortu) <= stockSeguridadProducto) {
+                    const errorModalId = 'errorStockModal';
+                    const errorModal = new bootstrap.Modal(document.getElementById(errorModalId));
+                    errorModal.show();
+                }
             }
         },
         eliminarFila(index) {

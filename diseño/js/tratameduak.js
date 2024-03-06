@@ -50,12 +50,20 @@ new Vue({
             // Si ya hay un tratamiento con el mismo nombre, confirma que se quiere añadir al actual (datos del form)
             const tratamenduExiste = this.listaTratamenduSinFiltro.find(tratamendu => tratamendu.izena === this.izenaSortu);
             if (tratamenduExiste) {
-                const isComfirmed = window.confirm("Ya existe un tratamiento con el mismo nombre. ¿Estás seguro de que quieres añadir el actual?");
-                if (!isComfirmed) {
-                    // Si el usuario cancela, no se realiza ninguna accion (no se añade el tratamiento)
+                const isConfirmed = window.confirm("Ya existe un tratamiento con el mismo nombre. ¿Estás seguro de que quieres añadir el actual?");
+                if (!isConfirmed) {
+                    // Si el usuario cancela, no se realiza ninguna acción (no se añade el tratamiento)
                     return;
                 }
             }
+        
+            // Validar que los valores ingresados sean números con hasta dos decimales
+            const regex = /^\d+(\.\d{1,2})?$/; // Expresión regular para detectar números con hasta 2 decimales
+            if (!regex.test(this.etxeSortu) || !regex.test(this.kanpoSortu)) {
+                alert("El formato del precio es incorrecto. Por favor, ingresa un número válido.");
+                return; // Detener la función si el formato del precio es incorrecto
+            }
+        
             try {
                 const izena = this.izenaSortu;
                 const etxeko_prezioa = this.etxeSortu;
@@ -65,24 +73,23 @@ new Vue({
                     "etxeko_prezioa": etxeko_prezioa,
                     "kanpoko_prezioa": kanpoko_prezioa
                 };
-
+        
                 console.log(JSON.stringify(arraySortu));
-
+        
                 const response = await fetch(window.ruta + 'tratamenduagorde', {
-                    // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
+                        'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
                     },
-                    body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
+                    body: JSON.stringify(arraySortu),
                 });
-
+        
                 if (!response.ok) {
                     console.log('Errorea sortzerakoan');
                     throw new Error('Errorea sortzerakoan');
                 }
-
+        
                 console.log('Sortu da');
                 await this.cargaTratamendu();
                 location.reload();
@@ -90,6 +97,7 @@ new Vue({
                 console.log('Errorea: ', error);
             }
         },
+                
         async actuTratamendu() {
             try {
                 const id = this.arrayId[0];
