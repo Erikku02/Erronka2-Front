@@ -37,6 +37,10 @@ new Vue({
         // Paginar
         itemsPorPagina: 10,
         paginaActual: 1,
+
+        // Ordenar los datos por columna
+        ordenColumna: '', // Almacena el nombre de la columna por la que se ordena
+        ordenAscendente: true // Indica si el orden es ascendente o descendente
     },
     computed: {
         // Paginar
@@ -51,6 +55,63 @@ new Vue({
         }
     },
     methods: {
+        cambiarOrden(columna) {
+            if (this.ordenColumna === columna) {
+                // Si ya está ordenado por esta columna, cambia la dirección
+                this.ordenAscendente = !this.ordenAscendente;
+            } else {
+                // Si es una nueva columna, establece el orden ascendente por defecto
+                this.ordenAscendente = true;
+                this.ordenColumna = columna;
+            }
+
+            // Ahora ordena la lista basándote en la columna seleccionada y la dirección
+            this.listaFitxa.sort((a, b) => {
+                return this.alphanumCompare(a, b, columna, this.ordenAscendente);
+            });
+        },
+        alphanumCompare(a, b, columna, ordenAscendente) {
+            const chunkRegExp = /(\D+|\d+)/g;
+
+            // Función auxiliar para comparar partes alfanuméricas
+            const compareChunks = (chunkA, chunkB) => {
+                const isDigitA = !isNaN(chunkA);
+                const isDigitB = !isNaN(chunkB);
+
+                if (isDigitA && isDigitB) {
+                    return parseInt(chunkA, 10) - parseInt(chunkB, 10);
+                } else {
+                    return chunkA.localeCompare(chunkB);
+                }
+            };
+
+            // Obtener los valores de la columna especificada para comparar
+            const valueA = a[columna];
+            const valueB = b[columna];
+
+            // Si los valores son nulos o indefinidos, colocarlos al final (o al principio para el orden descendente)
+            if (valueA === null || valueA === undefined) {
+                return ordenAscendente ? 1 : -1;
+            }
+            if (valueB === null || valueB === undefined) {
+                return ordenAscendente ? 1 : -1;
+            }
+
+            // Obtener las partes alfanumericas de los valores
+            const chunksA = String(valueA).match(chunkRegExp);
+            const chunksB = String(valueB).match(chunkRegExp);
+
+            // Comparar las partes alfanumericas
+            const minLength = Math.min(chunksA.length, chunksB.length);
+            for (let i = 0; i < minLength; i++) {
+                const result = compareChunks(chunksA[i], chunksB[i]);
+                if (result !== 0) {
+                    return ordenAscendente ? result : -result;
+                }
+            }
+
+            return chunksA.length - chunksB.length;
+        },
         paginaAnterior() {
             if (this.paginaActual > 1) {
                 this.paginaActual--;

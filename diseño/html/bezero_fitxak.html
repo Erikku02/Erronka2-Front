@@ -168,11 +168,22 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col"><input type="checkbox" class="form-check-input" v-model="selectAllFitxa"
-                                    @change="selectAllFitxaId" /></th>
-                            <th scope="col">{{ translations[selectedLanguage].default.tab_nombre }}</th>
-                            <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.apellidos }}</th>
-                            <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.tlf }}</th>
+                            <th scope="col">
+                                <input type="checkbox" class="form-check-input" v-model="selectAllFitxa"
+                                    @change="selectAllFitxaId" />
+                            </th>
+                            <th scope="col" @click="cambiarOrden('izena')">
+                                {{ translations[selectedLanguage].default.tab_nombre }}
+                                <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th scope="col" @click="cambiarOrden('abizena')">
+                                {{ translations[selectedLanguage].bezero_fitxak.apellidos }}
+                                <i class="bi bi-arrow-down-up"></i>
+                            </th>
+                            <th scope="col" @click="cambiarOrden('telefonoa')">
+                                {{ translations[selectedLanguage].bezero_fitxak.tlf }}
+                                <i class="bi bi-arrow-down-up"></i>
+                            </th>
                             <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.piel_sensible }}</th>
                             <th></th>
                         </tr>
