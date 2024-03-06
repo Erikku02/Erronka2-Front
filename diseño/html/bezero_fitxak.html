@@ -148,8 +148,33 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i v-if="visibleFitxa" class="bi bi-check-circle m-2" @click="actuFitxa()"></i>
-                    <i class="bi bi-dash-circle" @click="ezabFitxa()"></i>
+                    <div class="row justify-content-end">
+                        <div class="col-auto">
+                            <div class="input-group">
+                                <select class="form-select" id="inputGroupSelect02" v-model="campoSeleccionado">
+                                    <option selected disabled>Seleccione</option>
+                                    <option value="izena">
+                                        {{ translations[selectedLanguage].default.tab_nombre }}
+                                    </option>
+                                    <option value="abizena">
+                                        {{ translations[selectedLanguage].bezero_fitxak.apellidos }}
+                                    </option>
+                                    <option value="telefonoa">
+                                        {{ translations[selectedLanguage].bezero_fitxak.tlf }}
+                                    </option>
+                                </select>
+                                <input v-model="terminoBusqueda" type="text" class="form-control"
+                                    placeholder="Buscar...">
+                                <span class="input-group-text">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i v-if="visibleFitxa" class="bi bi-check-circle m-2" @click="actuFitxa()"></i>
+                            <i class="bi bi-dash-circle" @click="ezabFitxa()"></i>
+                        </div>
+                    </div>
 
                     <!-- CAMBIAR EL IDIOMA (probisional) -->
                     <!-- <p @click="changeLanguage('es')">ES</p>
@@ -189,7 +214,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="fitxa in itemsPaginados">
+                        <tr v-for="fitxa in itemsFiltradosPaginados" :key="fitxa.id">
                             <!-- <tr v-for="(fitxa) in listaFitxa"> -->
                             <td>
                                 <input type="checkbox" class="form-check-input" :value="fitxa.id" v-model="arrayId" />
@@ -238,7 +263,8 @@
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModalToggle" @click="cargaHistorial(fitxa.id)">
-                                    {{ translations[selectedLanguage].bezero_fitxak.hist_color }}</button>
+                                    {{ translations[selectedLanguage].bezero_fitxak.hist_color }}
+                                </button>
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModalToggle" data-bs-backdrop="static"

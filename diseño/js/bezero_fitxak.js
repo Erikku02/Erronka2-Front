@@ -40,19 +40,47 @@ new Vue({
 
         // Ordenar los datos por columna
         ordenColumna: '', // Almacena el nombre de la columna por la que se ordena
-        ordenAscendente: true // Indica si el orden es ascendente o descendente
+        ordenAscendente: true, // Indica si el orden es ascendente o descendente
+
+        // Buscador
+        terminoBusqueda: '',
+        campoSeleccionado: '',
     },
     computed: {
+        // Filtrar los datos basados en el término de búsqueda y el campo seleccionado
+        itemsFiltradosPaginados() {
+            // Busca en todos los datos
+            // Filtrar los datos basados en el término de búsqueda
+            let itemsFiltrados = this.listaFitxa.filter(item => {
+                // Convertir el valor de 'telefonoa' a string y luego buscar en minúsculas
+                const telefonoa = item.telefonoa ? item.telefonoa.toString() : '';
+                return (
+                    item.izena.toLowerCase().includes(this.terminoBusqueda.toLowerCase()) ||
+                    telefonoa.toLowerCase().includes(this.terminoBusqueda.toLowerCase())
+                );
+            });
+
+
+            // Calcular los índices de inicio y fin para la paginación
+            const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+            const fin = inicio + this.itemsPorPagina;
+            
+            // FIXME: Actualizar la cantidad de páginas
+            // this.cantidadPorPaginas = Math.ceil(itemsFiltrados.length / this.itemsPorPagina);
+
+            // Paginar los datos filtrados
+            return itemsFiltrados.slice(inicio, fin);
+        },
         // Paginar
         cantidadPorPaginas() {
             return Math.ceil(this.listaFitxa.length / this.itemsPorPagina)
         },
-        itemsPaginados() {
+        /* itemsPaginados() {
             const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
             const fin = inicio + this.itemsPorPagina;
             console.log(this.listaFitxa.slice(inicio, fin));
             return this.listaFitxa.slice(inicio, fin);
-        }
+        } */
     },
     methods: {
         cambiarOrden(columna) {
