@@ -197,6 +197,8 @@ new Vue({
         kategoriaSortu: "",
         markaSortu: "",
         stockSortu: "",
+        filtrMarca: "",
+        filtrCatego: "",
         stock_alertaSortu: "",
         listaProduktuBusc: [],
         listaProduktu: [],
@@ -207,6 +209,10 @@ new Vue({
         selectedLanguage: 'es',
         // languageStrings: {},
         translations: translations,
+        marcasUnicas: new Set(),
+        uniqueMarcas: [0],
+        listaMarkaFiltrada: []
+
     },
     methods: {
         async cargaProduktu() {
@@ -238,7 +244,29 @@ new Vue({
                 console.error('Errorea:', error);
             }
         },
-
+        async cargaMarka() {
+            try {
+                const response = await fetch(window.ruta + 'markaruta', {
+                    // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
+                    method: 'GET',
+                    // mode: "no-cors",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+                if (!response.ok) {
+                    console.log('Errorea eskera eskaera egiterakoan');
+                    throw new Error('Errorea eskaera egiterakoan');
+                }
+                const datuak = await response.json();
+                this.listaMarka = datuak;
+                this.listaMarkaFiltrada = datuak;
+                console.log(this.cargaMarka)
+            } catch (error) {
+                console.error('Errorea: ', error);
+            }
+        },
         async createProduktu() {
             try {
                 const izena = this.izenaSortu;
@@ -296,6 +324,52 @@ new Vue({
             }catch (error){
                 console.log("Errorea: ", error);
             }
+        },
+        filtrarMarcaCategoria(){
+            try {
+                if (this.filtrCatego && this.filtrMarca){
+                    this.listaProduktuBusc = this.listaProduktu
+                        .filter(produktu => produktu.id_kategoria === this.filtrCatego)
+                        .filter(produktu => produktu.marka === this.filtrMarca);
+                }
+
+                if (this.filtrCatego && this.filtrMarca == "" ){
+                    this.listaProduktuBusc = this.listaProduktu
+                    .filter(produktu => produktu.id_kategoria === this.filtrCatego);
+                }
+
+                if (this.filtrMarca && this.filtrCatego == "") {
+                    this.listaProduktuBusc = this.listaProduktu
+                    .filter(produktu => produktu.marka === this.filtrMarca);
+                }
+
+                if (this.filtrCatego == "" && this.filtrMarca == ""){
+                    this.listaProduktuBusc = this.listaProduktu
+                }
+            } catch (error) {
+                console.log("Errorea: ", error);
+            }
+        },
+        quitarFiltros(){
+            this.filtrCatego = "";
+            this.filtrMarca = "";
+            this.filtrarMarcaCategoria();
+        },
+        actualizarListaMarkaFiltrada() {
+            if (this.filtrCatego) {
+                // Filtrar marcas para la categoría seleccionada
+                this.listaMarkaFiltrada = this.listaMarka.filter(marka => marka.id_kategoria == this.filtrCatego);
+
+                // Obtener marcas únicas para la categoría seleccionada
+                this.uniqueMarcas = [...new Set(this.listaMarkaFiltrada.map(marka => marka.marka))];
+            } else {
+                // Obtener todas las marcas únicas
+                this.uniqueMarcas = [...new Set(this.listaMarka.map(marka => marka.marka))];
+                this.listaMarkaFiltrada = this.listaMarka; // Mantener todas las marcas si no hay categoría seleccionada
+            }
+
+            // Agregar marcas únicas al conjunto (¿marcasUnicas es necesario?)
+            this.uniqueMarcas.forEach(marka => this.marcasUnicas.add(marka));
         },
         async actuProduktu() {
             try {
@@ -473,11 +547,17 @@ new Vue({
             console.log(this.selectedLanguage);
         },
     },
+    watch: {
+        filtrCatego: function () {
+            this.actualizarListaMarkaFiltrada();
+        }
+    },
     mounted() {
         // Llama a tu función cargarPagina cuando el componente se monta
         this.cargaProduktu();
         this.cargaKategoria();
         this.ordenarPorNombre();
+        this.cargaMarka();
         // this.ordenKategoria();
     }
 });
