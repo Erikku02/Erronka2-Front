@@ -47,15 +47,18 @@ new Vue({
         campoSeleccionado: '',
     },
     computed: {
-        // Filtrar los datos basados en el término de búsqueda y el campo seleccionado
+        // Filtrar los datos basados en el término de búsqueda (busca en los campos izena, abizena, telefonoa)
         itemsFiltradosPaginados() {
             // Busca en todos los datos
             // Filtrar los datos basados en el término de búsqueda
             let itemsFiltrados = this.listaFitxa.filter(item => {
                 // Convertir el valor de 'telefonoa' a string y luego buscar en minúsculas
+                const izena = item.izena ? item.izena : '';
+                const abizena = item.abizena ? item.abizena : '';
                 const telefonoa = item.telefonoa ? item.telefonoa.toString() : '';
                 return (
-                    item.izena.toLowerCase().includes(this.terminoBusqueda.toLowerCase()) ||
+                    izena.toLowerCase().includes(this.terminoBusqueda.toLowerCase()) ||
+                    abizena.toLowerCase().includes(this.terminoBusqueda.toLowerCase()) ||
                     telefonoa.toLowerCase().includes(this.terminoBusqueda.toLowerCase())
                 );
             });
@@ -64,7 +67,7 @@ new Vue({
             // Calcular los índices de inicio y fin para la paginación
             const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
             const fin = inicio + this.itemsPorPagina;
-            
+
             // FIXME: Actualizar la cantidad de páginas
             // this.cantidadPorPaginas = Math.ceil(itemsFiltrados.length / this.itemsPorPagina);
 

@@ -21,35 +21,45 @@
         <nav-component :changeLanguage="changeLanguage"></nav-component>
         <div class="container">
             <div class="row">
-                <!-- Iconos para editar los datos -->
-                <div class="icons h4 text-end mt-4">
-                    <i class="bi bi-check-circle m-2" @click="actuProduktu()"></i>
-                    <i class="bi bi-dash-circle" @click="ezabProduktu()"></i>
+                <div class="row mt-4">
+                    <!-- Iconos para editar los datos -->
+                    <div class="icons h4 text-end">
+                        <i class="bi bi-check-circle m-2" @click="actuProduktu()"></i>
+                        <i class="bi bi-dash-circle" @click="ezabProduktu()"></i>
+                    </div>
                 </div>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Nombre del producto" aria-label="Nombre del producto" aria-describedby="button-addon2" v-model="buscadorProduktu">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="buscadorProduktua"><i class="bi bi-search"></i></button>
-                </div>
-                <div class="col-sm-6 col-lg-3 mt-5">
-                    <div class="mb-3">
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Nombre del producto"
+                                aria-label="Nombre del producto" aria-describedby="button-addon2"
+                                v-model="buscadorProduktu">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                @click="buscadorProduktua"><i class="bi bi-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <select class="form-select w-100" id="x" required v-model="filtrCatego">
-                            <option disabled value="">{{ translations[selectedLanguage].prod_mug.categoria }}
-                            </option>
+                            <option disabled value="">{{ translations[selectedLanguage].prod_mug.categoria }}</option>
                             <option v-for="(kategoria) in listaKategoria" :value="kategoria.id">{{kategoria.izena}}
                             </option>
                         </select>
                     </div>
-                    <div class="mb-3">
+                    <div class="col-md-4">
                         <select class="form-select w-100" id="x" required v-model="filtrMarca">
                             <option disabled value="">{{ translations[selectedLanguage].prod_mug.casa }}</option>
                             <option v-for="(marka) in listaMarkaFiltrada">{{marka.marka}}</option>
                         </select>
                     </div>
-                    <button type="button" @click="filtrarMarcaCategoria">Filtrar</button>
-                    <button type="button" @click="quitarFiltros">Quitar filtros</button>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-12 d-flex justify-content-end">
+                        <button type="button" class="btn btn-outline-primary me-2" @click="filtrarMarcaCategoria">Filtrar</button>
+                        <button type="button" class="btn btn-outline-secondary" @click="quitarFiltros">Quitar filtros</button>
+                    </div>
                 </div>
                 <!-- Tabla -->
-                <table class="table table-hover">
+                <table class="table table-hover mt-3">
                     <thead>
                         <tr>
                             <th scope="col"></th>
