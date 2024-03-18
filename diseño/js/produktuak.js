@@ -309,19 +309,17 @@ new Vue({
             }
         },
         buscadorProduktua() {
-            try{
-                if(this.buscadorProduktu != ""){
-                    this.listaProduktuBusc = this.listaProduktu
-                    // .filter(produktu => produktu.deleted_at === null || produktu.deleted_at === "0000-00-00 00:00:00")
-                    .filter(produktu => produktu.izena === this.buscadorProduktu);
-                }else {
-                    this.listaProduktuBusc = this.listaProduktu
-                    // .filter(produktu => produktu.deleted_at === null || produktu.deleted_at === "0000-00-00 00:00:00");
+            try {
+                if (this.buscadorProduktu !== "") {
+                    this.listaProduktuBusc = this.listaProduktu.filter(produktu =>
+                        (produktu.izena.toLowerCase()).includes(this.buscadorProduktu.toLowerCase())
+                    );
+                } else {
+                    this.listaProduktuBusc = this.listaProduktu;
                 }
-                
+        
                 this.ordenarPorNombre();
-                
-            }catch (error){
+            } catch (error) {
                 console.log("Errorea: ", error);
             }
         },
