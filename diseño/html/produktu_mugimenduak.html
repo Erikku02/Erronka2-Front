@@ -175,7 +175,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     <!-- Contenido de la fila (igual que antes) -->
                     <tr>
                         <td>
@@ -234,7 +233,8 @@
             </div>
         </div>
         <!-- Modal de alerta de stock -->
-    <div class="modal fade" id="stockAlertModal" tabindex="-1" aria-labelledby="stockAlertModalLabel" aria-hidden="true">
+    
+    <div class="modal fade" id="stockAlertModal" tabindex="-1" aria-labelledby="stockAlertModalLabel" aria-hidden="true" v-model="stockTotalProducto">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -242,7 +242,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Ahora quedan {{ stockTotalProducto - this.kantitateaSortu }} unidades.
+                    Ahora quedan {{ guardarStockTotal }} unidades.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -260,7 +260,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    No puede añadir esa cantidad porque el stock actual de este producto es de {{ stockTotalProducto }}.
+                    No puede añadir esa cantidad porque el stock actual de este producto es de {{ guardarStockTotal }}.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

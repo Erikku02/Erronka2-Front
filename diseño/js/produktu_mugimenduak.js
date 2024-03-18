@@ -1,6 +1,7 @@
 new Vue({
     el: '#app',
     data: {
+        boolSeguridad: false,
         selectedTalde: "",
         arrayKodea: [],
         kodeaSortu: "",
@@ -28,6 +29,7 @@ new Vue({
         uniqueMarcas: [0],
         stockTotala: 0,
         stockTotalProducto: 0, 
+        guardarStockTotal: 0,
         /* IDIOMAS */
         selectedLanguage: 'es',
         // languageStrings: {},
@@ -193,24 +195,36 @@ new Vue({
             }
         },
         async añadirFila() {
-
             // Validar que los campos obligatorios no estén vacíos
             if (!this.produktuIzenaSortu || this.kantitateaSortu <= 0) {
-                // Mostrar un mensaje de error (puedes reemplazar esto con tu lógica de pop-up)
                 alert("Por favor, completa los campos obligatorios: Producto y Cantidad");
                 return; // No continuar con la función si hay campos obligatorios vacíos
             }
-
+            
             const arrProduktuarenStock = await this.cargaProduktuaById(this.produktuIzenaSortu);
-            var stockTotalProducto = arrProduktuarenStock[0];
+            this.stockTotalProducto = arrProduktuarenStock[0];
             const stockSeguridadProducto = arrProduktuarenStock[1];
 
-            console.log(stockSeguridadProducto);
+            //FALTA QUE TENGA EN CUENTA QUE SI EL PRODUCTO ES DIFERENTE NO SE RESTE LA CANTIDAD DE ESE PRODUCTO SINO
+            //DEL OTRO!!!
 
-            if (this.kantitateaSortu <= stockTotalProducto) {
-                if ((stockTotalProducto - this.kantitateaSortu) <= stockSeguridadProducto) {
-                    console.log(stockTotalProducto - this.kantitateaSortu)
+            if(this.registros.length > 0){
+                for (let i = 0; i < this.registros.length; i++) {
+                    if(this.registros[i].produktua == this.produktuIzenaSortu){
+                        this.guardarStockTotal = this.stockTotalProducto - this.registros[i].kantitatea;
+                    }
+                }
+                this.guardarStockTotal = this.guardarStockTotal - this.kantitateaSortu;
+            }else{
+                this.guardarStockTotal = this.stockTotalProducto - this.kantitateaSortu;
+            }
+            console.log(this.guardarStockTotal)
+
+            if (this.guardarStockTotal >= 0) {
+                if (this.guardarStockTotal <= stockSeguridadProducto) {
+                    // console.log(this.stockTotalProducto - this.kantitateaSortu)
                     // Abre el pop-up modal
+            
                     const modalId = 'stockAlertModal';
                     const modal = new bootstrap.Modal(document.getElementById(modalId));
                     modal.show();
@@ -232,9 +246,9 @@ new Vue({
                 this.casaSortu = "";
                 this.produktuIzenaSortu = "";
                 this.kantitateaSortu = 0;
-        
             } else {
-                if ((stockTotalProducto - this.kantitateaSortu) <= stockSeguridadProducto) {
+                if (this.guardarStockTotal <= stockSeguridadProducto) {
+                    this.guardarStockTotal = parseInt(this.guardarStockTotal) + parseInt(this.kantitateaSortu);
                     const errorModalId = 'errorStockModal';
                     const errorModal = new bootstrap.Modal(document.getElementById(errorModalId));
                     errorModal.show();
@@ -353,7 +367,6 @@ new Vue({
     },
 
     watch: {
-
         kategoriaIzenaSortu: function () {
             this.actualizarListaFiltrada();
             this.actualizarListaMarkaFiltrada();
@@ -361,7 +374,6 @@ new Vue({
         casaSortu: function () {
             this.actualizarListaFiltrada();
         }
-
     },
     mounted() {
         // Llama a tu función cargarPagina cuando el componente se monta
