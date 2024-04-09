@@ -206,7 +206,7 @@ new Vue({
                     const responseComprobar = await fetch(window.ruta + 'taldeaComprobarLangileak/' + this.arrayKodea[i]);
                     const dataComprobar = await responseComprobar.json();
         
-                    if (dataComprobar.message === 'Este grupo tiene usuarios activos') {
+                    if (dataComprobar.message === 'Este grupo tiene langileak activos') {
                         const confirmacion = confirm(dataComprobar.message + '. ¿Seguro que quieres eliminarlo?');
                         if (!confirmacion) continue; // Si el usuario cancela, continuar con la siguiente iteración del bucle
                     }
