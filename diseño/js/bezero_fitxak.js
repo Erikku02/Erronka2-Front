@@ -268,7 +268,7 @@ new Vue({
                     // para validar el numero de telefono
                     const telefonoRegex = /^\d{9}$/;
                     if (!telefonoRegex.test(telefonoa)) {
-                        this.showMessage('error', 'Número de telefono no valido', 'botton');
+                        this.showMessage('error', 'Número de teléfono no válido', 'botton');
                         return;
                     } else {
                         const arraySortu = {
