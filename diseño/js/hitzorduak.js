@@ -282,7 +282,7 @@ new Vue({
 
             const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
             const numeroDiaSemana = fechaInput.getDay();
-            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado'];
             const fechaFormateada = fechaInput.toLocaleDateString('es-ES', options);
 
             try {

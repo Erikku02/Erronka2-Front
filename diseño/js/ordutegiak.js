@@ -175,7 +175,7 @@ new Vue({
             }
         },
         egunaOrdutegia(numeroDia) {
-            const diasSemana = ['', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+            const diasSemana = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
             return diasSemana[numeroDia];
         },
         async cargaTalde() {
