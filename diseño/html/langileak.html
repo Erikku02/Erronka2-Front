@@ -162,7 +162,7 @@
                 <p @click="changeLanguage('eus')">EUS</p>
 
 
-                <ul class="nav nav-tabs mt-5">
+                <ul class="nav nav-tabs mt-5" style="font-size: 19px;">
                     <li class="nav-item">
                         <a :class="{ 'nav-link': true, 'selected': selectedTalde === null }" aria-current="page"
                             href="#" @click="cargaLangile()">
@@ -189,7 +189,7 @@
                 <!-- Tabla -->
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr style="font-size: 20px;">
                             <th scope="col"></th>
                             <th @click="ordenarPorNombre" scope="col">{{
                                 translations[selectedLanguage].default.tab_nombre }} <i class="bi bi-arrow-down-up"></i>
@@ -231,12 +231,10 @@
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
                     <div class="col-sm-6 col-lg-3">
-                        <div class="mb-3">
                             <select class="form-select w-100" id="dia" required v-model="kodeaSortu">
                                 <option disabled value="">{{ translations[selectedLanguage].langileak.grupo }}</option>
                                 <option v-for="(talde) in listaTalde">{{talde.kodea}}</option>
                             </select>
-                        </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input1" class="">Código</label> -->

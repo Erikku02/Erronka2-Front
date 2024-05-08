@@ -174,8 +174,8 @@
                     </div>
 
                     <!-- CAMBIAR EL IDIOMA (probisional) -->
-                    <!-- <p @click="changeLanguage('es')">ES</p>
-                    <p @click="changeLanguage('eus')">EUS</p> -->
+                    <p @click="changeLanguage('es')">ES</p>
+                    <p @click="changeLanguage('eus')">EUS</p>
                 </div>
                 <div id="error-message" class="alert alert-danger justify-content-between" v-if="errorMessageTop"
                     :class="{ 'fade-out': !errorMessageTop }">
@@ -189,7 +189,7 @@
                 <!-- Tabla -->
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr style="font-size: 19px;">
                             <th scope="col">
                                 <input type="checkbox" class="form-check-input" v-model="selectAllFitxa"
                                     @change="selectAllFitxaId" />
@@ -482,7 +482,7 @@
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
-                <h4 class="text-center pt-5 mx-auto">{{ translations[selectedLanguage].bezero_fitxak.añad_ficha }}</h4>
+                <h4 class="text-center pt-5 mx-auto" style="font-size: 21px;">{{ translations[selectedLanguage].bezero_fitxak.añad_ficha }}</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
