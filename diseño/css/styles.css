@@ -7,6 +7,7 @@
     font-family: 'roboto';
 }
 
+
 /* * {
     background-color: #F5F9FE;
 }
@@ -41,7 +42,7 @@ main {
 
 .offcanvas-start .navbar-nav .nav-link,
 .offcanvas-start {
-    background-color: #313C40;
+    background-color: #25363e;
 }
 
 .offcanvas-start .navbar-toggler-icon {
@@ -80,6 +81,9 @@ form button {
     transition: opacity 1s ease-out;
 }
 
+.dropdown-menu{
+    background-color: aquamarine;
+}
 /* @keyframes fadeOut {
     from {
         opacity: 1;

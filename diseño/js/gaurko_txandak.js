@@ -16,6 +16,7 @@ new Vue({
         selectedLanguage: 'es',
         // languageStrings: {},
         translations: translations,
+        lang: '',
     },
     methods: {
         obtenerFechaActual() {
@@ -160,8 +161,28 @@ new Vue({
         },
         changeLanguage(lang) {
             this.selectedLanguage = lang;
-            console.log(this.selectedLanguage);
+            window.selectedLanguage = lang;
+            // console.log(this.selectedLanguage);
+            // console.log(this.translations);
         },
+        changeLanguageAndClose(lang) {
+            // Cerrar la barra de navegación lateral
+            const offcanvasNavbar = document.getElementById('offcanvasNavbar');
+            const offcanvasInstance = new bootstrap.Offcanvas(offcanvasNavbar);
+            offcanvasInstance.hide();
+
+            // Cambiar el idioma
+            this.changeLanguage(lang);
+
+            // Enviar la variable al método changeLanguage de la instancia de Vue
+            this.$root.changeLanguage(lang);
+        },
+
+
+        /* creo que no se usa */
+        getTranslation(key) {
+            return this.translations[this.selectedLanguage][key] || '';
+        }
     },
     mounted() {
         // Llama a tu función cargarPagina cuando el componente se monta
