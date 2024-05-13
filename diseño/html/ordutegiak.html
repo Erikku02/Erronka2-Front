@@ -138,7 +138,7 @@
         </div>
     </nav>
 
-    <main id="app">
+    <main id="app" style="margin-bottom: 60px;">
         <div class="container">
             <div class="row">
                 <!-- Iconos para editar los datos -->
@@ -283,15 +283,17 @@
                             <button @click.prevent="createOrdutegia" class="btn btn-primary">{{
                                 translations[selectedLanguage].default.btn_añadir }}</button>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>
         <!-- FOOTER -->
-        <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
+        <footer class="bg-dark text-light text-center py-3" style="position: fixed; bottom: 0; width: 100%;">
             <div class="container">
                 <p>&copy; {{ translations[selectedLanguage].ordutegiak.footer }}</p>
             </div>
         </footer>
+        
     </main>
 
 
