@@ -11,8 +11,39 @@ new Vue({
         /* IDIOMAS */
         selectedLanguage: 'es',
         translations: translations,
+        // Paginar
+        itemsPorPagina: 10,
+        paginaActual: 1,
+    },
+    computed: {
+        // Filtrar los datos basados en el término de búsqueda (busca en los campos izena, abizena, telefonoa)
+        itemsFiltradosPaginados() {
+            let itemsFiltrados = this.listaTratamendua;
+
+
+            // Calcular los índices de inicio y fin para la paginación
+            const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+            const fin = inicio + this.itemsPorPagina;
+
+            // Paginar los datos filtrados
+            return itemsFiltrados.slice(inicio, fin);
+        },
+        // Paginar
+        cantidadPorPaginas() {
+            return Math.ceil(this.listaTratamendua.length / this.itemsPorPagina)
+        },
     },
     methods: {
+        paginaAnterior() {
+            if (this.paginaActual > 1) {
+                this.paginaActual--;
+            }
+        },
+        paginaSiguiente() {
+            if (this.paginaActual < this.cantidadPorPaginas) {
+                this.paginaActual++;
+            }
+        },
         changeLanguage(lang) {
             this.selectedLanguage = lang;
             console.log(this.selectedLanguage);
@@ -56,14 +87,14 @@ new Vue({
                     return;
                 }
             }
-        
+
             // Validar que los valores ingresados sean números con hasta dos decimales
             const regex = /^\d+(\.\d{1,2})?$/; // Expresión regular para detectar números con hasta 2 decimales
             if (!regex.test(this.etxeSortu) || !regex.test(this.kanpoSortu)) {
                 alert("El formato del precio es incorrecto. Por favor, ingresa un número válido.");
                 return; // Detener la función si el formato del precio es incorrecto
             }
-        
+
             try {
                 const izena = this.izenaSortu;
                 const etxeko_prezioa = this.etxeSortu;
@@ -73,9 +104,9 @@ new Vue({
                     "etxeko_prezioa": etxeko_prezioa,
                     "kanpoko_prezioa": kanpoko_prezioa
                 };
-        
+
                 console.log(JSON.stringify(arraySortu));
-        
+
                 const response = await fetch(window.ruta + 'tratamenduagorde', {
                     method: 'POST',
                     headers: {
@@ -84,12 +115,12 @@ new Vue({
                     },
                     body: JSON.stringify(arraySortu),
                 });
-        
+
                 if (!response.ok) {
                     console.log('Errorea sortzerakoan');
                     throw new Error('Errorea sortzerakoan');
                 }
-        
+
                 console.log('Sortu da');
                 await this.cargaTratamendu();
                 location.reload();
@@ -97,7 +128,7 @@ new Vue({
                 console.log('Errorea: ', error);
             }
         },
-                
+
         async actuTratamendu() {
             try {
                 const id = this.arrayId[0];
