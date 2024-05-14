@@ -24,8 +24,39 @@ new Vue({
         selectedLanguage: 'es',
         // languageStrings: {},
         translations: translations,
+        // Paginar
+        itemsPorPagina: 10,
+        paginaActual: 1,
+    },
+    computed: {
+        // Filtrar los datos basados en el término de búsqueda (busca en los campos izena, abizena, telefonoa)
+        itemsFiltradosPaginados() {
+            let itemsFiltrados = this.listaFiltrada;
+
+
+            // Calcular los índices de inicio y fin para la paginación
+            const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+            const fin = inicio + this.itemsPorPagina;
+
+            // Paginar los datos filtrados
+            return itemsFiltrados.slice(inicio, fin);
+        },
+        // Paginar
+        cantidadPorPaginas() {
+            return Math.ceil(this.listaFiltrada.length / this.itemsPorPagina)
+        },
     },
     methods: {
+        paginaAnterior() {
+            if (this.paginaActual > 1) {
+                this.paginaActual--;
+            }
+        },
+        paginaSiguiente() {
+            if (this.paginaActual < this.cantidadPorPaginas) {
+                this.paginaActual++;
+            }
+        },
         obtenerFechaActual() {
             const fechaActual = new Date();
             const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -123,6 +154,7 @@ new Vue({
                 const datuak = await response.json();
                 this.listaMaterialaErabili = datuak;
                 this.actualizarListaFiltrada();
+
             } catch (error) {
                 console.error('Errorea: ', error);
             }
@@ -130,10 +162,10 @@ new Vue({
         actualizarListaFiltrada() {
             // Obtener el ID del material seleccionado
             const idMaterialSeleccionado = this.materialaIzenaSortu;
-    
+
             // Obtener el ID del alumno seleccionado
             const idAlumnoSeleccionado = this.izenaSortu;
-    
+
             // Filtrar la lista de registros por material y alumno seleccionados
             this.listaFiltrada = this.listaMaterialaErabili
                 .filter(registro =>
@@ -150,7 +182,7 @@ new Vue({
         filtrarPorAlumno() {
             // Obtener el ID del alumno seleccionado
             const idAlumnoSeleccionado = this.izenaSortu;
-    
+
             // Actualizar la lista filtrada solo con los registros del alumno seleccionado
             if (!idAlumnoSeleccionado) {
                 // Si no se selecciona ningún alumno, mostrar todos los registros
@@ -204,5 +236,6 @@ new Vue({
         this.obtenerFechaActual();
         this.cargaHorariosPorGrupo();
         this.cargaMaterialaErabili();
+        this.itemsPaginados;
     }
 });
