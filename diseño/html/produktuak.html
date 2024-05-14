@@ -54,8 +54,10 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12 d-flex justify-content-end">
-                        <button type="button" class="btn btn-outline-primary me-2" @click="filtrarMarcaCategoria">Filtrar</button>
-                        <button type="button" class="btn btn-outline-secondary" @click="quitarFiltros">Quitar filtros</button>
+                        <button type="button" class="btn btn-outline-primary me-2"
+                            @click="filtrarMarcaCategoria">Filtrar</button>
+                        <button type="button" class="btn btn-outline-secondary" @click="quitarFiltros">Quitar
+                            filtros</button>
                     </div>
                 </div>
                 <!-- Tabla -->
@@ -89,7 +91,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(produktu) in listaProduktuBusc">
+                        <tr v-for="(produktu) in itemsFiltradosPaginados" :key="produktu.id">
                             <td>
                                 <input type="checkbox" class="form-check-input" :value="produktu.id"
                                     v-model="arrayId" />
@@ -150,16 +152,32 @@
                             </td>
 
                         </tr>
-
                     </tbody>
                 </table>
+
+                <div id="paginacion" class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous" @click="paginaAnterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#"><span>{{paginaActual}} / {{cantidadPorPaginas}}</span></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next" @click="paginaSiguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </div>
             </div>
 
 
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
             <div class="row d-flex justify-content-center p-5" style="width: 100%;">
-                <h4 class="text-center pt-5 mx-auto" style="font-size: 19px;">{{ translations[selectedLanguage].produktuak.añadir }}</h4>
+                <h4 class="text-center pt-5 mx-auto" style="font-size: 19px;">{{
+                    translations[selectedLanguage].produktuak.añadir }}</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">

@@ -211,10 +211,40 @@ new Vue({
         translations: translations,
         marcasUnicas: new Set(),
         uniqueMarcas: [0],
-        listaMarkaFiltrada: []
+        listaMarkaFiltrada: [],
+        // Paginar
+        itemsPorPagina: 10,
+        paginaActual: 1,
+    },
+    computed: {
+        // Filtrar los datos basados en el término de búsqueda (busca en los campos izena, abizena, telefonoa)
+        itemsFiltradosPaginados() {
+            let itemsFiltrados = this.listaProduktu;
 
+
+            // Calcular los índices de inicio y fin para la paginación
+            const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+            const fin = inicio + this.itemsPorPagina;
+
+            // Paginar los datos filtrados
+            return itemsFiltrados.slice(inicio, fin);
+        },
+        // Paginar
+        cantidadPorPaginas() {
+            return Math.ceil(this.listaProduktu.length / this.itemsPorPagina)
+        },
     },
     methods: {
+        paginaAnterior() {
+            if (this.paginaActual > 1) {
+                this.paginaActual--;
+            }
+        },
+        paginaSiguiente() {
+            if (this.paginaActual < this.cantidadPorPaginas) {
+                this.paginaActual++;
+            }
+        },
         async cargaProduktu() {
             try {
                 const response = await fetch(window.ruta + 'produktuaruta', {
@@ -317,38 +347,38 @@ new Vue({
                 } else {
                     this.listaProduktuBusc = this.listaProduktu;
                 }
-        
+
                 this.ordenarPorNombre();
             } catch (error) {
                 console.log("Errorea: ", error);
             }
         },
-        filtrarMarcaCategoria(){
+        filtrarMarcaCategoria() {
             try {
-                if (this.filtrCatego && this.filtrMarca){
+                if (this.filtrCatego && this.filtrMarca) {
                     this.listaProduktuBusc = this.listaProduktu
                         .filter(produktu => produktu.id_kategoria === this.filtrCatego)
                         .filter(produktu => produktu.marka === this.filtrMarca);
                 }
 
-                if (this.filtrCatego && this.filtrMarca == "" ){
+                if (this.filtrCatego && this.filtrMarca == "") {
                     this.listaProduktuBusc = this.listaProduktu
-                    .filter(produktu => produktu.id_kategoria === this.filtrCatego);
+                        .filter(produktu => produktu.id_kategoria === this.filtrCatego);
                 }
 
                 if (this.filtrMarca && this.filtrCatego == "") {
                     this.listaProduktuBusc = this.listaProduktu
-                    .filter(produktu => produktu.marka === this.filtrMarca);
+                        .filter(produktu => produktu.marka === this.filtrMarca);
                 }
 
-                if (this.filtrCatego == "" && this.filtrMarca == ""){
+                if (this.filtrCatego == "" && this.filtrMarca == "") {
                     this.listaProduktuBusc = this.listaProduktu
                 }
             } catch (error) {
                 console.log("Errorea: ", error);
             }
         },
-        quitarFiltros(){
+        quitarFiltros() {
             this.filtrCatego = "";
             this.filtrMarca = "";
             this.filtrarMarcaCategoria();
