@@ -26,15 +26,16 @@
                 Categorías
             </a>
 
-           <!-- Barra de navegacion fija -->
+            <!-- Barra de navegacion fija -->
             <i class="bi bi-box-arrow-right h3"></i>
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="width: 350px;">
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel" style="width: 350px;">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
                     <img src="../img/sj.png" alt="Logo" width="200" height="60">
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-                
+
                 <!-- Barra de navegacion "oculta" -->
                 <div class="offcanvas-body" style="position: relative;">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
@@ -62,7 +63,8 @@
                                 <li><a class="dropdown-item" href="produktu_mugimenduak.html">Extraer productos</a></li>
                                 <li><a class="dropdown-item" href="produktuak.html">Gestionar productos</a></li>
                                 <li><a class="dropdown-item" href="kategoriak.html">Gestionar categorías</a></li>
-                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de extracción de productos</a></li>
+                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de
+                                        extracción de productos</a></li>
                             </ul>
                         </li>
 
@@ -77,7 +79,8 @@
                                 <li><a class="dropdown-item" href="materiala.html">Gestionar material</a></li>
                                 <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a>
                                 </li>
-                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de movimientos de material</a></li>
+                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de
+                                        movimientos de material</a></li>
                             </ul>
                         </li>
 
@@ -160,7 +163,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(kategoria) in listaKategoria">
+                        <!-- <tr v-for="(kategoria) in listaKategoria"> -->
+                        <tr v-for="(kategoria) in itemsFiltradosPaginados" :key="kategoria.id">
                             <td>
                                 <input type="checkbox" class="form-check-input" :value="kategoria.id"
                                     v-model="arrayId" />
@@ -175,6 +179,22 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <div id="paginacion" class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous" @click="paginaAnterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#"><span>{{paginaActual}} / {{cantidadPorPaginas}}</span></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next" @click="paginaSiguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </div>
             </div>
 
 

@@ -10,8 +10,39 @@ new Vue({
         selectedLanguage: 'es',
         // languageStrings: {},
         translations: translations,
+        // Paginar
+        itemsPorPagina: 10,
+        paginaActual: 1,
+    },
+    computed: {
+        // Filtrar los datos basados en el término de búsqueda (busca en los campos izena, abizena, telefonoa)
+        itemsFiltradosPaginados() {
+            let itemsFiltrados = this.listaKategoria;
+
+
+            // Calcular los índices de inicio y fin para la paginación
+            const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+            const fin = inicio + this.itemsPorPagina;
+
+            // Paginar los datos filtrados
+            return itemsFiltrados.slice(inicio, fin);
+        },
+        // Paginar
+        cantidadPorPaginas() {
+            return Math.ceil(this.listaKategoria.length / this.itemsPorPagina)
+        },
     },
     methods: {
+        paginaAnterior() {
+            if (this.paginaActual > 1) {
+                this.paginaActual--;
+            }
+        },
+        paginaSiguiente() {
+            if (this.paginaActual < this.cantidadPorPaginas) {
+                this.paginaActual++;
+            }
+        },
         changeLanguage(lang) {
             this.selectedLanguage = lang;
             console.log(this.selectedLanguage);
@@ -35,11 +66,10 @@ new Vue({
                 }
 
                 const datuak = await response.json();
-                console.log(datuak);
+                // console.log(datuak);
                 this.listaKategoria = datuak
-
                     .filter(kategoria => kategoria.deleted_at === null || kategoria.deleted_at === "0000-00-00 00:00:00");
-                console.log(datuak);
+                // console.log(datuak);
 
             } catch (error) {
                 console.error('Errorea:', error);
