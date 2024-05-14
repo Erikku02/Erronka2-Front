@@ -27,9 +27,39 @@ new Vue({
         /* IDIOMAS */
         selectedLanguage: 'es',
         // languageStrings: {},
-        translations: translations,
+        translations: translations, // Paginar
+        itemsPorPagina: 10,
+        paginaActual: 1,
+    },
+    computed: {
+        // Filtrar los datos basados en el término de búsqueda (busca en los campos izena, abizena, telefonoa)
+        itemsFiltradosPaginados() {
+            let itemsFiltrados = this.listaFiltrada;
+
+
+            // Calcular los índices de inicio y fin para la paginación
+            const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+            const fin = inicio + this.itemsPorPagina;
+
+            // Paginar los datos filtrados
+            return itemsFiltrados.slice(inicio, fin);
+        },
+        // Paginar
+        cantidadPorPaginas() {
+            return Math.ceil(this.listaFiltrada.length / this.itemsPorPagina)
+        },
     },
     methods: {
+        paginaAnterior() {
+            if (this.paginaActual > 1) {
+                this.paginaActual--;
+            }
+        },
+        paginaSiguiente() {
+            if (this.paginaActual < this.cantidadPorPaginas) {
+                this.paginaActual++;
+            }
+        },
         actualizarFecha() {
             if (!this.dataSortu) {
                 this.dataSortu = new Date().toISOString().slice(0, 10); // Establecer la fecha actual si no hay fecha seleccionada
