@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,15 +26,16 @@
                 Extraer/Devolver material
             </a>
 
-           <!-- Barra de navegacion fija -->
+            <!-- Barra de navegacion fija -->
             <i class="bi bi-box-arrow-right h3"></i>
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="width: 350px;">
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel" style="width: 350px;">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
                     <img src="../img/sj.png" alt="Logo" width="200" height="60">
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-                
+
                 <!-- Barra de navegacion "oculta" -->
                 <div class="offcanvas-body" style="position: relative;">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
@@ -63,7 +63,8 @@
                                 <li><a class="dropdown-item" href="produktu_mugimenduak.html">Extraer productos</a></li>
                                 <li><a class="dropdown-item" href="produktuak.html">Gestionar productos</a></li>
                                 <li><a class="dropdown-item" href="kategoriak.html">Gestionar categorías</a></li>
-                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de extracción de productos</a></li>
+                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de
+                                        extracción de productos</a></li>
                             </ul>
                         </li>
 
@@ -78,7 +79,8 @@
                                 <li><a class="dropdown-item" href="materiala.html">Gestionar material</a></li>
                                 <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a>
                                 </li>
-                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de movimientos de material</a></li>
+                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de
+                                        movimientos de material</a></li>
                             </ul>
                         </li>
 
@@ -151,23 +153,29 @@
                 <br>
                 <div class="row mb-3">
                     <div class="col-md-5">
-                        <label for="selectAlumno" class="form-label">{{ translations[selectedLanguage].mat_era.alumno }}:</label>
+                        <label for="selectAlumno" class="form-label">{{ translations[selectedLanguage].mat_era.alumno
+                            }}:</label>
                         <select class="form-select w-100" id="selectAlumno" required v-model="izenaSortu">
                             <option disabled value="">{{ translations[selectedLanguage].mat_era.alumno }}</option>
-                            <option v-for="(langile) in alumnosPorGrupo" :key="langile.id" :value="langile.id">{{langile.izena}}</option>
+                            <option v-for="(langile) in alumnosPorGrupo" :key="langile.id" :value="langile.id">
+                                {{langile.izena}}</option>
                         </select>
                     </div>
                     <div class="col-md-5">
-                        <label for="inputMateriala" class="form-label">{{ translations[selectedLanguage].mat_era.material }}:</label>
-                        <select class="form-select w-100" id="selectMateriala" required v-model="materialaSortu" :key="actualizarMateriales">
+                        <label for="inputMateriala" class="form-label">{{
+                            translations[selectedLanguage].mat_era.material }}:</label>
+                        <select class="form-select w-100" id="selectMateriala" required v-model="materialaSortu"
+                            :key="actualizarMateriales">
                             <option disabled value="">{{ translations[selectedLanguage].mat_era.material }}</option>
-                            <option v-for="materiala in materialesDisponibles" :key="materiala.id" :value="materiala.id">{{materiala.etiketa}}</option>
-                        </select>                        
+                            <option v-for="materiala in materialesDisponibles" :key="materiala.id"
+                                :value="materiala.id">{{materiala.etiketa}}</option>
+                        </select>
                     </div>
                     <div class="col-md-2 mt-4">
-                        <button class="btn btn-primary mt-2" @click="createMaterialErabili()">{{ translations[selectedLanguage].default.btn_añadir }}</button>
-                    </div>   
-                </div>     
+                        <button class="btn btn-primary mt-2" @click="createMaterialErabili()">{{
+                            translations[selectedLanguage].default.btn_añadir }}</button>
+                    </div>
+                </div>
             </template>
             <br>
             <div class="container d-flex align-items-center mt-5">
@@ -178,7 +186,7 @@
                 </div>
             </div>
             <!-- Línea horizontal de Bootstrap en gris -->
-            
+
 
             <table class="table table-hover">
                 <thead>
@@ -192,16 +200,35 @@
                 </thead>
                 <br>
                 <tbody>
-                    <tr v-for="(fila, index) in listaMaterialaErabili" :key="index">
+                    <!-- FIXME -->
+                    <!-- <tr v-for="(fila) in itemsFiltradosPaginados" :key="fila.id"> -->
+                    <tr v-for="(fila) in itemsFiltradosPaginados" :key="fila.id">
                         <td>{{fila.langilea.izena}}</td>
                         <td>{{fila.materiala.etiketa}}</td>
                         <td>{{ formatDate(fila.hasiera_data) }}</td>
                         <td>
-                            <button class="btn btn-primary" @click="materialaItzuli(fila.id)">{{ translations[selectedLanguage].mat_era.devolver }}</button>
+                            <button class="btn btn-primary" @click="materialaItzuli(fila.id)">{{
+                                translations[selectedLanguage].mat_era.devolver }}</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
+
+            <div id="paginacion" class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous" @click="paginaAnterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#"><span>{{paginaActual}} / {{cantidadPorPaginas}}</span></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next" @click="paginaSiguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </div>
         </div>
         <!-- FOOTER -->
         <footer class="bg-dark text-light text-center py-3 mt-auto">
@@ -224,4 +251,5 @@
     <script src="../js/materiala_erabili.js"></script>
 
 </body>
+
 </html>
