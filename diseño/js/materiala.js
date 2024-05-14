@@ -16,8 +16,39 @@ new Vue({
         selectedLanguage: 'es',
         // languageStrings: {},
         translations: translations,
+        // Paginar
+        itemsPorPagina: 10,
+        paginaActual: 1,
+    },
+    computed: {
+        // Filtrar los datos basados en el término de búsqueda (busca en los campos izena, abizena, telefonoa)
+        itemsFiltradosPaginados() {
+            let itemsFiltrados = this.listaMateriala;
+
+
+            // Calcular los índices de inicio y fin para la paginación
+            const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+            const fin = inicio + this.itemsPorPagina;
+
+            // Paginar los datos filtrados
+            return itemsFiltrados.slice(inicio, fin);
+        },
+        // Paginar
+        cantidadPorPaginas() {
+            return Math.ceil(this.listaMateriala.length / this.itemsPorPagina)
+        },
     },
     methods: {
+        paginaAnterior() {
+            if (this.paginaActual > 1) {
+                this.paginaActual--;
+            }
+        },
+        paginaSiguiente() {
+            if (this.paginaActual < this.cantidadPorPaginas) {
+                this.paginaActual++;
+            }
+        },
         // Para cargar los grupos que estan activos
         async cargaMateriala() {
             try {
@@ -209,42 +240,6 @@ new Vue({
             this.selectedLanguage = lang;
             console.log(this.selectedLanguage);
         },
-
-
-        /*async filtermateriala(materiala) {
-            this.selectedmateriala = materiala;
-            console.log("rfrfr");
-            try {
-                const kodea = this.selectedmateriala;
-                console.log(kodea);
-
-                if (!kodea) {
-                    // Si no se selecciona ningún grupo, cargar todos los trabajadores
-                    this.cargaLangile();
-                } else {
-                    const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/langilearuta/' + kodea, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': '*'
-                        },
-                    });
-
-                    if (!response.ok) {
-                        console.log('Error al solicitar trabajadores por grupo');
-                        throw new Error('Error al realizar la solicitud');
-                    }
-
-                    const datuak = await response.json();
-                    console.log(datuak);
-                    this.listaLangile = datuak
-                        .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
-                    console.log(datuak);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        },*/
     },
     mounted() {
         // Llama a tu función cargarPagina cuando el componente se monta
