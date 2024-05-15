@@ -162,13 +162,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(bezero) in listaBezero">
+                        <tr v-for="(cita) in listaBezero">
                             <!-- <td><input type="checkbox" :value="talde.kodea" v-model="arrayKodea" /></td> -->
-                            <td>{{bezero.izena}} {{bezero.abizenak}}</td>
-                            <td>{{bezero.data}}</td>
+                            <td>{{cita.izena}} </td>
+                            <td>{{cita.data}}</td>
                             <td>
-                                <span v-if="bezero.prezio_totala">
-                                    {{bezero.prezio_totala}}€
+                                <span v-if="cita.prezio_totala">
+                                    {{cita.prezio_totala}}€
                                 </span>
                                 <span v-else class="text-center">
                                     -

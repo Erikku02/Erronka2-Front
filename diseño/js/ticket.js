@@ -9,30 +9,24 @@ new Vue({
         listaTaldeSinFiltro: []
     },
     methods: {
-        async cargaHItzordu() {
+        async cargaHitzordu() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaruta', {
-                    // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
                     method: 'GET',
-                    // mode: "no-cors",
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
                     },
                 });
-
+    
                 if (!response.ok) {
-                    console.log('Errorea eskera egiterakoan');
-                    throw new Error('Errorea eskaera egiterakoan');
+                    throw new Error('Error al cargar los datos de hitzordua');
                 }
-
+    
                 const datuak = await response.json();
-                // console.log(this.fecha);
                 this.listaBezero = datuak;
-
-
             } catch (error) {
-                console.error('Errorea:', error);
+                console.error('Error al cargar los datos:', error);
             }
         },
 
@@ -78,6 +72,6 @@ new Vue({
     },
     mounted() {
         // Llama a tu función cargarPagina cuando el componente se monta
-        this.cargaHItzordu();
+        this.cargaHitzordu();
     }
 });
