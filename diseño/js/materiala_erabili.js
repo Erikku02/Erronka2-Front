@@ -174,14 +174,14 @@ new Vue({
                     alert('¡El material ya está en uso!');
                     return; // Detener la ejecución si el material ya está en uso
                 }
-
+        
                 const arraySortu = {
                     "id_langilea": langile,
                     "id_materiala": materiala
                 };
                 
                 console.log(JSON.stringify(arraySortu));
-
+        
                 const response = await fetch(window.ruta +'materialaerabiligorde', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
@@ -191,18 +191,22 @@ new Vue({
                     },
                     body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
                 });
-
+        
                 if (!response.ok) {
                     console.log('Errorea sortzerakoan');
                     throw new Error('Errorea sortzerakoan');
                 }
                 await this.cargaMaterialaErabili();
                 await this.actualizarMaterialesDisponibles(); // Llamada a la nueva función
-
+                
+                // Restablecer la selección del alumno
+                this.izenaSortu = null;
+        
             } catch (error) {
                 console.log('Errorea: ', error);
             }
         },
+        
 
         async materialaItzuli(id){
 
