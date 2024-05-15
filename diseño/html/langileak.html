@@ -140,7 +140,7 @@
                         <a class="nav-link active" aria-current="page" href="#" @click="cargaLangile()">Todos</a>
                     </li>
                     <li class="nav-item" v-for="(talde,index) in listaTalde" :key="index">
-                        <a href="#" class="nav-link active" aria-current="page" @click="filterTaldea(talde.kodea)">
+                        <a href="#" class="nav-link" :class="{ 'active': talde.kodea === selectedGroup }" @click="filterTaldea(talde.kodea)">
                             {{ talde.kodea }}
                         </a>
                     </li>

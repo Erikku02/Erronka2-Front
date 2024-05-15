@@ -1,6 +1,7 @@
 new Vue({
     el: '#app',
     data: {
+        selectedGroup: "", // Variable para almacenar el grupo seleccionado
         selectedTalde: "",
         selectedCheckbox: null, // Esta variable almacenará la ID del checkbox seleccionado
         listaLangile: [],
@@ -216,7 +217,7 @@ new Vue({
         },
 
         async filterTaldea(talde) {
-            this.selectedTalde = talde;
+            this.selectedGroup = talde;
             try {
                 const kodea = this.selectedTalde;
                 console.log(kodea);
