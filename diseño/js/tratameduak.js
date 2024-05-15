@@ -40,6 +40,15 @@ new Vue({
             }
         },
         async createTratamendu() {
+            // Validar el formato de los precios
+            const etxePrecioValido = /^[0-9]+(?:\.[0-9]{1,2})?$/.test(this.etxeSortu);
+            const kanpoPrecioValido = /^[0-9]+(?:\.[0-9]{1,2})?$/.test(this.kanpoSortu);
+        
+            if (!etxePrecioValido || !kanpoPrecioValido) {
+                alert("El formato del precio es incorrecto. Por favor, introduzca un número válido.");
+                return;
+            }
+        
             // Si ya hay un tratamiento con el mismo nombre, confirma que se quiere añadir al actual (datos del form)
             const tratamenduExiste = this.listaTratamenduSinFiltro.find(tratamendu => tratamendu.izena === this.izenaSortu);
             if (tratamenduExiste) {
@@ -58,11 +67,10 @@ new Vue({
                     "etxeko_prezioa": etxeko_prezioa,
                     "kanpoko_prezioa": kanpoko_prezioa
                 };
-
+        
                 console.log(JSON.stringify(arraySortu));
-
+        
                 const response = await fetch(window.ruta +'tratamenduagorde', {
-                    // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
@@ -70,12 +78,12 @@ new Vue({
                     },
                     body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
                 });
-
+        
                 if (!response.ok) {
                     console.log('Errorea sortzerakoan');
                     throw new Error('Errorea sortzerakoan');
                 }
-
+        
                 alert('Sortu da');
                 await this.cargaTratamendu();
                 location.reload();
@@ -83,6 +91,7 @@ new Vue({
                 console.log('Errorea: ', error);
             }
         },
+        
         async actuTratamendu() {
             try {
                 const id = this.arrayId[0];

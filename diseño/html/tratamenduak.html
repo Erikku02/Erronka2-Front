@@ -163,7 +163,7 @@
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(tratamendu.id)">
-                                    {{tratamendu.etxeko_prezioa}}
+                                    {{tratamendu.etxeko_prezioa}} €
                                 </span>
 
                                 <input v-else type="text" v-model="tratamendu.etxeko_prezioa"
@@ -171,7 +171,7 @@
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(tratamendu.id)">
-                                    {{tratamendu.kanpoko_prezioa}}
+                                    {{tratamendu.kanpoko_prezioa}} €
                                 </span>
 
                                 <input v-else type="text" v-model="tratamendu.kanpoko_prezioa"
