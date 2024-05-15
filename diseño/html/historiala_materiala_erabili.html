@@ -145,6 +145,13 @@
                             <option v-for="(materiala_erabili) in listaMateriala" :value="materiala_erabili.id">{{ materiala_erabili.etiketa }}</option>
                         </select>
                     </div>
+                    <div class="col-md-3">
+                        <select class="form-select form-select-sm" id="selectAlumno" required v-model="izenaSortu">
+                            <option disabled value="" class="fs-5">Filtra por alumno</option>
+                            <option value="">Todos</option>
+                            <option v-for="(langilea) in listaLangile" :value="langilea.id">{{ langilea.izena }}</option>
+                        </select>
+                    </div>
                 </div>
             </template>
             <table  class="table table-hover mt-5 mb-5">
