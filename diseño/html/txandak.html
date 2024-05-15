@@ -150,10 +150,11 @@
                         <a class="nav-link active" aria-current="page" href="#" @click="cargaTxanda()">Todos</a>
                     </li>
                     <li class="nav-item" v-for="(talde,index) in listaTalde" :key="index">
-                        <a href="#" class="nav-link active" aria-current="page" @click="filterTaldea(talde.kodea)">
+                        <a href="#" class="nav-link" :class="{ 'active': talde.kodea === selectedTalde }" @click="filterTaldea(talde.kodea)">
                             {{ talde.kodea }}
                         </a>
                     </li>
+                    
                 </ul>
             </header>
 
@@ -167,7 +168,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Nombre</th>
+                            <th scope="col">Alumno</th>
                             <th scope="col">Limpieza</th>
                             <th scope="col">Mostrador</th>
                         </tr>
@@ -175,7 +176,7 @@
                     <tbody>
                         <tr v-for="(alumno, index) in contarTurnosPorAlumno()" :key="index"
                             v-if="contarTurnos(alumno.turnos, 'G') !== 1 || contarTurnos(alumno.turnos, 'M') !== 1">
-                            <td>{{ alumno.nombre }}</td>
+                            <td>{{ alumno.nombre }} {{ alumno.apellido }}</td>
                             <td>{{ contarTurnos(alumno.turnos, 'G')-1 }}</td>
                             <td>{{ contarTurnos(alumno.turnos, 'M')-1 }}</td>
                         </tr>
@@ -202,9 +203,9 @@
                     <div class="col-sm-6 col-lg-3">
                         <div class="mb-3">
                             <select class="form-select w-100" id="y" required v-model="izenaSortu">
-                                <option disabled value="">Nombre</option>
+                                <option disabled value="">Alumno</option>
                                 <option v-for="(langile) in alumnosPorGrupo" :key="langile.id" :value="langile.id">
-                                    {{langile.izena}}</option>
+                                    {{langile.izena}} {{ langile.abizenak }}</option>
                             </select>
                         </div>
                     </div>
