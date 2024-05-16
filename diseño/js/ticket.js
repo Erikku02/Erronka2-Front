@@ -49,7 +49,7 @@ new Vue({
         },
         async cargaHItzordu() {
             try {
-                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/txandaruta', {
+                const response = await fetch('http://localhost/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
                     // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/hitzorduaruta', {
                     method: 'GET',
                     // mode: "no-cors",
