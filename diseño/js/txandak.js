@@ -34,24 +34,32 @@ new Vue({
         },
         contarTurnosPorAlumno() {
             const alumnos = {};
-
+        
             this.listaTxanda.forEach((txanda) => {
-                const nombre = txanda.izena;
+                const id_langilea = txanda.id_langilea;
                 const mota = txanda.mota;
-
-                if (!alumnos[nombre]) {
-                    alumnos[nombre] = { nombre, turnos: {} };
-                }
-
-                if (!alumnos[nombre].turnos[mota]) {
-                    alumnos[nombre].turnos[mota] = 1;
-                } else {
-                    alumnos[nombre].turnos[mota]++;
+        
+                // Buscar el alumno correspondiente al id_langilea
+                const alumno = this.listaLangile.find(alumno => alumno.id === id_langilea);
+        
+                if (alumno) {
+                    const nombreCompleto = alumno.izena + ' ' + alumno.abizenak; // Concatenar nombre y apellido
+        
+                    if (!alumnos[nombreCompleto]) {
+                        alumnos[nombreCompleto] = { nombre: nombreCompleto, turnos: {} };
+                    }
+        
+                    if (!alumnos[nombreCompleto].turnos[mota]) {
+                        alumnos[nombreCompleto].turnos[mota] = 1;
+                    } else {
+                        alumnos[nombreCompleto].turnos[mota]++;
+                    }
                 }
             });
-
+        
             return Object.values(alumnos);
         },
+        
         contarTurnos(turnos, tipo) {
             return turnos[tipo] || 0;
         },
