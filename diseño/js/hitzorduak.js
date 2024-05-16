@@ -261,6 +261,11 @@ new Vue({
         translations: translations,
     },
     methods: {
+        // Función para validar el formato del teléfono
+        validatePhone(phone) {
+            const phonePattern = /^\d{9}$/;
+            return phonePattern.test(phone);
+        },
 
         async cargarDatos(fechaInput) {
             try {
@@ -523,6 +528,15 @@ new Vue({
                 const telefonoa = this.telefonoaSortu;
                 const deskribapena = this.deskribapenaSortu;
                 const etxekoa = this.etxekoaSortu;
+
+                // Validar el formato del teléfono
+                const phonePattern = /^\d{9}$/;
+                if (!phonePattern.test(telefonoa)) {
+                    alert('Formato de teléfono no válido. Debe tener 9 dígitos.');
+                    return;
+                }
+
+
                 const arraySortu = {
                     'eserlekua': eserlekua,
                     'data': data,
