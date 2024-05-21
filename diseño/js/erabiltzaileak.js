@@ -1,3 +1,4 @@
+
 Vue.component('nav-component', {
     template: `
         <nav class="navbar bg-body-tertiary fixed-top">
@@ -7,7 +8,7 @@ Vue.component('nav-component', {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
-                {{ translations[selectedLanguage].nav.ext_dev_mate }}
+                {{ translations[selectedLanguage].nav.login_usuarios }}
                 </a>
 
                 <!-- Barra de navegacion fija -->
@@ -216,290 +217,31 @@ Vue.component('nav-component', {
     }
 
 });
+
 new Vue({
     el: '#app',
     data: {
-        selectedTalde: "",
-        arrayKodea: [],
-        kodeaSortu: "",
-        izenaSortu: "",
-        materialaSortu: "",
-        listaTalde: [],
-        listaLangile: [],
-        fechaFormateada: '',
-        listaOrdutegia: [],
-        grupoPorDia: '',
-        alumnosPorGrupo: [],
-        listaMateriala: [],
-        materialesDisponibles: [],
-        materialesEnUso: [], // Nueva propiedad para almacenar los materiales en uso
-        listaMaterialaErabili: [],
-        registroBerri: [],
-        guardarRegistro: [],
-        registros: [],
-        stockTotala: 0,
-        actualizarMateriales: false,
+        selectedCheckbox: null, // Esta variable almacenará la ID del checkbox seleccionado
+        listaErabiltzaile: [],
+        arrayErabiltzaile: [],
+        erabiltzaileaSortu: "",
+        pasahitzaSortu: "",
+        rolaSortu: "",
+        //ordenNombre: 'asc', // para ordenar los datos
+        //ordenApellidos: 'asc',
         /* IDIOMAS */
         selectedLanguage: 'es',
         // languageStrings: {},
         translations: translations,
-        // Paginar
-        itemsPorPagina: 10,
-        paginaActual: 1,
-
-        //Cookies
-        esAlumno: false,
         esProfesor: false,
-    },
-    computed: {
-        // Filtrar los datos basados en el término de búsqueda (busca en los campos izena, abizena, telefonoa)
-        itemsFiltradosPaginados() {
-            let itemsFiltrados = this.listaMaterialaErabili;
-            console.log(itemsFiltrados);
-
-            // Calcular los índices de inicio y fin para la paginación
-            const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
-            const fin = inicio + this.itemsPorPagina;
-
-            // Paginar los datos filtrados
-            return itemsFiltrados.slice(inicio, fin);
-        },
-        // Paginar
-        cantidadPorPaginas() {
-            return Math.ceil(this.listaMaterialaErabili.length / this.itemsPorPagina);
-        },
+        esAlumno: false,
+        visibleActu: true,
+        selectAllErabil: false
     },
     methods: {
-        paginaAnterior() {
-            if (this.paginaActual > 1) {
-                this.paginaActual--;
-            }
-        },
-        paginaSiguiente() {
-            if (this.paginaActual < this.cantidadPorPaginas) {
-                this.paginaActual++;
-            }
-        },
-        formatDate(dateString) {
-            const date = new Date(dateString);
-            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-            return date.toLocaleString('es-ES', options);
-        },
-        changeLanguage(lang) {
-            this.selectedLanguage = lang;
-            console.log(this.selectedLanguage);
-        },
-        obtenerFechaActual() {
-            const fechaActual = new Date();
-            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-            const numeroDiaSemana = fechaActual.getDay();
-            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-            this.fechaFormateada = `${fechaActual.toLocaleDateString('es-ES', options)}`;
-        },
-        // Para cargar los grupos que están activos
-        async cargaHorariosPorGrupo() {
-            const fechaActual = new Date();
-            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-            const numeroDiaSemana = fechaActual.getDay();
-
+        async cargaErabiltzaile() {
             try {
-                const response = await fetch(window.ruta + 'ordutegiaruta', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                });
-
-                if (!response.ok) {
-                    console.log('Error al solicitar trabajadores por grupo');
-                    throw new Error('Error al realizar la solicitud');
-                }
-
-                const datuak = await response.json();
-                this.listaOrdutegia = datuak;
-
-                // Verificar si se encontró un grupo antes de acceder a 'kodea'
-                const grupoEncontrado = this.listaOrdutegia.find(ordutegia => ordutegia.eguna === numeroDiaSemana && ordutegia.deleted_at === null);
-
-                if (grupoEncontrado) {
-                    this.grupoPorDia = grupoEncontrado.kodea;
-                } else {
-                    // Manejar el caso cuando no se encuentra un grupo
-                    console.error('No se encontró un grupo para el día actual.');
-                }
-
-            } catch (error) {
-                console.error('Error:', error);
-            }
-            this.cargaLangile();
-        },
-
-        filtrarAlumnosPorGrupo() {
-            const grupoSeleccionado = this.grupoPorDia;
-            // Filtrar la lista de alumnos por el grupo seleccionado
-            this.alumnosPorGrupo = this.listaLangile.filter(langile => langile.kodea === this.grupoPorDia);
-        },
-        async actualizarMaterialesDisponibles() {
-            try {
-                const response = await fetch(window.ruta + 'materialaruta', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                });
-
-                if (!response.ok) {
-                    console.log('Errorea eskera eskaera egiterakoan');
-                    throw new Error('Errorea eskaera egiterakoan');
-                }
-
-                const datuak = await response.json();
-
-                // Filtrar los materiales que no están en uso
-                this.materialesDisponibles = datuak
-                    .filter(materiala => materiala.deleted_at === null || materiala.deleted_at === "0000-00-00 00:00:00")
-                    .filter(materiala => !this.materialesEnUso.includes(materiala.id));
-                // Cambiar el valor de la variable para forzar la actualización
-                this.actualizarMateriales = !this.actualizarMateriales;
-            } catch (error) {
-                console.error('Errorea: ', error);
-            }
-        },
-        async cargaMateriala() {
-
-            try {
-                const response = await fetch(window.ruta + 'materialaruta', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                });
-
-                if (!response.ok) {
-                    console.log('Errorea eskera eskaera egiterakoan');
-                    throw new Error('Errorea eskaera egiterakoan');
-                }
-                // Verificar si el material ya está en uso
-
-
-                const datuak = await response.json();
-
-                // Filtrar los materiales que no están en uso
-                this.materialesDisponibles = datuak
-                    .filter(materiala => materiala.deleted_at === null || materiala.deleted_at === "0000-00-00 00:00:00")
-                    .filter(materiala => !this.materialesEnUso.includes(materiala.id));
-            } catch (error) {
-                console.error('Errorea: ', error);
-            }
-            this.cargaMaterialaErabili();
-        },
-
-
-        async cargaMaterialaErabili() {
-            this.actualizarMaterialesDisponibles();
-            try {
-                const response = await fetch(window.ruta + 'materialaerabiliruta', {
-                    // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
-                    method: 'GET',
-                    // mode: "no-cors",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                });
-                if (!response.ok) {
-                    console.log('Errorea eskera eskaera egiterakoan');
-                    throw new Error('Errorea eskaera egiterakoan');
-                }
-                const datuak = await response.json();
-                this.listaMaterialaErabili = datuak.filter(materiala_erabili => materiala_erabili.amaiera_data === null || materiala_erabili.amaiera_data === "0000-00-00 00:00:00");
-
-                // Actualizar la lista de materiales en uso
-                this.materialesEnUso = this.listaMaterialaErabili.map(item => item.materiala.id);
-
-            } catch (error) {
-                console.error('Errorea: ', error);
-            }
-        },
-
-        // // Nuevo método para filtrar la lista de materiales disponibles
-        // materialesDisponibles() {
-        //     return this.listaMateriala.filter(materiala => !this.materialesEnUso.includes(materiala.id));
-        // },
-
-        async createMaterialErabili() {
-            try {
-                const langile = this.izenaSortu;
-                const materiala = this.materialaSortu;
-
-                // Verificar si el material ya está en uso
-                if (this.materialesEnUso.includes(materiala)) {
-                    console.log('¡El material ya está en uso!');
-                    return; // Detener la ejecución si el material ya está en uso
-                }
-
-                const arraySortu = {
-                    "id_langilea": langile,
-                    "id_materiala": materiala
-                };
-
-                console.log(JSON.stringify(arraySortu));
-
-                const response = await fetch(window.ruta + 'materialaerabiligorde', {
-                    // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeagorde', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
-                });
-
-                if (!response.ok) {
-                    console.log('Errorea sortzerakoan');
-                    throw new Error('Errorea sortzerakoan');
-                }
-                await this.cargaMaterialaErabili();
-                await this.actualizarMaterialesDisponibles(); // Llamada a la nueva función
-
-                // Reiniciar la variable izenaSortu
-                this.izenaSortu = '';
-
-            } catch (error) {
-                console.log('Errorea: ', error);
-            }
-        },
-
-        async materialaItzuli(id) {
-
-            try {
-
-                const response = await fetch(window.ruta + `materialaerabiliezabatu/` + id, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    body: JSON.stringify({}),
-                });
-
-                if (!response.ok) {
-                    console.log('Errorea eguneratzerakoan');
-                    throw new Error('Errorea eguneratzerakoan');
-                }
-                await this.cargaMaterialaErabili();
-                location.reload();
-            } catch (error) {
-                console.log('Errorea: ', error);
-            }
-        },
-
-        async cargaLangile() {
-            try {
-                const response = await fetch(window.ruta + 'langilearuta', {
+                const response = await fetch(window.ruta + 'erabiltzailearuta', {
                     // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langilearuta', {
                     method: 'GET',
                     // mode: "no-cors",
@@ -514,37 +256,167 @@ new Vue({
                 }
 
                 const datuak = await response.json();
-                // this.listaTalde = datuak
-                //      .filter(talde => talde.deleted_at === null || talde.deleted_at === "0000-00-00 00:00:00");
-                this.listaLangile = datuak
-                    .filter(langile => langile.deleted_at === null || langile.deleted_at === "0000-00-00 00:00:00");
-                //  console.log(this.listaLangile)
+                // console.log(datuak);
+                this.listaErabiltzaile = datuak
+                    .filter(erabiltzaile => erabiltzaile.deleted_at === null || erabiltzaile.deleted_at === "0000-00-00 00:00:00");
+
+                // this.ordenarPorNombre();
             } catch (error) {
                 console.error('Errorea: ', error);
             }
-            this.filtrarAlumnosPorGrupo();
+        },
+        async createErabiltzaile() {
+            try {
+                const username = this.erabiltzaileaSortu;
+                const pasahitza = this.pasahitzaSortu;
+                const rola = this.rolaSortu;
+                const arraySortu = {
+                    "username": username,
+                    "pasahitza": pasahitza,
+                    "rola": rola
+                };
+
+                console.log(JSON.stringify(arraySortu));
+
+                const response = await fetch(window.ruta + 'erabiltzaileagorde', {
+                    // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileagorde', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Indicar el tipo de contenido como JSON
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify(arraySortu), // Convertir el objeto JSON a una cadena JSON
+                });
+
+                if (!response.ok) {
+                    console.log('Errorea sortzerakoan');
+                    throw new Error('Errorea sortzerakoan');
+                }
+
+                console.log('Sortu da');
+                this.cargaErabiltzaile();
+                // location.reload();
+                this.erabiltzaileaSortu = "";
+                this.pasahitzaSortu = "";
+                this.rolaSortu = "";
+
+            } catch (error) {
+                console.log("Errorea: ", error);
+            }
+        },
+
+        async actuErabiltzaile() {
+            try {
+                const username = this.listaErabiltzaile.find(erabiltzaile => erabiltzaile.username === this.arrayErabiltzaile[0]).username;
+                const pasahitza = this.listaErabiltzaile.find(erabiltzaile => erabiltzaile.username === this.arrayErabiltzaile[0]).pasahitza;
+                const rola = this.listaErabiltzaile.find(erabiltzaile => erabiltzaile.username === this.arrayErabiltzaile[0]).rola;
+                const arrayActu = {
+                    "username": username,
+                    "pasahitza": pasahitza,
+                    "rola": rola
+                }
+
+                const response = await fetch(window.ruta + 'erabiltzaileaeguneratu/' + username, {
+                    // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/langileaeguneratu/' + id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify(arrayActu),
+                });
+
+                if (!response.ok) {
+                    console.log('Errorea eguneratzerakoan');
+                    throw new Error('Errorea eguneratzerakoan');
+                }
+
+                console.log('Ondo eguneratuta');
+                await this.cargaErabiltzaile();
+                location.reload();
+
+            } catch (error) {
+                console.log('Errorea: ', error);
+            }
+        },
+        async ezabErabiltzaile() {
+            try {
+                for (var i = 0; i < this.arrayErabiltzaile.length; i++) {
+                    const response = await fetch(window.ruta + 'erabiltzaileaezabatu/' + this.arrayErabiltzaile[i], {
+                        // const response = await fetch('https://www.talde3.edu:8081/Erronka2/laravel_e2t3/public/api/taldeaezabatu/' + this.arrayKodea[i], {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify(this.arrayErabiltzaile[i]),
+                    });
+                }
+
+
+                // if(!response.ok){
+                //   console.log('Errorea eguneratzerakoan');
+                //   throw new Error('Errorea eguneratzerakoan');
+                // }
+
+                console.log('Ondo ezabatuta');
+                await this.cargaErabiltzaile();
+                location.reload();
+            } catch (error) {
+                console.log('Errorea: ', error);
+            }
+        },
+          
+        changeLanguage(lang) {
+            this.selectedLanguage = lang;
+            console.log(this.selectedLanguage);
         },
 
         checkCookies () {
             this.esProfesor = document.cookie == "rol=ir";
             this.esAlumno = document.cookie == "rol=ik";
-           
+
             if (document.cookie == "") {
                 window.location.assign("./login.html");
             } 
 
             // if (document.cookie == "rol=ik") {
             //     window.location.assign("./login.html");
-            // }
-        }
-    },
+            // } 
+        },
+        selectAllErabiltzaileak() {
+            if (this.selectAllErabil) {
+                // Si el checkbox de seleccionar todo está marcado,
+                // se añaden todos los IDs a arrayId
+                this.arrayErabiltzaile = this.listaErabiltzaile.map(erabiltzaile => erabiltzaile.username);
+            } else {
+                // Si el checkbox de seleccionar todo está desmarcado,
+                // se vacía arrayId
+                this.arrayErabiltzaile = [];
+            }
 
+            // Marcar o desmarcar todos los checkboxes de la tabla
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.selectAllErabil;
+            });
+        },
+        
+    },
     mounted() {
         // Llama a tu función cargarPagina cuando el componente se monta
-        this.cargaMaterialaErabili();
-        this.obtenerFechaActual();
-        this.cargaHorariosPorGrupo();
-        this.cargaMateriala();
+        this.cargaErabiltzaile();
+        // this.ordenarPorNombre();
         this.checkCookies();
+
+    },
+    watch: {
+        arrayErabiltzaile() {
+            if (this.arrayErabiltzaile.length > 1) {
+                this.visibleActu = false;
+            } else {
+                this.visibleActu = true;
+            }
+        }
     }
 });

@@ -16,6 +16,7 @@ Vue.filter('formatHour', function (value) {
 });
 
 
+
 Vue.component('nav-component', {
     template: `
         <nav class="navbar bg-body-tertiary fixed-top">
@@ -25,15 +26,16 @@ Vue.component('nav-component', {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
-                {{ translations[selectedLanguage].nav.productos }}
+                {{ translations[selectedLanguage].nav.gestion_citas }}
                 </a>
 
                 <!-- Barra de navegacion fija -->
-                <i class="bi bi-box-arrow-right h3"></i>
+                <i class="bi bi-box-arrow-right h3" @click="borrarCookies()"></i>
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+                        <img src="../img/sj.png" alt="Logo" width="200" height="60">
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
 
@@ -64,7 +66,7 @@ Vue.component('nav-component', {
                                     <li><a class="dropdown-item" href="produktu_mugimenduak.html">{{ translations[selectedLanguage].nav.extraer_produ }}</a></li>
                                     <li><a class="dropdown-item" href="produktuak.html">{{ translations[selectedLanguage].nav.gestionar_produ }}</a></li>
                                     <li><a class="dropdown-item" href="kategoriak.html">{{ translations[selectedLanguage].nav.gestionar_categ }}</a></li>
-                                    <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">{{ translations[selectedLanguage].nav.hist_produ }}</a></li>
+                                    <li v-if="esProfesor === true"><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">{{ translations[selectedLanguage].nav.hist_produ }}</a></li>
                                 </ul>
                             </li>
 
@@ -79,7 +81,7 @@ Vue.component('nav-component', {
                                     <li><a class="dropdown-item" href="materiala.html">{{ translations[selectedLanguage].nav.gestion_mate }}</a></li>
                                     <li><a class="dropdown-item" href="materiala_erabili.html">{{ translations[selectedLanguage].nav.ext_dev_mate }}</a>
                                     </li>
-                                    <li><a class="dropdown-item" href="historiala_materiala_erabili.html">{{ translations[selectedLanguage].nav.hist_mate }}</a></li>
+                                    <li v-if="esProfesor === true"><a class="dropdown-item" href="historiala_materiala_erabili.html">{{ translations[selectedLanguage].nav.hist_mate }}</a></li>
                                 </ul>
                             </li>
 
@@ -107,7 +109,7 @@ Vue.component('nav-component', {
                             </li>
 
                             <!-- Grupos -->
-                            <li class="nav-item dropdown mb-3">
+                            <li class="nav-item dropdown mb-3" v-if="esProfesor === true">
                                 <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-people-fill m-2"></i>
@@ -136,26 +138,33 @@ Vue.component('nav-component', {
                                     {{ translations[selectedLanguage].nav.ficha_cliente }}
                                 </a>
                             </li>
+                            <li class="nav-item dropdown mb-3" v-if="esProfesor === true">
+                                <a class="nav-link link-info fs-5 fw-bold text-light" href="erabiltzaileak.html"
+                                    role="button" aria-expanded="false">
+                                    <i class="bi bi-person-vcard m-2"></i>
+                                    {{ translations[selectedLanguage].nav.login_usuarios }}
+                                </a>
+                            </li>
                         </ul>
                         <hr class="border border-white">
                         <ul class="pt-3">
                             <li v-if="selectedLanguage === 'es'" 
                                 class="d-flex justify-content-center pe-5">
-                                <a @click="changeLanguage('es')" 
+                                <a @click="changeLanguageAndClose('es')" 
                                     class="text-white pe-2" 
                                     style="text-decoration: underline;" >ES </a> 
                                 <p class="text-white"> / </p>
-                                <a @click="changeLanguage('eus')"
+                                <a @click="changeLanguageAndClose('eus')"
                                     class="text-white ps-2"
                                     style="text-decoration: none;">EUS</a>
                             </li>
                             <li v-if="selectedLanguage === 'eus'" 
                                 class="d-flex justify-content-center pe-5">
-                                <a @click="changeLanguage('es')" 
+                                <a @click="changeLanguageAndClose('es')" 
                                     class="text-white pe-2"  
                                     style="text-decoration: none;">ES </a> 
                                 <p class="text-white"> / </p>
-                                <a @click="changeLanguage('eus')"
+                                <a @click="changeLanguageAndClose('eus')"
                                     class="text-white ps-2"
                                     style="text-decoration: underline;">EUS</a>
                             </li>
@@ -168,18 +177,21 @@ Vue.component('nav-component', {
     `,
     data() {
         return {
-            selectedLanguage: 'es',
+            selectedLanguage: window.selectedLanguage || 'es', // si window. esta definido se usa ese, sino el valor por defecto
             translations: translations,
             lang: '',
+            esProfesor: false,
+            esAlumno: false
         };
     },
     methods: {
         changeLanguage(lang) {
             this.selectedLanguage = lang;
-            console.log(this.selectedLanguage);
-            console.log(this.translations);
+            window.selectedLanguage = lang;
+            // console.log(this.selectedLanguage);
+            // console.log(this.translations);
         },
-        /* changeLanguageAndClose(lang) {
+        changeLanguageAndClose(lang) {
             // Cerrar la barra de navegación lateral
             const offcanvasNavbar = document.getElementById('offcanvasNavbar');
             const offcanvasInstance = new bootstrap.Offcanvas(offcanvasNavbar);
@@ -190,12 +202,40 @@ Vue.component('nav-component', {
 
             // Enviar la variable al método changeLanguage de la instancia de Vue
             this.$root.changeLanguage(lang);
-        }, */
+        },
+
+
+        /* creo que no se usa */
         getTranslation(key) {
             return this.translations[this.selectedLanguage][key] || '';
-        }
+        },
+
+        checkCookies () {
+            this.esProfesor = document.cookie == "rol=ir";
+            this.esAlumno = document.cookie == "rol=ik";
+           
+            if (document.cookie == "") {
+                window.location.assign("./login.html");
+            } 
+
+            // if (document.cookie == "rol=ik") {
+            //     window.location.assign("./login.html");
+            // }
+        },
+
+        borrarCookies (){
+            document.cookie = "rol=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/Erronka2-Front/dise%C3%B1o/html;";
+            if (document.cookie == "") {
+                window.location.assign("./login.html");
+            } 
+        },
     },
+    mounted() {
+        this.checkCookies();
+    }
+
 });
+
 
 
 new Vue({
@@ -259,6 +299,10 @@ new Vue({
         selectedLanguage: 'es',
         // languageStrings: {},
         translations: translations,
+
+        //Cookies
+        esProfesor: false,
+        esAlumno: false,
     },
     methods: {
         // Función para validar el formato del teléfono
@@ -337,7 +381,7 @@ new Vue({
 
                 this.organizarCitasPorHora();
 
-
+                
             } catch (error) {
                 console.error('Errorea:', error);
             }
@@ -572,6 +616,16 @@ new Vue({
                 // this.modalVisible = false;
                 this.$emit('close')
                 this.cargaHitzordu();
+                
+                this.eserlekuaSortu = "";
+                this.fechaSortu = "";
+                this.hasiera_orduaSortu = "";
+                this.amaiera_orduaSortu = "";
+                this.izenaSortu = "";
+                this.telefonoaSortu = "";
+                this.deskribapenaSortu = "";
+                this.etxekoaSortu = "";
+            
             } catch (error) {
                 console.log('Errorea: ', error);
             }
@@ -797,6 +851,19 @@ new Vue({
             console.log(this.selectedLanguage);
         },
 
+        checkCookies () {
+            this.esProfesor = document.cookie == "rol=ir";
+            this.esAlumno = document.cookie == "rol=ik";
+           
+            if (document.cookie == "") {
+                window.location.assign("./login.html");
+            } 
+
+            // if (document.cookie == "rol=ik") {
+            //     window.location.assign("./login.html");
+            // }
+        }
+
 
     },
     mounted() {
@@ -804,7 +871,7 @@ new Vue({
         this.obtenerFechaSeleccionada({ target: { value: undefined } }); // Llamar obtenerFechaSeleccionada al cargar la página
         this.cargaHitzordu();
         this.cargarDatos();
-
+        this.checkCookies();
 
 
         // Actualizar fechaFormateada con la fecha actual

@@ -15,150 +15,24 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <!-- BARRA DE NAVEGACION -->
-    <nav class="navbar bg-body-tertiary fixed-top">
-        <div class="container d-flex align-items-center">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
-                Categorías
-            </a>
-
-            <!-- Barra de navegacion fija -->
-            <i class="bi bi-box-arrow-right h3"></i>
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel" style="width: 350px;">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
-                    <img src="../img/sj.png" alt="Logo" width="200" height="60">
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-
-                <!-- Barra de navegacion "oculta" -->
-                <div class="offcanvas-body" style="position: relative;">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <!-- Citas -->
-                        <li class="nav-item dropdown mb-2">
-                            <a class="nav-link dropdown-toggle link-info fs-6 fw-bold text-light" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-calendar3 m-1"></i>
-                                Citas
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="hitzorduak.html">Gestión de citas</a></li>
-                                <li><a class="dropdown-item" href="ticket.html">Tickets</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Productos -->
-                        <li class="nav-item dropdown mb-2">
-                            <a class="nav-link dropdown-toggle link-info fs-6 fw-bold text-light" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-tags-fill m-1"></i>
-                                Productos
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="produktu_mugimenduak.html">Extraer productos</a></li>
-                                <li><a class="dropdown-item" href="produktuak.html">Gestionar productos</a></li>
-                                <li><a class="dropdown-item" href="kategoriak.html">Gestionar categorías</a></li>
-                                <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">Historial de
-                                        extracción de productos</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Material -->
-                        <li class="nav-item dropdown mb-2">
-                            <a class="nav-link dropdown-toggle link-info fs-6 fw-bold text-light" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-palette2 m-1"></i>
-                                Material
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="materiala.html">Gestionar material</a></li>
-                                <li><a class="dropdown-item" href="materiala_erabili.html">Extraer/Devolver Material</a>
-                                </li>
-                                <li><a class="dropdown-item" href="historiala_materiala_erabili.html">Historial de
-                                        movimientos de material</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Tratamientos -->
-                        <li class="nav-item mb-2">
-                            <a class="nav-link link-info fs-6 fw-bold text-light" href="tratamenduak.html" role="button"
-                                aria-expanded="false">
-                                <i class="bi bi-scissors m-1"></i>
-                                Tratamientos
-                            </a>
-                        </li>
-
-                        <!-- Turnos -->
-                        <li class="nav-item dropdown mb-2">
-                            <a class="nav-link dropdown-toggle link-info fs-6 fw-bold text-light" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-calendar-check-fill m-1"></i>
-                                Turnos
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="txandak.html">Asignación de turnos</a></li>
-                                <li><a class="dropdown-item" href="gaurko_txandak.html">Turnos de hoy</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Grupos -->
-                        <li class="nav-item dropdown mb-2">
-                            <a class="nav-link dropdown-toggle link-info fs-6 fw-bold text-light" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-people-fill m-1"></i>
-                                Grupos
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="taldeak.html">Gestionar grupos</a></li>
-                                <li><a class="dropdown-item" href="ordutegiak.html">Horarios por grupo</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Usuarios -->
-                        <li class="nav-item mb-2">
-                            <a class="nav-link link-info fs-6 fw-bold text-light" href="langileak.html" role="button"
-                                aria-expanded="false">
-                                <i class="bi bi-person-fill m-1"></i>
-                                Usuarios
-                            </a>
-                        </li>
-
-                        <!-- Ficha Clientes -->
-                        <li class="nav-item mb-2">
-                            <a class="nav-link link-info fs-6 fw-bold text-light" href="bezero_fitxak.html"
-                                role="button" aria-expanded="false">
-                                <i class="bi bi-person-vcard m-1"></i>
-                                Ficha-clientes
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-
     <main id="app">
+        <nav-component :changeLanguage="changeLanguage"></nav-component>
         <div class="container">
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i class="bi bi-check-circle m-2" @click="actuKategoria()"></i>
-                    <i class="bi bi-dash-circle" @click="ezabKategoria()"></i>
-                    <!-- CAMBIAR EL IDIOMA (probisional) -->
-                    <p @click="changeLanguage('es')">ES</p>
-                    <p @click="changeLanguage('eus')">EUS</p>
+                    <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2" @click="actuKategoria()"></i>
+                    <i v-if="esProfesor === true" class="bi bi-dash-circle" @click="ezabKategoria()"></i>
                 </div>
 
                 <!-- Tabla -->
                 <table class="table table-hover">
                     <thead>
                         <tr style="font-size: 19px;">
-                            <th scope="col"></th>
+                            <th scope="col">
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" v-model="selectAllKatego"
+                                    @change="selectAllKategoriak" />
+                            </th>
                             <th scope="col">{{ translations[selectedLanguage].default.tab_nombre }}</th>
                         </tr>
                     </thead>
@@ -166,7 +40,7 @@
                         <!-- <tr v-for="(kategoria) in listaKategoria"> -->
                         <tr v-for="(kategoria) in itemsFiltradosPaginados" :key="kategoria.id">
                             <td>
-                                <input type="checkbox" class="form-check-input" :value="kategoria.id"
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" :value="kategoria.id"
                                     v-model="arrayId" />
                             </td>
                             <td>
@@ -200,7 +74,7 @@
 
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
-            <div class="row d-flex justify-content-center p-5" style="width: 100%; font-size: 19px;">
+            <div v-if="esProfesor === true" class="row d-flex justify-content-center p-5" style="width: 100%; font-size: 19px;">
                 <h4 class="text-center pt-5 mx-auto">{{ translations[selectedLanguage].kategoriak.añad_cat }}</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"

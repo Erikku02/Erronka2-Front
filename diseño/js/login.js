@@ -41,7 +41,30 @@ new Vue({
                         // console.log("Conectado exitosamente");
                         // console.log(response);
                         // console.log(response.status);
-                        window.location.assign('../html/hitzorduak.html')
+                        try {
+                            const response = await fetch(window.ruta + 'erabiltzailearuta/' + username,{
+                                method: 'GET',
+                                headers: {
+                                    'Content-Type' : 'application/json',
+                                    'Access-Control-Allow-Origin': '*'
+                                }
+                            });
+
+                            if (!response.ok) {
+                                console.log('Errorea eskera egiterakoan');
+                                throw new Error('Errorea eskaera egiterakoan');
+                            }
+
+                            const datuak = await response.json();
+                            console.log(datuak);
+                            document.cookie = "rol=" + datuak.rola + ";";
+                            console.log(document.cookie);
+                            window.location.assign('../html/hitzorduak.html')
+                        
+                        } catch (error) {
+                            console.error('Errorea:', error);
+                        }
+
                     } else {
                         const responseData = await response.json(); // Obtener los datos del cuerpo de la respuesta
                         console.error("Error de autenticación:", responseData.error);

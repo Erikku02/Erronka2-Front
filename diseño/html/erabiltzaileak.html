@@ -27,32 +27,21 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
+    <!-- BARRA DE NAVEGACION -->
     <main id="app">
         <nav-component :changeLanguage="changeLanguage"></nav-component>
         <div class="container">
             <header class="row">
-                <ul class="nav nav-tabs mt-5" style="font-size: 19px;">
-                    <li class="nav-item">
-                        <a :class="{ 'nav-link': true, 'selected': selectedTalde === null }" aria-current="page"
-                            href="#" @click="cargaLangile()">
-                            {{ translations[selectedLanguage].langileak.todos }}
-                        </a>
-                    </li>
-                    <!-- Dentro de tu bucle v-for para generar las pestañas de grupos -->
-                    <li class="nav-item" v-for="(talde, index) in listaTalde" :key="index">
-                        <a :class="{ 'nav-link': true, 'selected': selectedTalde === talde.kodea }"
-                            @click="filterTaldea(talde.kodea)" href="#">
-                            {{ talde.kodea }}
-                        </a>
-                    </li>
-                </ul>
+                <!-- CAMBIAR EL IDIOMA (probisional) -->
+                <p @click="changeLanguage('es')">ES</p>
+                <p @click="changeLanguage('eus')">EUS</p>
             </header>
 
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2" @click="actuLangile()"></i>
-                    <i v-if="esProfesor === true" class="bi bi-dash-circle" @click="ezabLangile()"></i>
+                    <i v-if="visibleActu" class="bi bi-check-circle m-2" @click="actuErabiltzaile()"></i>
+                    <i class="bi bi-dash-circle" @click="ezabErabiltzaile()"></i>
                 </div>
 
                 <!-- Tabla -->
@@ -60,34 +49,42 @@
                     <thead>
                         <tr style="font-size: 20px;">
                             <th scope="col">
-                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" v-model="selectAllLangile"
-                                    @change="selectAllLangileak" />
+                                <input type="checkbox" class="form-check-input" v-model="selectAllErabil"
+                                    @change="selectAllErabiltzaileak" />
                             </th>
-                            <th @click="ordenarPorNombre" scope="col">{{
-                                translations[selectedLanguage].default.tab_nombre }} <i class="bi bi-arrow-down-up"></i>
+                            <th scope="col">{{
+                                translations[selectedLanguage].erabiltzaileak.usuario }}
                             </th>
-                            <th @click="ordenarPorApellidos" scope="col">{{
-                                translations[selectedLanguage].langileak.apellidos }} <i
-                                    class="bi bi-arrow-down-up"></i>
+                            <th scope="col">{{
+                                translations[selectedLanguage].erabiltzaileak.contraseña }}
+                            </th>
+                            <th scope="col">{{
+                                translations[selectedLanguage].erabiltzaileak.rol }}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(langile) in listaLangile">
+                        <tr v-for="(erabiltzaile) in listaErabiltzaile">
                             <td>
-                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" :value="langile.id" v-model="arrayId">
+                                <input type="checkbox" class="form-check-input" :value="erabiltzaile.username" v-model="arrayErabiltzaile">
                             </td>
                             <td>
-                                <span v-if="!arrayId.includes(langile.id)">
-                                    {{ langile.izena }}
+                                <span v-if="!arrayErabiltzaile.includes(erabiltzaile.username)">
+                                    {{ erabiltzaile.username }}
                                 </span>
-                                <input v-else type="text" v-model="langile.izena" :placeholder="langile.izena">
+                                <input v-else type="text" v-model="erabiltzaile.username" :placeholder="erabiltzaile.username">
                             </td>
                             <td>
-                                <span v-if="!arrayId.includes(langile.id)">
-                                    {{ langile.abizenak }}
+                                <span v-if="!arrayErabiltzaile.includes(erabiltzaile.username)">
+                                    {{ erabiltzaile.pasahitza }}
                                 </span>
-                                <input v-else type="text" v-model="langile.abizenak" :placeholder="langile.abizenak">
+                                <input v-else type="text" v-model="erabiltzaile.pasahitza" :placeholder="erabiltzaile.pasahitza">
+                            </td>
+                            <td>
+                                <span v-if="!arrayErabiltzaile.includes(erabiltzaile.username)">
+                                    {{ erabiltzaile.rola }}
+                                </span>
+                                <input v-else type="text" v-model="erabiltzaile.rola" :placeholder="erabiltzaile.rola">
                             </td>
                         </tr>
                     </tbody>
@@ -97,33 +94,34 @@
 
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
-            <div v-if="esProfesor === true" class="row d-flex justify-content-center p-5" style="width: 100%; font-size: 19px;">
-                <h4 class="text-center pt-5 mx-auto">{{ translations[selectedLanguage].langileak.añadir_trab }}</h4>
+            <div class="row d-flex justify-content-center p-5" style="width: 100%; font-size: 19px;">
+                <h4 class="text-center pt-5 mx-auto">{{ translations[selectedLanguage].erabiltzaileak.añad_usu }}</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
                     <div class="col-sm-6 col-lg-3">
-                            <select class="form-select w-100" id="dia" required v-model="kodeaSortu">
-                                <option disabled value="">{{ translations[selectedLanguage].langileak.grupo }}</option>
-                                <option v-for="(talde) in listaTalde">{{talde.kodea}}</option>
-                            </select>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input1" class="">Código</label> -->
-                        <input type="text" class="form-control" id="input1" v-model="izenaSortu" placeholder="Nombre" />
+                        <input type="text" class="form-control" id="input1" v-model="erabiltzaileaSortu" placeholder="Usuario" />
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input2" class="">Nombre</label> -->
-                        <input type="text" class="form-control" id="input2" v-model="abizenakSortu"
-                            placeholder="Apellido" />
+                        <input type="password" class="form-control" id="input2" v-model="pasahitzaSortu"
+                            placeholder="Contraseña" />
                     </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <select class="form-select w-100" id="dia" required v-model="rolaSortu">
+                            <option disabled value="">{{ translations[selectedLanguage].erabiltzaileak.rol }}</option>
+                            <option value="ir">Irakaslea</option>
+                            <option value="ik">Ikaslea</option>
+                        </select>
+                </div>
 
                     <!-- FIXME: el button solo se centra cuando esta en pantalla completa-->
                     <!-- <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto"> -->
                     <div class="col-1 align-self-center">
                         <!-- <button type="submit" class="btn btn-primary">Añadir</button> -->
                         <div class="col-sm-2 col-lg-2 mb-auto ms-sm-auto">
-                            <button @click.prevent="createLangile()" class="btn btn-primary">{{
+                            <button @click.prevent="createErabiltzaile()" class="btn btn-primary">{{
                                 translations[selectedLanguage].default.btn_añadir }}</button>
                         </div>
                     </div>
@@ -137,7 +135,7 @@
         <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
             <div class="container">
                 <p>&copy; {{
-                    translations[selectedLanguage].langileak.footer }}</p>
+                    translations[selectedLanguage].erabiltzaileak.footer }}</p>
             </div>
         </footer>
     </main>
@@ -152,7 +150,7 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
     <script src="../js/translations.js"></script>
-    <script src="../js/langileak.js"></script>
+    <script src="../js/erabiltzaileak.js"></script>
 
 </body>
 

@@ -22,7 +22,8 @@ const translations = {
             gestion_grupos: "Gestionar grupos",
             horario_grupos: "Horarios por grupo",
             usuarios: "Usuarios",
-            ficha_cliente: "Ficha-clientes"
+            ficha_cliente: "Ficha-clientes",
+            login_usuarios: "Usuarios de login"
         },
         default: {
             tab_codigo: 'Código',
@@ -193,6 +194,13 @@ const translations = {
             grupo: "Grupo",
             tarea: "Tarea",
             footer: "2024 Turnos. Todos los derechos reservados.",
+        },
+        erabiltzaileak: {
+            usuario: "Usuario",
+            contraseña: "Contraseña",
+            rol: "Rol",
+            añad_usu: "Añadir usuario",
+            footer: "2024 Usuarios. Todos los derechos reservados."
         }
     },
     eus: {
@@ -217,7 +225,8 @@ const translations = {
             gestion_grupos: "Taldeak kudeatzea",
             horario_grupos: "Ordutegiak taldeka",
             usuarios: "Erabiltzaileak",
-            ficha_cliente: "Bezero-fitxak"
+            ficha_cliente: "Bezero-fitxak",
+            login_usuarios: "Login erabiltzaileak"
         },
         default: {
             tab_codigo: "Kodea",
@@ -396,6 +405,13 @@ const translations = {
             grupo: "Taldea",
             tarea: "Lana",
             footer: "2024 Txandak. Eskubide guztiak gordeta.",
+        },
+        erabiltzaileak: {
+            usuario: "Erabiltzailea",
+            contraseña: "Pasahitza",
+            rol: "Rola",
+            añad_usu: "Erabiltzailea gehitu",
+            footer: "2024 Erabiltzaileak. Eskubide guztiak gordeta."
         }
 
 
