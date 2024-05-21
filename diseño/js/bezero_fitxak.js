@@ -91,7 +91,7 @@ Vue.component('nav-component', {
                             </li>
 
                             <!-- Grupos -->
-                            <li class="nav-item dropdown mb-3" v-if="esProfesor === true">
+                            <li class="nav-item dropdown mb-3">
                                 <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-people-fill m-2"></i>
