@@ -24,8 +24,8 @@
                 <div class="row mt-4">
                     <!-- Iconos para editar los datos -->
                     <div class="icons h4 text-end">
-                        <i class="bi bi-check-circle m-2" @click="actuProduktu()"></i>
-                        <i class="bi bi-dash-circle" @click="ezabProduktu()"></i>
+                        <i  v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2" @click="actuProduktu()"></i>
+                        <i v-if="esProfesor === true" class="bi bi-dash-circle" @click="ezabProduktu()"></i>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -64,7 +64,10 @@
                 <table class="table table-hover mt-3">
                     <thead>
                         <tr style="font-size: 19px;">
-                            <th scope="col"></th>
+                            <th v-if="esProfesor === true" scope="col">
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" v-model="selectAllMaterial"
+                                    @change="selectAllMaterialak" />
+                            </th>
                             <th @click="ordenarPorNombre" scope="col">
                                 {{ translations[selectedLanguage].default.tab_nombre }}
                                 <i class="bi bi-arrow-down-up"></i>
@@ -93,7 +96,7 @@
                     <tbody>
                         <tr v-for="(produktu) in itemsFiltradosPaginados" :key="produktu.id">
                             <td>
-                                <input type="checkbox" class="form-check-input" :value="produktu.id"
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" :value="produktu.id"
                                     v-model="arrayId" />
                             </td>
                             <td>
@@ -175,7 +178,7 @@
 
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
-            <div class="row d-flex justify-content-center p-5" style="width: 100%;">
+            <div v-if="esProfesor === true" class="row d-flex justify-content-center p-5" style="width: 100%;">
                 <h4 class="text-center pt-5 mx-auto" style="font-size: 19px;">{{
                     translations[selectedLanguage].produktuak.añadir }}</h4>
 

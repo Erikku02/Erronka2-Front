@@ -11,11 +11,12 @@ Vue.component('nav-component', {
                 </a>
 
                 <!-- Barra de navegacion fija -->
-                <i class="bi bi-box-arrow-right h3"></i>
+                <i class="bi bi-box-arrow-right h3" @click="borrarCookies()"></i>
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+                        <img src="../img/sj.png" alt="Logo" width="200" height="60">
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
 
@@ -46,7 +47,7 @@ Vue.component('nav-component', {
                                     <li><a class="dropdown-item" href="produktu_mugimenduak.html">{{ translations[selectedLanguage].nav.extraer_produ }}</a></li>
                                     <li><a class="dropdown-item" href="produktuak.html">{{ translations[selectedLanguage].nav.gestionar_produ }}</a></li>
                                     <li><a class="dropdown-item" href="kategoriak.html">{{ translations[selectedLanguage].nav.gestionar_categ }}</a></li>
-                                    <li><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">{{ translations[selectedLanguage].nav.hist_produ }}</a></li>
+                                    <li v-if="esProfesor === true"><a class="dropdown-item" href="historiala_produktu_mugimenduak.html">{{ translations[selectedLanguage].nav.hist_produ }}</a></li>
                                 </ul>
                             </li>
 
@@ -61,18 +62,22 @@ Vue.component('nav-component', {
                                     <li><a class="dropdown-item" href="materiala.html">{{ translations[selectedLanguage].nav.gestion_mate }}</a></li>
                                     <li><a class="dropdown-item" href="materiala_erabili.html">{{ translations[selectedLanguage].nav.ext_dev_mate }}</a>
                                     </li>
-                                    <li><a class="dropdown-item" href="historiala_materiala_erabili.html">{{ translations[selectedLanguage].nav.hist_mate }}</a></li>
+                                    <li v-if="esProfesor === true"><a class="dropdown-item" href="historiala_materiala_erabili.html">{{ translations[selectedLanguage].nav.hist_mate }}</a></li>
                                 </ul>
                             </li>
 
 
                             <!-- Tratamientos -->
                             <li class="nav-item dropdown mb-3">
-                                <a class="nav-link link-info fs-5 fw-bold text-light" href="tratamenduak.html" role="button"
-                                    aria-expanded="false">
+                                <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-scissors m-2"></i>
                                     {{ translations[selectedLanguage].nav.tratamientos }}
                                 </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="tratamenduak.html">{{ translations[selectedLanguage].nav.gestion_trata }}</a></li>
+                                    <li v-if="esProfesor === true"><a class="dropdown-item" href="historiala_tratamenduak.html">{{ translations[selectedLanguage].nav.hist_trata }}</a></li>
+                                </ul>
                             </li>
 
                             <!-- Turnos -->
@@ -118,6 +123,13 @@ Vue.component('nav-component', {
                                     {{ translations[selectedLanguage].nav.ficha_cliente }}
                                 </a>
                             </li>
+                            <li class="nav-item dropdown mb-3" v-if="esProfesor === true">
+                                <a class="nav-link link-info fs-5 fw-bold text-light" href="erabiltzaileak.html"
+                                    role="button" aria-expanded="false">
+                                    <i class="bi bi-person-vcard m-2"></i>
+                                    {{ translations[selectedLanguage].nav.login_usuarios }}
+                                </a>
+                            </li>
                         </ul>
                         <hr class="border border-white">
                         <ul class="pt-3">
@@ -153,6 +165,8 @@ Vue.component('nav-component', {
             selectedLanguage: window.selectedLanguage || 'es', // si window. esta definido se usa ese, sino el valor por defecto
             translations: translations,
             lang: '',
+            esProfesor: false,
+            esAlumno: false
         };
     },
     methods: {
@@ -179,10 +193,33 @@ Vue.component('nav-component', {
         /* creo que no se usa */
         getTranslation(key) {
             return this.translations[this.selectedLanguage][key] || '';
-        }
-    },
-});
+        },
 
+        checkCookies () {
+            this.esProfesor = document.cookie == "rol=ir";
+            this.esAlumno = document.cookie == "rol=ik";
+           
+            if (document.cookie == "") {
+                window.location.assign("./login.html");
+            } 
+
+            // if (document.cookie == "rol=ik") {
+            //     window.location.assign("./login.html");
+            // }
+        },
+
+        borrarCookies (){
+            document.cookie = "rol=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/Erronka2-Front/dise%C3%B1o/html;";
+            if (document.cookie == "") {
+                window.location.assign("./login.html");
+            } 
+        },
+    },
+    mounted() {
+        this.checkCookies();
+    }
+
+});
 
 new Vue({
     el: '#app',
@@ -215,6 +252,13 @@ new Vue({
         // Paginar
         itemsPorPagina: 10,
         paginaActual: 1,
+
+        //Cookies
+        esAlumno: false,
+        esProfesor: false,
+
+        selectAllMaterial: false,
+        visibleActu: true,
     },
     computed: {
         // Filtrar los datos basados en el término de búsqueda (busca en los campos izena, abizena, telefonoa)
@@ -332,8 +376,15 @@ new Vue({
                 }
 
                 console.log('Sortu da');
-                await this.cargaProduktu();
-                location.reload();
+                this.cargaProduktu();
+                this.izenaSortu = "";
+                this.deskribSortu = "";
+                this.kategoriaSortu = "";
+                this.markaSortu = "";
+                this.stockSortu = "";
+                this.stock_alertaSortu = "";
+                
+                // location.reload();
             } catch (error) {
                 console.log('Errorea: ', error);
             }
@@ -574,6 +625,37 @@ new Vue({
             this.selectedLanguage = lang;
             console.log(this.selectedLanguage);
         },
+
+        checkCookies () {
+            this.esProfesor = document.cookie == "rol=ir";
+            this.esAlumno = document.cookie == "rol=ik";
+           
+            if (document.cookie == "") {
+                window.location.assign("./login.html");
+            } 
+
+            // if (document.cookie == "rol=ik") {
+            //     window.location.assign("./login.html");
+            // }
+        },
+
+        selectAllMaterialak() {
+            if (this.selectAllMaterial) {
+                // Si el checkbox de seleccionar todo está marcado,
+                // se añaden todos los IDs a arrayId
+                this.arrayId = this.listaProduktu.map(produktu => produktu.id);
+            } else {
+                // Si el checkbox de seleccionar todo está desmarcado,
+                // se vacía arrayId
+                this.arrayId = [];
+            }
+
+            // Marcar o desmarcar todos los checkboxes de la tabla
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.selectAllMaterial;
+            });
+        }
     },
     watch: {
         filtrCatego: function () {
@@ -586,6 +668,16 @@ new Vue({
         this.cargaKategoria();
         this.ordenarPorNombre();
         this.cargaMarka();
+        this.checkCookies();
         // this.ordenKategoria();
+    },
+    watch: {
+        arrayId() {
+            if (this.arrayId.length > 1) {
+                this.visibleActu = false;
+            } else {
+                this.visibleActu = true;
+            }
+        }
     }
 });

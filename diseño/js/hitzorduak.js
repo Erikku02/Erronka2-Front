@@ -88,11 +88,15 @@ Vue.component('nav-component', {
 
                             <!-- Tratamientos -->
                             <li class="nav-item dropdown mb-3">
-                                <a class="nav-link link-info fs-5 fw-bold text-light" href="tratamenduak.html" role="button"
-                                    aria-expanded="false">
+                                <a class="nav-link dropdown-toggle link-info fs-5 fw-bold text-light" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-scissors m-2"></i>
                                     {{ translations[selectedLanguage].nav.tratamientos }}
                                 </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="tratamenduak.html">{{ translations[selectedLanguage].nav.gestion_trata }}</a></li>
+                                    <li v-if="esProfesor === true"><a class="dropdown-item" href="historiala_tratamenduak.html">{{ translations[selectedLanguage].nav.hist_trata }}</a></li>
+                                </ul>
                             </li>
 
                             <!-- Turnos -->
