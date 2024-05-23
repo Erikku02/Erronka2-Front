@@ -151,6 +151,14 @@
             <!-- Tabla -->
             <template>
                 <div class="row mb-3">
+                    <!-- Agrega este código en tu HTML, dentro del bloque <template> -->
+                    <div class="col-md-3">
+                        <select class="form-select form-select-sm" id="selectTratamiento" v-model="selectedTratamiento" @change="filtrarPorTratamiento">
+                            <option value="todos">Todos</option>
+                            <option v-for="tratamiento in listaTratamendu" :value="tratamiento">{{ tratamiento.izena }}</option>
+                        </select>
+                    </div>
+
                     <!-- <div class="col-md-3">
                         <select class="form-select form-select-sm" id="selectMateriala" required
                             v-model="materialaIzenaSortu">
@@ -161,28 +169,28 @@
                                 materiala_erabili.etiketa }}</option>
                         </select>
                     </div> -->
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <select class="form-select form-select-sm" id="selectAlumno" required v-model="izenaSortu">
                             <option disabled value="">{{ translations[selectedLanguage].nav.tratamientos }}</option>
                             <option v-for="(langile) in alumnosPorGrupo" :key="langile.id" :value="langile.id">
                                 {{langile.izena}}</option>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
             </template>
             <table class="table table-hover mt-5 mb-5">
                 <thead>
                     <tr style="font-size: 19px;">
-                        <th scope="col">{{ translations[selectedLanguage].nav.tratamientos }}</th>
                         <th scope="col">{{ translations[selectedLanguage].hist_mat_era.alumno }}</th>
+                        <th scope="col">{{ translations[selectedLanguage].nav.tratamientos }}</th>
                         <th scope="col">{{ translations[selectedLanguage].bezero_fitxak.cantidad }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(registro) in itemsFiltradosPaginados" :key="registro.id">
-                        <td>{{registro.materiala.etiketa}}</td>
-                        <td>{{registro.langilea.izena}}</td>
-                        <td>{{registro.hasiera_data}}</td>
+                    <tr v-for="(registro, index) in listaLangileTratamendu" :key="index">
+                        <td>{{ registro.izena }}</td>
+                        <td>{{ registro.tratamendua }}</td>
+                        <td>{{ registro.kantitatea }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -221,7 +229,7 @@
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
     <script src="../js/translations.js"></script>
-    <script src="../js/historiala_materiala_erabili.js"></script>
+    <script src="../js/historiala_tratamenduak.js"></script>
 </body>
 
 </html>

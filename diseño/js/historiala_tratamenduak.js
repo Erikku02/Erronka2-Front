@@ -1,30 +1,12 @@
 new Vue({
     el: '#app',
     data: {
-        selectedTalde: "",
-        kategoriaIzenaSortu: "",
-        dataSortu: "",
-        arrayKodea: [],
-        listaTalde: [],
-        listaLangile: [],
-        fechaFormateada: '',
+        listaLangileTratamenduOriginal: [], // Variable para almacenar la copia original
+        listaLangileTratamendu: [],
         listaOrdutegia: [],
-        listaKategoria: [],
-        listaProduktua: [],
-        listaFiltrada: [],
-        listaFiltrada2: [],
-        listaMarka: [],
-        listaProduktuMugimendua: [],
-        listaTratamendua: [],
-        registroBerri: [],
-        guardarRegistro: [],
-        registros: [],
-        marcasUnicas: new Set(),
-        listaMarkaFiltrada: [],
-        uniqueMarcas: [0],
-        stockTotala: 0,
-        mapaProduktua: {},  // Mapa para almacenar datos adicionales de productos
-        mapaLangilea: {},   // Mapa para almacenar datos adicionales de langileak
+        listaTratamendu: [],
+        selectedTratamiento: '', // Nuevo dato para almacenar el tratamiento seleccionado
+        tratamientosDisponibles: [], // Lista de tratamientos disponibles
         /* IDIOMAS */
         selectedLanguage: 'es',
         // languageStrings: {},
@@ -35,7 +17,7 @@ new Vue({
     computed: {
         // Filtrar los datos basados en el término de búsqueda (busca en los campos izena, abizena, telefonoa)
         itemsFiltradosPaginados() {
-            let itemsFiltrados = this.listaFiltrada;
+            let itemsFiltrados = this.listaLangileTratamendu;
 
 
             // Calcular los índices de inicio y fin para la paginación
@@ -47,7 +29,7 @@ new Vue({
         },
         // Paginar
         cantidadPorPaginas() {
-            return Math.ceil(this.listaFiltrada.length / this.itemsPorPagina)
+            return Math.ceil(this.listaLangileTratamendu.length / this.itemsPorPagina)
         },
     },
     methods: {
@@ -61,92 +43,86 @@ new Vue({
                 this.paginaActual++;
             }
         },
-        actualizarFecha() {
-            if (!this.dataSortu) {
-                this.dataSortu = new Date().toISOString().slice(0, 10); // Establecer la fecha actual si no hay fecha seleccionada
-            }
-            this.obtenerFechaActual();
-            this.actualizarListaFiltrada();
-        },
-        actualizarFechaAutomaticamente() {
-            // Función para actualizar automáticamente la fecha cada minuto
-            setInterval(() => {
-                this.obtenerFechaActual();
-            }, 60000); // 60000 milisegundos = 1 minuto
-        },
-        formatProductName(produktua) {
-            const truncatedName = produktua.izena.length > 30 ? produktua.izena.slice(0, 30) : produktua.izena;
-            const truncatedDescription = produktua.deskribapena.length > 40 ? produktua.deskribapena.slice(0, 40) + '' : produktua.deskribapena;
-            return `${truncatedName} - ${truncatedDescription}`;
-        },
-        obtenerFechaActual() {
-            const fechaSeleccionada = new Date(this.dataSortu);
+        async cargaHorariosPorGrupo() {
+            const fechaActual = new Date();
             const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-            this.fechaFormateada = `${fechaSeleccionada.toLocaleDateString('es-ES', options)}`;
+            const numeroDiaSemana = fechaActual.getDay();
+
+            console.log(numeroDiaSemana);
+            try {
+                const response = await fetch(window.ruta + 'ordutegiaruta', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+
+                if (!response.ok) {
+                    console.log('Error al solicitar trabajadores por grupo');
+                    throw new Error('Error al realizar la solicitud');
+                }
+
+                const datuak = await response.json();
+                this.listaOrdutegia = datuak;
+                this.grupoPorDia = this.listaOrdutegia.find(ordutegia => ordutegia.eguna === numeroDiaSemana && ordutegia.deleted_at === null).kodea
+                this.tratamenduByLangile();
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
         },
-        async cargaTratamendua() {
+        async cargaTratamendu() {
             try {
                 const response = await fetch(window.ruta + 'tratamenduaruta', {
-                    // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
-                    method: 'GET',
-                    // mode: "no-cors",
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'
                     },
+                    method: "GET"
                 });
                 if (!response.ok) {
-                    console.log('Errorea eskera eskaera egiterakoan');
-                    throw new Error('Errorea eskaera egiterakoan');
-                }
-
-                const datuak = await response.json();
-                this.listaTratamendua = datuak
-                    .filter(tratamendua => tratamendua.deleted_at === null || tratamendua.deleted_at === "0000-00-00 00:00:00");
-                console.log(this.listaTratamendua);
-            } catch (error) {
-                console.error('Errorea: ', error);
-            }
-        },
-        async cargaProduktuMugimendua() {
-            try {
-                const response = await fetch(window.ruta + 'produktumugimenduaruta', {
-                    // const response = await fetch('https://www.talde3-back.edu/Erronka2/laravel_e2t3/public/api/txandaaruta', {
-                    method: 'GET',
-                    // mode: "no-cors",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                });
-                if (!response.ok) {
-                    console.log('Errorea eskera eskaera egiterakoan');
                     throw new Error('Errorea eskaera egiterakoan');
                 }
                 const datuak = await response.json();
-                this.listaProduktuMugimendua = datuak;
-                this.actualizarListaFiltrada();
+                this.listaTratamendu = datuak;
             } catch (error) {
-                console.error('Errorea: ', error);
+                console.log("Errorea: " + error);
             }
+            console.log(this.listaTratamendu)
         },
-        compararFechas(fechaRegistro, fechaSeleccionada) {
-            // Convierte las fechas a objetos Date para facilitar la comparación
-            const fechaRegistroObj = new Date(fechaRegistro);
-            const fechaSeleccionadaObj = new Date(fechaSeleccionada);
-
-            // Compara solo el año, mes y día
-            return fechaRegistroObj.toISOString().split('T')[0] === fechaSeleccionadaObj.toISOString().split('T')[0];
-        },
-        actualizarListaFiltrada() {
-            if (!this.kategoriaIzenaSortu && !this.dataSortu) {
-                this.listaFiltrada = this.listaProduktuMugimendua;
-
+        filtrarPorTratamiento() {
+            if (this.selectedTratamiento === 'todos') {
+                this.paginaActual = 1;
+                this.listaLangileTratamendu = [...this.listaLangileTratamenduOriginal]; // Restaura la lista original
             } else {
-                this.listaFiltrada = this.listaProduktuMugimendua
-                    .filter(registro =>
-                        (!this.kategoriaIzenaSortu || (registro.produktua && registro.produktua.kategoria.id == this.kategoriaIzenaSortu)) &&
-                        (!this.dataSortu || this.compararFechas(registro.data, this.dataSortu)));
+                this.paginaActual = 1;
+                this.listaLangileTratamendu = this.listaLangileTratamenduOriginal.filter(registro => registro.tratamendua === this.selectedTratamiento.izena);
+        
+                // Ordenar por cantidad en orden descendente
+                this.listaLangileTratamendu.sort((a, b) => b.kantitatea - a.kantitatea);
+            }
+        },
+        
+        
+        async tratamenduByLangile() {
+            try {
+                const response = await fetch(window.ruta + 'tratamenduastats/' + this.grupoPorDia, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    method: "GET"
+                });
+                if (!response.ok) {
+                    throw new Error('Errorea eskaera egiterakoan');
+                }
+                const datuak = await response.json();
+                this.listaLangileTratamendu = datuak;
+                this.listaLangileTratamenduOriginal = [...datuak]; // Guarda una copia original
+                console.log(this.listaLangileTratamendu);
+            } catch (error) {
+                console.log("Errorea: " + error);
             }
         },
         changeLanguage(lang) {
@@ -154,18 +130,11 @@ new Vue({
             console.log(this.selectedLanguage);
         },
     },
-
-    watch: {
-        kategoriaIzenaSortu: function () {
-            this.actualizarListaFiltrada();
-        }
-    },
-
     mounted() {
-        this.dataSortu = this.obtenerFechaActual();
-        this.actualizarFecha();
-        this.cargaKategoria();
-        this.cargaProduktuMugimendua();
-        this.actualizarFechaAutomaticamente();
+        this.cargaHorariosPorGrupo();
+        this.cargaTratamendu();
+        this.tratamenduByLangile();
+
+
     }
 });
