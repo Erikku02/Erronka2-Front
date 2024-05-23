@@ -7,7 +7,7 @@ Vue.component('nav-component', {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand mx-auto h3 d-flex d-inline fs-2" href="#">
-                {{ translations[selectedLanguage].nav.gestionar_categ }}
+                {{ translations[selectedLanguage].nav.hist_trata }}
                 </a>
 
                 <!-- Barra de navegacion fija -->
