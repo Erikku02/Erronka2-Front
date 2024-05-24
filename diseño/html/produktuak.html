@@ -24,7 +24,8 @@
                 <div class="row mt-4">
                     <!-- Iconos para editar los datos -->
                     <div class="icons h4 text-end">
-                        <i  v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2" @click="actuProduktu()"></i>
+                        <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2"
+                            @click="actuProduktu()"></i>
                         <i v-if="esProfesor === true" class="bi bi-dash-circle" @click="ezabProduktu()"></i>
                     </div>
                 </div>
@@ -65,8 +66,8 @@
                     <thead>
                         <tr style="font-size: 19px;">
                             <th v-if="esProfesor === true" scope="col">
-                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" v-model="selectAllMaterial"
-                                    @change="selectAllMaterialak" />
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input"
+                                    v-model="selectAllMaterial" @change="selectAllMaterialak" />
                             </th>
                             <th @click="ordenarPorNombre" scope="col">
                                 {{ translations[selectedLanguage].default.tab_nombre }}
@@ -96,8 +97,8 @@
                     <tbody>
                         <tr v-for="(produktu) in itemsFiltradosPaginados" :key="produktu.id">
                             <td>
-                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" :value="produktu.id"
-                                    v-model="arrayId" />
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input"
+                                    :value="produktu.id" v-model="arrayId" />
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(produktu.id)">
