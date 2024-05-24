@@ -196,24 +196,24 @@ Vue.component('nav-component', {
             return this.translations[this.selectedLanguage][key] || '';
         },
 
-        checkCookies () {
+        checkCookies() {
             this.esProfesor = document.cookie == "rol=ir";
             this.esAlumno = document.cookie == "rol=ik";
-           
+
             if (document.cookie == "") {
                 window.location.assign("./login.html");
-            } 
+            }
 
             // if (document.cookie == "rol=ik") {
             //     window.location.assign("./login.html");
             // }
         },
 
-        borrarCookies (){
+        borrarCookies() {
             document.cookie = "rol=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/Erronka2-Front/dise%C3%B1o/html;";
             if (document.cookie == "") {
                 window.location.assign("./login.html");
-            } 
+            }
         },
     },
     mounted() {
@@ -339,13 +339,13 @@ new Vue({
                     this.alphanumCompare(b.kodea, a.kodea);
             });
         },
-        checkCookies () {
+        checkCookies() {
             this.esProfesor = document.cookie == "rol=ir";
             this.esAlumno = document.cookie == "rol=ik";
-           
+
             if (document.cookie == "") {
                 window.location.assign("./login.html");
-            } 
+            }
 
             // if (document.cookie == "rol=ik") {
             //     window.location.assign("./login.html");
