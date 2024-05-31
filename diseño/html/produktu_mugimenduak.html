@@ -102,50 +102,52 @@
             </div>
         </div>
         <!-- Modal de alerta de stock -->
-    
-    <div class="modal fade" id="stockAlertModal" tabindex="-1" aria-labelledby="stockAlertModalLabel" aria-hidden="true" v-model="stockTotalProducto">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="stockAlertModalLabel">¡¡¡Stock de alerta superado!!!</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Ahora quedan {{ guardarStockTotal }} unidades.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Modal de error de stock -->
-    <div class="modal fade" id="errorStockModal" tabindex="-1" aria-labelledby="errorStockModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="errorStockModalLabel">Error</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    No puede añadir esa cantidad porque el stock actual de este producto es de {{ guardarStockTotal }}.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <div class="modal fade" id="stockAlertModal" tabindex="-1" aria-labelledby="stockAlertModalLabel"
+            aria-hidden="true" v-model="stockTotalProducto">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="stockAlertModalLabel">¡¡¡Stock de alerta superado!!!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Ahora quedan {{ guardarStockTotal }} unidades.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-        
-        <!-- FOOTER -->
-        <footer class="bg-dark text-light text-center py-3 mt-auto">
-            <div class="container">
-                <p>&copy; {{ translations[selectedLanguage].prod_mug.footer }}</p>
+
+        <!-- Modal de error de stock -->
+        <div class="modal fade" id="errorStockModal" tabindex="-1" aria-labelledby="errorStockModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorStockModalLabel">Error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        No puede añadir esa cantidad porque el stock actual de este producto es de {{ guardarStockTotal
+                        }}.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
             </div>
-        </footer>
+        </div>
     </main>
 
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
+
+        <p>&copy; 2024. Todos los derechos reservados. CIFP San Jorge LHII</p>
+
+    </footer>
 
 
     <!-- SCRIPTS -->

@@ -28,7 +28,8 @@
 
                 <div class="mt-4">
                     <div>
-                        <input type="date" class="col-4 float-start" v-model="fecha" @change="cargarDatos" style="font-size: 19px;">
+                        <input type="date" class="col-4 float-start" v-model="fecha" @change="cargarDatos"
+                            style="font-size: 19px;">
                     </div>
                     <div>
                         <i class="bi bi-plus-circle float-end h4" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -113,7 +114,8 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{
                                             translations[selectedLanguage].hitzorduak.cancelar }}</button>
-                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" @click="createHitzordu">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                            @click="createHitzordu">
                                             {{ translations[selectedLanguage].hitzorduak.añadir }}</button>
                                     </div>
                                 </div>
@@ -416,7 +418,8 @@
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">{{
                                                     translations[selectedLanguage].hitzorduak.cancelar }}</button>
-                                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="updateHitzordu">{{
+                                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                                    @click="updateHitzordu">{{
                                                     translations[selectedLanguage].hitzorduak.actualizar_cita
                                                     }}</button>
                                             </div>

@@ -20,7 +20,8 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2" @click="actuOrdutegia()"></i>
+                    <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2"
+                        @click="actuOrdutegia()"></i>
                     <i v-if="esProfesor === true" class="bi bi-dash-circle" @click="ezabOrdutegi()"></i>
                 </div>
 
@@ -29,8 +30,8 @@
                     <thead>
                         <tr style="font-size: 19px;">
                             <th scope="col">
-                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" v-model="selectAllOrdutegi"
-                                    @change="selectAllOrdutegiak" />
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input"
+                                    v-model="selectAllOrdutegi" @change="selectAllOrdutegiak" />
                             </th>
                             <th scope="col">{{ translations[selectedLanguage].default.tab_codigo }}</th>
                             <!-- <th scope="col">Nombre</th> -->
@@ -46,8 +47,8 @@
                         <!-- TODO: mostrar los datos del fetch -->
                         <tr v-for="(ordutegia) in listaOrdutegia">
                             <td>
-                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" :value="ordutegia.id"
-                                    v-model="arrayId" />
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input"
+                                    :value="ordutegia.id" v-model="arrayId" />
                             </td>
                             <td>
                                 {{ ordutegia.kodea }}
@@ -94,10 +95,11 @@
             <!-- TODO: reorganizar todo -->
             <!-- FORMULARIO AÑADIR HORARIO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
-            <div  v-if="esProfesor === true" class="row d-flex justify-content-center p-5" style="width: 100%; font-size: 19px;">
+            <div v-if="esProfesor === true" class="row d-flex justify-content-center p-5"
+                style="width: 100%; font-size: 19px;">
                 <h4 class="text-center pt-5 mx-auto">{{ translations[selectedLanguage].ordutegiak.añadir }}</h4>
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center">
-                    <div class="btn-group col-sm-6 col-lg-3">
+                    <div class="col-sm-6 col-lg-3">
                         <div class="mb-3">
                             <!-- TODO: los grupos se añaden automaticamente -->
                             <label for="dia" class="form-label">{{ translations[selectedLanguage].ordutegiak.grupo
@@ -114,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="btn-group col-sm-6 col-lg-3">
+                    <div class="col-sm-6 col-lg-3">
                         <div class="mb-3">
                             <!-- TODO: hacer que se inserte bien el dia en la db -->
                             <label for="dia" class="form-label">{{ translations[selectedLanguage].ordutegiak.dia_semana
@@ -163,14 +165,14 @@
                 </form>
             </div>
         </div>
-        <!-- FOOTER -->
-        <footer class="bg-dark text-light text-center py-3" style="position: fixed; bottom: 0; width: 100%;">
-            <div class="container">
-                <p>&copy; {{ translations[selectedLanguage].ordutegiak.footer }}</p>
-            </div>
-        </footer>
-        
     </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
+
+        <p>&copy; 2024. Todos los derechos reservados. CIFP San Jorge LHII</p>
+
+    </footer>
 
 
     <!-- SCRIPTS -->

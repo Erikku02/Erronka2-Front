@@ -24,7 +24,8 @@
                         <a class="nav-link active" aria-current="page" href="#" @click="cargaTxanda()">Todos</a>
                     </li>
                     <li class="nav-item" v-for="(talde,index) in listaTalde" :key="index">
-                        <a href="#" class="nav-link" :class="{ 'active': talde.kodea === selectedTalde }" @click="filterTaldea(talde.kodea)">
+                        <a href="#" class="nav-link" :class="{ 'active': talde.kodea === selectedTalde }"
+                            @click="filterTaldea(talde.kodea)">
                             {{ talde.kodea }}
                         </a>
                     </li>
@@ -105,13 +106,14 @@
                 </form>
             </div>
         </div>
-        <!-- FOOTER -->
-        <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
-            <div class="container">
-                <p>&copy; {{ translations[selectedLanguage].txandak.footer }}</p>
-            </div>
-        </footer>
     </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
+
+        <p>&copy; 2024. Todos los derechos reservados. CIFP San Jorge LHII</p>
+
+    </footer>
 
 
 

@@ -60,19 +60,22 @@
                     <tbody>
                         <tr v-for="(erabiltzaile) in listaErabiltzaile">
                             <td>
-                                <input type="checkbox" class="form-check-input" :value="erabiltzaile.username" v-model="arrayErabiltzaile">
+                                <input type="checkbox" class="form-check-input" :value="erabiltzaile.username"
+                                    v-model="arrayErabiltzaile">
                             </td>
                             <td>
                                 <span v-if="!arrayErabiltzaile.includes(erabiltzaile.username)">
                                     {{ erabiltzaile.username }}
                                 </span>
-                                <input v-else type="text" v-model="erabiltzaile.username" :placeholder="erabiltzaile.username">
+                                <input v-else type="text" v-model="erabiltzaile.username"
+                                    :placeholder="erabiltzaile.username">
                             </td>
                             <td>
                                 <span v-if="!arrayErabiltzaile.includes(erabiltzaile.username)">
                                     {{ erabiltzaile.pasahitza }}
                                 </span>
-                                <input v-else type="text" v-model="erabiltzaile.pasahitza" :placeholder="erabiltzaile.pasahitza">
+                                <input v-else type="text" v-model="erabiltzaile.pasahitza"
+                                    :placeholder="erabiltzaile.pasahitza">
                             </td>
                             <td>
                                 <span v-if="!arrayErabiltzaile.includes(erabiltzaile.username)">
@@ -95,7 +98,8 @@
                     style="width: 100%;">
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input1" class="">Código</label> -->
-                        <input type="text" class="form-control" id="input1" v-model="erabiltzaileaSortu" placeholder="Usuario" />
+                        <input type="text" class="form-control" id="input1" v-model="erabiltzaileaSortu"
+                            placeholder="Usuario" />
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input2" class="">Nombre</label> -->
@@ -108,7 +112,7 @@
                             <option value="ir">Irakaslea</option>
                             <option value="ik">Ikaslea</option>
                         </select>
-                </div>
+                    </div>
 
                     <!-- FIXME: el button solo se centra cuando esta en pantalla completa-->
                     <!-- <div class="col-sm-2 col-lg-2 mb-auto ms-auto mx-auto"> -->
@@ -122,17 +126,14 @@
                 </form>
             </div>
         </div>
-
-
-
-        <!-- FOOTER -->
-        <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
-            <div class="container">
-                <p>&copy; {{
-                    translations[selectedLanguage].erabiltzaileak.footer }}</p>
-            </div>
-        </footer>
     </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
+
+        <p>&copy; 2024. Todos los derechos reservados. CIFP San Jorge LHII</p>
+
+    </footer>
 
 
 

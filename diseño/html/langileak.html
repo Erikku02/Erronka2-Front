@@ -51,7 +51,8 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2" @click="actuLangile()"></i>
+                    <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2"
+                        @click="actuLangile()"></i>
                     <i v-if="esProfesor === true" class="bi bi-dash-circle" @click="ezabLangile()"></i>
                 </div>
 
@@ -60,8 +61,8 @@
                     <thead>
                         <tr style="font-size: 20px;">
                             <th scope="col">
-                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" v-model="selectAllLangile"
-                                    @change="selectAllLangileak" />
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input"
+                                    v-model="selectAllLangile" @change="selectAllLangileak" />
                             </th>
                             <th @click="ordenarPorNombre" scope="col">{{
                                 translations[selectedLanguage].default.tab_nombre }} <i class="bi bi-arrow-down-up"></i>
@@ -75,7 +76,8 @@
                     <tbody>
                         <tr v-for="(langile) in listaLangile">
                             <td>
-                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" :value="langile.id" v-model="arrayId">
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input"
+                                    :value="langile.id" v-model="arrayId">
                             </td>
                             <td>
                                 <span v-if="!arrayId.includes(langile.id)">
@@ -97,16 +99,17 @@
 
             <!-- FORMULARIO AÑADIR GRUPO -->
             <!-- <div class="row justify-content-center align-items-center"> -->
-            <div v-if="esProfesor === true" class="row d-flex justify-content-center p-5" style="width: 100%; font-size: 19px;">
+            <div v-if="esProfesor === true" class="row d-flex justify-content-center p-5"
+                style="width: 100%; font-size: 19px;">
                 <h4 class="text-center pt-5 mx-auto">{{ translations[selectedLanguage].langileak.añadir_trab }}</h4>
 
                 <form class="row g-3 d-flex flex-column justify-content-center align-content-center"
                     style="width: 100%;">
                     <div class="col-sm-6 col-lg-3">
-                            <select class="form-select w-100" id="dia" required v-model="kodeaSortu">
-                                <option disabled value="">{{ translations[selectedLanguage].langileak.grupo }}</option>
-                                <option v-for="(talde) in listaTalde">{{talde.kodea}}</option>
-                            </select>
+                        <select class="form-select w-100" id="dia" required v-model="kodeaSortu">
+                            <option disabled value="">{{ translations[selectedLanguage].langileak.grupo }}</option>
+                            <option v-for="(talde) in listaTalde">{{talde.kodea}}</option>
+                        </select>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <!-- <label for="input1" class="">Código</label> -->
@@ -130,18 +133,14 @@
                 </form>
             </div>
         </div>
-
-
-
-        <!-- FOOTER -->
-        <footer class="bg-dark text-light text-center py-3 mt-auto" id="sticky-footer">
-            <div class="container">
-                <p>&copy; {{
-                    translations[selectedLanguage].langileak.footer }}</p>
-            </div>
-        </footer>
     </main>
 
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
+
+        <p>&copy; 2024. Todos los derechos reservados. CIFP San Jorge LHII</p>
+
+    </footer>
 
 
     <!-- SCRIPTS -->

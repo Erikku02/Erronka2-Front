@@ -21,7 +21,8 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2" @click="actuTalde()"></i>
+                    <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2"
+                        @click="actuTalde()"></i>
                     <i v-if="esProfesor === true" class="bi bi-dash-circle" @click="ezabTalde()"></i>
                 </div>
 
@@ -30,8 +31,8 @@
                     <thead>
                         <tr style="font-size: 19px;">
                             <th scope="col">
-                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" v-model="selectAllTalde"
-                                    @change="selectAllTaldeak" />
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input"
+                                    v-model="selectAllTalde" @change="selectAllTaldeak" />
                             </th>
                             <th scope="col">{{ translations[selectedLanguage].default.tab_codigo }}</th>
                             <th scope="col">{{ translations[selectedLanguage].default.tab_nombre }}</th>
@@ -39,8 +40,8 @@
                     </thead>
                     <tbody>
                         <tr v-for="(talde) in listaTalde">
-                            <td><input v-if="esProfesor === true" type="checkbox" class="form-check-input" :value="talde.kodea"
-                                    v-model="arrayKodea" /></td>
+                            <td><input v-if="esProfesor === true" type="checkbox" class="form-check-input"
+                                    :value="talde.kodea" v-model="arrayKodea" /></td>
                             <td>{{talde.kodea}}</td>
                             <td>
                                 <span v-if="!arrayKodea.includes(talde.kodea)">
@@ -84,14 +85,14 @@
                 </form>
             </div>
         </div>
-        <!-- FOOTER -->
-        <footer class="bg-dark text-light text-center py-3 mt-auto">
-            <div class="container">
-                <p>&copy; {{ translations[selectedLanguage].taldeak.footer }}</p>
-            </div>
-        </footer>
     </main>
 
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
+
+        <p>&copy; 2024. Todos los derechos reservados. CIFP San Jorge LHII</p>
+
+    </footer>
 
 
     <!-- SCRIPTS -->

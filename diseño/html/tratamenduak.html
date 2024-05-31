@@ -21,7 +21,8 @@
             <div class="row">
                 <!-- Iconos para editar los datos -->
                 <div class="icons h4 text-end mt-4">
-                    <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2" @click="actuTratamendu()"></i>
+                    <i v-if="visibleActu && esProfesor === true" class="bi bi-check-circle m-2"
+                        @click="actuTratamendu()"></i>
                     <i v-if="esProfesor === true" class="bi bi-dash-circle" @click="ezabTratamendu()"></i>
                 </div>
 
@@ -30,8 +31,8 @@
                     <thead>
                         <tr style="font-size: 21px;">
                             <th scope="col">
-                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input" v-model="selectAllTrata"
-                                    @change="selectAllTratamenduak" />
+                                <input v-if="esProfesor === true" type="checkbox" class="form-check-input"
+                                    v-model="selectAllTrata" @change="selectAllTratamenduak" />
                             </th>
                             <th scope="col">{{ translations[selectedLanguage].default.tab_nombre }}</th>
                             <th scope="col">{{ translations[selectedLanguage].tratamenduak.pre_casa }}</th>
@@ -40,8 +41,8 @@
                     </thead>
                     <tbody>
                         <tr v-for="(tratamendu) in itemsFiltradosPaginados" :key="tratamendu.id">
-                            <td><input v-if="esProfesor === true" type="checkbox" class="form-check-input" :value="tratamendu.id"
-                                    v-model="arrayId" /></td>
+                            <td><input v-if="esProfesor === true" type="checkbox" class="form-check-input"
+                                    :value="tratamendu.id" v-model="arrayId" /></td>
                             <td>
                                 <span v-if="!arrayId.includes(tratamendu.id)">
                                     {{tratamendu.izena}}
@@ -121,15 +122,14 @@
                 </form>
             </div>
         </div>
-        <!-- FOOTER -->
-        <footer class="bg-dark text-light text-center py-3 mt-auto">
-            <div class="container">
-                <p>&copy; {{ translations[selectedLanguage].tratamenduak.footer }}</p>
-            </div>
-        </footer>
-
     </main>
 
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
+
+        <p>&copy; 2024. Todos los derechos reservados. CIFP San Jorge LHII</p>
+
+    </footer>
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

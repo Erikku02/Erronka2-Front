@@ -81,9 +81,10 @@ form button {
     transition: opacity 1s ease-out;
 }
 
-.dropdown-menu{
+.dropdown-menu {
     background-color: #bbcbc5;
 }
+
 /* @keyframes fadeOut {
     from {
         opacity: 1;
@@ -94,9 +95,9 @@ form button {
     }
 } */
 
-footer {
+/* footer {
     width: 100%;
     position: fixed;
     bottom: 0;
     left: 0;
-}
+} */

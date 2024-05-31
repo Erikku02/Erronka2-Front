@@ -14,8 +14,8 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-        <main id="app">
-            <nav-component :changeLanguage="changeLanguage"></nav-component>
+    <main id="app">
+        <nav-component :changeLanguage="changeLanguage"></nav-component>
         <div class="container">
             <div class="row">
                 <!-- Tabla -->
@@ -62,13 +62,14 @@
                 </div>
             </div>
         </div>
-        <!-- FOOTER -->
-        <footer class="bg-dark text-light text-center py-3 mt-auto" style="position: absolute; bottom: 0; width: 100%;">
-            <div class="container">
-                <p>&copy; {{ translations[selectedLanguage].ticket.footer }}</p>
-            </div>
-        </footer>
     </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark text-light text-center py-3 mt-auto">
+
+        <p>&copy; 2024. Todos los derechos reservados. CIFP San Jorge LHII</p>
+
+    </footer>
 
 
 
